@@ -11,7 +11,7 @@ class User(AbstractUser):
     address = models.CharField(max_length=200, null=True)
     registered_date = models.DateTimeField(auto_now_add=True)
 
-    avatar = models.ImageField(upload_to='images/', null=True, default="avatar.svg")
+    avatar = models.ImageField(null=True, default="avatar.svg")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

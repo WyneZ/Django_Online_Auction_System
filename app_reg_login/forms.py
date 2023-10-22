@@ -6,11 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class MyUserCreationForm(UserCreationForm):
-    profile_pic = forms.ImageField(required=False)
-
     class Meta:
         model = User
-        fields = UserCreationForm.Meta.fields + ('profile_pic',)
+        fields = ['avatar', 'name', 'username', 'email', 'password1', 'password2', 'phone', 'address']
         # fields = '__all__'
 
 

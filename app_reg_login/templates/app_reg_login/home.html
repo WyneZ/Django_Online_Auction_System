@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if request.user.is_authenticated %}
-        <a><button>Update</button></a>
+        <a href="{% url 'update' %}"><button>Update</button></a>
         <form method="POST" >
             {% csrf_token %}
             <input type="submit" value="Logout">

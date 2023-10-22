@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.forms import UserCreationForm
 
-from .forms import MyUserCreationForm
+from .forms import MyUserCreationForm, UserForm
 from .models import User
 
 # for login required to enter home
@@ -41,19 +41,17 @@ class MyView(View):
 def signup(request):
     form = MyUserCreationForm()
     if request.method == "POST":
-        print("Ok signUp")
+        print("Ok signUp:")
         form = MyUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             print("Form is valid")
-            user = form.save(commit=False)
+            user = form.save()
             user.username = user.username.lower()
+            # user.avatar = request.POST['avatar']
             user.save()
-            sec_form = MyUserCreationForm(request.POST, request.FILES, instance=request.user)
-            sec_form.save()
             print(f'Name: {user.name} '
                   f'Email: {user.email} '
-                  f'Phone: {user.phone} '
-                  f'Avatar: {user.avatar}')
+                  f'Phone: {user.phone} ')
             login(request, user)
             return redirect('home')
         else:
@@ -96,3 +94,18 @@ def loginUser(request):
             print('54 Login Error@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     context = {'page': page}
     return render(request, 'app_reg_login/reg_login.html', context)
+
+
+@login_required(login_url='login')
+def updateUser(request):
+    user = request.user
+    form = UserForm(instance=user)
+
+    if request.method == "POST":
+        form = UserForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'app_reg_login/updateUser.html', context)
