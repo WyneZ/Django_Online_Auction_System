@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'update' %}"><button>Update</button></a>
+        <a href="{% url 'logout' %}"><button>Logout</button></a>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Delete Account" style="background-color: red">
+        </form>
+        <hr>
+
+        <img width="100px" height="100px" src="{{ user.avatar.url }}">
+        <p>Id: {{ user.id }}</p>
+        <p>Name: {{ user.name }}</p>
+        <p>UserName: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Password: {{ user.password }}</p>
+        <p>Phone: {{ user.phone }}</p>
+        <p>Address: {{ user.address }}</p>
+{#        {% for u in user %}#}
+{#            <p>Id: {{ u.id }}</p>#}
+{#            <p>Name: {{ u.name }}</p>#}
+{#            <p>UserName: {{ u.username }}</p>#}
+{#            <p>Email: {{ u.email }}</p>#}
+{#            <p>Password: {{ u.password }}</p>#}
+{#            <p>Phone: {{ u.phone }}</p>#}
+{#            <p>Address: {{ u.address }}</p>#}
+{#            <hr>#}
+{#        {% endfor %}#}
+    {% endif %}
+
+
+
+
+{% endblock %}

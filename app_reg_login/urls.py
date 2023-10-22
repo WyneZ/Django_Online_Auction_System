@@ -5,7 +5,14 @@ from . import views
 
 urlpatterns = [
     path('', MyView.as_view(), name='home'),
+
+    # user management
     path('register/', views.signup, name='register'),
     path('login/', views.loginUser, name='login'),
-    path('update/', views.updateUser, name='update')
+    path('logout/', views.logoutUser, name='logout'),
+    path('update/', views.updateUser, name='update'),
+    path('profile/<str:pk>', views.profile, name='profile'),
+
+    # auction Listing & bidding
+
 ]

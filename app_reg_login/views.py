@@ -12,7 +12,6 @@ from .models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-# @login_required(login_url='login')
 class MyView(View):
 
     def get(self, request):
@@ -25,14 +24,14 @@ class MyView(View):
     #
     #     user = User.objects.get(id=pk)
     #     context = {'user', user}
-    #     return render(request, 'app_reg_login/home.html', context)
+    #     return render(request, 'app_reg_login/profile.html', context)
 
     # this is for Logout button
     def post(self, request):
         # user = User.objects.all()
         # print('Home POST:', user)
         # context = {'user': user}
-        # return render(request, 'app_reg_login/home.html', context)
+        # return render(request, 'app_reg_login/profile.html', context)
 
         logout(request)
         return redirect('login')
@@ -97,6 +96,24 @@ def loginUser(request):
 
 
 @login_required(login_url='login')
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+
+@login_required(login_url='login')
+def profile(request, pk):
+    user = User.objects.get(id=pk)
+    if request.method == 'POST':
+        logout(request)
+        user.delete()
+        return redirect('home')
+
+    context = {'user': user}
+    return render(request, 'app_reg_login/profile.html', context)
+
+
+@login_required(login_url='login')
 def updateUser(request):
     user = request.user
     form = UserForm(instance=user)
@@ -105,7 +122,10 @@ def updateUser(request):
         form = UserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('profile', user.id)
 
     context = {'form': form}
     return render(request, 'app_reg_login/updateUser.html', context)
+
+
+
