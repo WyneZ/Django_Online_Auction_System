@@ -14,5 +14,5 @@ urlpatterns = [
     path('profile/<str:pk>', views.profile, name='profile'),
 
     # auction Listing & bidding
-
+    path('sell/', views.sellItem, name='sell'),
 ]

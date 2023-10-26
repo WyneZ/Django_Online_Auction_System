@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
     {% if request.user.is_authenticated %}
         <a href="{% url 'profile' request.user.id %}"><button style="margin-top: 10px" >Profile</button></a>
@@ -43,9 +45,14 @@
     <hr>
     <p>Latest Auction Items</p>
     <div class="scrollmenu">
-        <a href="#home">Home</a>
-        <a href="#news">News</a>
-        <a href="#contact">Contact</a>
+
+        {% for item in latest_items %}
+            <a>
+                <img src="{{ item.item_image.url }}" style="width: 100px; height: 100px">
+                <p>Title: {{ item.title }}</p>
+            </a>
+
+        {% endfor %}
     </div>
     <hr>
     <p>Popular Auction Items</p>

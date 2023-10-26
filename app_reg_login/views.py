@@ -5,8 +5,8 @@ from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.forms import UserCreationForm
 
-from .forms import MyUserCreationForm, UserForm
-from .models import User
+from .forms import MyUserCreationForm, UserForm, SellForm
+from .models import User, Item, Category
 
 # for login required to enter home
 from django.contrib.auth import authenticate, login, logout
@@ -15,16 +15,9 @@ from django.contrib.auth import authenticate, login, logout
 class MyView(View):
 
     def get(self, request):
-        user = User.objects.all()
-        print('home>> get:', request.GET, 'post:', request.POST, 'user:', user[0].email)
-        context = {'user': user}
+        latest_items = Item.objects.all()
+        context = {'latest_items': latest_items}
         return render(request, 'app_reg_login/home.html', context)
-
-    # def get(self, request):
-    #
-    #     user = User.objects.get(id=pk)
-    #     context = {'user', user}
-    #     return render(request, 'app_reg_login/profile.html', context)
 
     # this is for Logout button
     def post(self, request):
@@ -46,7 +39,6 @@ def signup(request):
             print("Form is valid")
             user = form.save()
             user.username = user.username.lower()
-            # user.avatar = request.POST['avatar']
             user.save()
             print(f'Name: {user.name} '
                   f'Email: {user.email} '
@@ -57,7 +49,7 @@ def signup(request):
             messages.error(request, 'An error occurs during signup')
 
     context = {'form': form}
-    return render(request, 'app_reg_login/reg_login.html', context)
+    return render(request, 'app_reg_login/reg_login_old.html', context)
 
 
 def loginUser(request):
@@ -128,4 +120,32 @@ def updateUser(request):
     return render(request, 'app_reg_login/updateUser.html', context)
 
 
+def sellItem(request):
+    form = SellForm()
+    items = Item.objects.all()
+    categories = Category.objects.all()
 
+    if request.method == 'POST':
+        form = SellForm(request.POST, request.FILES)
+        print('All items:', items)
+        print('Sell:', request.POST['category'], type(request.POST['category']))
+        if form.is_valid():
+            item = form.save()
+            item.save()
+        # category_name = request.POST.get('category')
+        # category, start_date = Category.objects.get_or_create(name=category_name)
+
+        # Item.objects.create(
+        #     seller=request.user,
+        #     category=request.POST['category'],
+        #     title=request.POST['title'],
+        #     item_name=request.POST['item_name'],
+        #     description=request.POST['description'],
+        #     item_image=request.POST['item_image'],
+        #     reverse_price=request.POST['reverse_price'],
+        #     item_condition=request.POST['item_condition']
+        #     # highest_price=request.POST.get('reverse_price'),
+        # )
+        return redirect('home')
+    context = {'form': form}
+    return render(request, 'app_reg_login/sell_item.html', context)

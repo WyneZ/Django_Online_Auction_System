@@ -29,17 +29,26 @@ class Category(models.Model):
 
 class Item(models.Model):
     seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    # category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
-    name = models.CharField(max_length=200, null=False)
+    title = models.CharField(max_length=100, null=False)
+
+    category = models.CharField(max_length=100, null=True)
+
+    item_name = models.CharField(max_length=200, null=False)
     description = models.TextField(null=True, blank=True)
-    reverse_price = models.IntegerField(max_length=20, null=False)
-    item_condition = models.CharField(max_length=100)
+    item_image = models.ImageField(null=True, default='avatar.svg')
+    reverse_price = models.IntegerField(null=False)
+    highest_price = models.IntegerField(null=True, default=0)
+    item_condition = models.CharField(max_length=100, null=True, blank=False)
     start_date = models.DateTimeField(auto_now_add=True)
     # end_date =
 
     class Meta:
         ordering = ['-start_date']
+
+    def __str__(self):
+        return self.title
 
 
 

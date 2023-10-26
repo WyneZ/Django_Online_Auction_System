@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import User
+from .models import User, Item
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -16,3 +16,10 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['avatar', 'name', 'username', 'email', 'phone', 'address']
+
+
+class SellForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = '__all__'
+        exclude = ['seller', 'highest_price']

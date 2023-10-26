@@ -1,40 +1,120 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
     {% if page == 'login' %}
-    <div>
-        <form method="POST" action="" >
-            {% csrf_token %}
-            <label>Email:</label>
-            <input type="text" name="email" placeholder="Enter email" />
+        <div class="container mt-3 rounded-4 text-center position-absolute top-50 start-50 translate-middle" style = "width:28rem;background-color: #ccc7aa;">
+        <h1 class="text-center pt-5 mb-5">Sign In</h1>
+        <div class="container " style = "width:20rem;">
 
-            <label>Password:</label>
-            <input type="password" name="password" placeholder="Enter password" />
+            <form method="POST">
+                {% csrf_token %}
+                <div class="col mb-3">
+                  <label for="validationServerUsername" class="form-label">Email</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                    <input name="email" type="text" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Enter your Email" required>
+                  </div>
+                </div>
+                <div class="col">
+                    <label for="validationServer07" class="form-label">Password</label>
 
-            <input type="submit" value="Login"/>
-        </form>
+                    <input name="password" type="password" class="form-control" id="validationServer07" aria-describedby="validationServer7Feedback" placeholder="Enter your Password" required>
+                </div>
 
-        <p>haven't signed up yet?</p>
-        <a href="{% url 'register' %}">Sign up</a>
+                <div class="col p-5">
+                  <button class="btn btn-dark mx-3" type="submit" >Sign In</button>
+                    <form action="{% url 'register' %}">
+                        <button class="btn btn-dark" >Sign Up</button>
+                    </form>
+                </div>
+            </form>
+
+            <div class="col p-5">
+                <a href="{% url 'register' %}">
+                    <button class="btn btn-dark" >Sign Up</button>
+                </a>
+            </div>
+
+{#            <p>haven't signed up yet?</p>#}
+{#            <a href="{% url 'register' %}">Sign up</a>#}
+        </div>
+
     </div>
+
     {% else %}
-    <div>
-        <form method="POST" action="" enctype="multipart/form-data" >
-            {% csrf_token %}
-{#            {{ form.as_p }}#}
 
-            {% for field in form %}
-                {{ field.label }}
-                {{ field }}
-                <br>
-                <br>
-            {% endfor %}
+        <div class="container mt-3 rounded-4 position-absolute top-50 start-50 translate-middle" style = "width:50rem; background-color: #ccc7aa;">
+        <h1 class="text-center pt-5">Sign Up</h1>
+        <form class="row p-5">
+            <div class="col-md-6">
+              <label for="validationServer01" class="form-label">First name</label>
+              <input type="text" class="form-control" id="validationServer01" placeholder="Enter your First name"required>
 
-            <input type="submit" value="Register"/>
-        </form>
-        <p>Already signed up?</p>
-        <a href="{% url 'login' %}">Login</a>
+            </div>
+            <div class="col-md-6">
+              <label for="validationServer02" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="validationServer02" placeholder="Enter your Last name" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationServerUsername" class="form-label">Email</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                <input type="text" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Enter your Email"required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="validationServer03" class="form-label">Address</label>
+              <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer03Feedback" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationServer04" class="form-label">City</label>
+                <input type="text" class="form-control" id="validationServer04" aria-describedby="validationServer04Feedback" required>
+            </div>
+
+            <div class="col-md-3">
+              <label for="validationServer05" class="form-label">State</label>
+              <select class="form-select" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+                <option selected disabled value="">Choose...</option>
+
+                <option>Myanmar</option>
+                <option>Cambodia</option>
+                <option>Lao</option>
+
+              </select>
+
+            </div>
+            <div class="col-md-3">
+              <label for="validationServer06" class="form-label">Zip</label>
+              <input type="text" class="form-control" id="validationServer06" aria-describedby="validationServer06Feedback" required>
+
+            </div>
+            <div class="col-md-6">
+                <label for="validationServer07" class="form-label">Password</label>
+                <input type="text" class="form-control" id="validationServer07" aria-describedby="validationServer7Feedback" required>
+
+              </div>
+              <div class="col-md-6">
+                <label for="validationServer08" class="form-label">Comfirm Password</label>
+                <input type="text" class="form-control" id="validationServer08" aria-describedby="validationServer08Feedback" required>
+              </div>
+            <div class="col-12 mb-lg-3 mt-lg-3" >
+              <div class="form-check">
+                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+                <label class="form-check-label" for="validCheck3">
+                  Agree to terms and conditions
+                </label>
+                <div id="invalidCheck3Feedback" class="invalid-feedback ">
+                  You must agree before submitting.
+                </div>
+              </div>
+            </div>
+            <div class="col text-center">
+              <button class="btn btn-dark" type="submit" >Submit</button>
+            </div>
+          </form>
     </div>
+
+
     {% endif %}
-{% endblock content %}
+
+{% endblock %}
