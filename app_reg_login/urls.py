@@ -15,5 +15,6 @@ urlpatterns = [
 
     # auction Listing & bidding
     path('sell/', views.sellItem, name='sell'),
-    path('item_detail/<str:pk>', views.item_detial, name="item_detail")
+    path('item_detail/<str:pk>', views.item_detail, name="item_detail"),
+    path('item_edit/<str:pk>', views.item_edit, name="item_edit"),
 ]

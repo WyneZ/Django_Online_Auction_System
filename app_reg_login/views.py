@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
-from django.contrib.auth.forms import UserCreationForm
 
 from .forms import MyUserCreationForm, UserForm, SellForm
 from .models import User, Category, Item, ImageTable
@@ -12,19 +11,26 @@ from .models import User, Category, Item, ImageTable
 from django.contrib.auth import authenticate, login, logout
 
 
+# Function to get only {item: one image} | not for images
+def create_related_dict(item_list, image_list):
+    related_dict: dict = {}
+    for item in item_list:
+        for image in image_list:
+            if image.item == item:
+                image_dict = {item: image.image_url}
+                related_dict.update(image_dict)
+                break
+
+    return related_dict
+
+
 class MyView(View):
 
     def get(self, request):
         latest_items = Item.objects.all()
         all_images = ImageTable.objects.all()
-        # related_images = ImageTable.objects.
-        related_dict = {}
-        for item in latest_items:
-            for image in all_images:
-                if image.item == item:
-                    image_dict = {item: image.image_url}
-                    related_dict.update(image_dict)
-                    break
+
+        related_dict = create_related_dict(latest_items, all_images)
 
         context = {'latest_items': latest_items, "all_images": all_images, "related_dict": related_dict}
         return render(request, 'app_reg_login/home.html', context)
@@ -91,12 +97,17 @@ def logoutUser(request):
 @login_required(login_url='login')
 def profile(request, pk):
     user = User.objects.get(id=pk)
+    item_list = user.item_set.all()
+    images = ImageTable.objects.all()
+
+    related_dict = create_related_dict(item_list, images)
+
     if request.method == 'POST':
         logout(request)
         user.delete()
         return redirect('home')
 
-    context = {'user': user}
+    context = {'user': user, 'related_dict': related_dict}
     return render(request, 'app_reg_login/profile.html', context)
 
 
@@ -142,11 +153,30 @@ def sellItem(request):
     return render(request, 'app_reg_login/sell_item.html', context)
 
 
-def item_detial(request, pk):
+def item_detail(request, pk):
     item = Item.objects.get(id=pk)
     images = ImageTable.objects.filter(item=item)
     context = {'item': item, 'images': images}
     return render(request, 'app_reg_login/item_details.html', context)
+
+
+def item_edit(request, pk):
+    item = Item.objects.get(id=pk)
+    images = ImageTable.objects.get(item=item)
+    form = SellForm(instance=item)
+
+    if request.user != item.seller:
+        return HttpResponse('Your are not allowed here!!')
+
+    if request.method == 'POST':
+        form = SellForm(request.POST, request.FILES, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('item_detail', pk)
+
+    context = {'form': form, 'item': item, 'images': images, 'edit': 'edit'}
+    return render(request, 'app_reg_login/sell_item.html', context)
+
 
 
 

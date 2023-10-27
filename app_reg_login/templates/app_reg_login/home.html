@@ -45,17 +45,12 @@
     <hr>
     <p>Latest Auction Items</p>
     <div class="scrollmenu">
-
         {% for item, image in related_dict.items %}
             <a href="{% url 'item_detail' item.id %}">
-{#            {% for image in all_images %}#}
-{#            	{% if image.item.id == item.id %}#}
-{#                    <img src="{{ image.image_url.url }}" style="width: 100px; height: 100px">#}
-{#            	{% endif %}#}
-{#            {% endfor %}#}
-                <img src="{{ image }}" style="width: 100px; height: 100px">
+                <img src="{{ image.url }}" style="width: 200px; height: 200px">
+                <p>{{ item.title }}</p>
+                <p>${{ item.reverse_price }}</p>
             </a>
-            <p>{{ item.title }}</p>
         {% endfor %}
     </div>
     <hr>
