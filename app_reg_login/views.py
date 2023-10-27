@@ -6,7 +6,7 @@ from django.views import View
 from django.contrib.auth.forms import UserCreationForm
 
 from .forms import MyUserCreationForm, UserForm, SellForm
-from .models import User, Item, Category
+from .models import User, Category, Item, ImageTable
 
 # for login required to enter home
 from django.contrib.auth import authenticate, login, logout
@@ -16,16 +16,21 @@ class MyView(View):
 
     def get(self, request):
         latest_items = Item.objects.all()
-        context = {'latest_items': latest_items}
+        all_images = ImageTable.objects.all()
+        # related_images = ImageTable.objects.
+        related_dict = {}
+        for item in latest_items:
+            for image in all_images:
+                if image.item == item:
+                    image_dict = {item: image.image_url}
+                    related_dict.update(image_dict)
+                    break
+
+        context = {'latest_items': latest_items, "all_images": all_images, "related_dict": related_dict}
         return render(request, 'app_reg_login/home.html', context)
 
     # this is for Logout button
     def post(self, request):
-        # user = User.objects.all()
-        # print('Home POST:', user)
-        # context = {'user': user}
-        # return render(request, 'app_reg_login/profile.html', context)
-
         logout(request)
         return redirect('login')
 
@@ -60,29 +65,19 @@ def loginUser(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        print('67 inputEmail & pw', email, password)
         try:
             user = User.objects.get(email=email)
-            print('65 login:', user.password, 'requestUser:', request.POST)
         except:
-            print("User Not Found!!!!!!!!!!!!!!!!!!!!!!")
+            print("User Not Found!!!")
 
         user = authenticate(request, email=email, password=password)
         print('authenticated >>', user)
-        # users = User.objects.all()
-        # for u in users:
-        #     print('compare pw:', u.password, password)
-        #     if u.email == email and u.password == password:
-        #         print(78, u.name)
-        #         user = u
-        #     else:
-        #         return redirect('login')
 
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            print('54 Login Error@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            print('54 Login Error!!')
     context = {'page': page}
     return render(request, 'app_reg_login/reg_login.html', context)
 
@@ -123,29 +118,43 @@ def updateUser(request):
 def sellItem(request):
     form = SellForm()
     items = Item.objects.all()
-    categories = Category.objects.all()
 
     if request.method == 'POST':
         form = SellForm(request.POST, request.FILES)
-        print('All items:', items)
         print('Sell:', request.POST['category'], type(request.POST['category']))
+
         if form.is_valid():
             item = form.save()
+            item.seller = request.user
             item.save()
-        # category_name = request.POST.get('category')
-        # category, start_date = Category.objects.get_or_create(name=category_name)
 
-        # Item.objects.create(
-        #     seller=request.user,
-        #     category=request.POST['category'],
-        #     title=request.POST['title'],
-        #     item_name=request.POST['item_name'],
-        #     description=request.POST['description'],
-        #     item_image=request.POST['item_image'],
-        #     reverse_price=request.POST['reverse_price'],
-        #     item_condition=request.POST['item_condition']
-        #     # highest_price=request.POST.get('reverse_price'),
-        # )
+            images = request.FILES.getlist('upload_images')
+            for image in images:
+                image = ImageTable.objects.create(
+                    item=item,
+                    image_url=image
+                )
+        category_name = request.POST.get('category')
+        category, start_date = Category.objects.get_or_create(name=category_name)
+
         return redirect('home')
     context = {'form': form}
     return render(request, 'app_reg_login/sell_item.html', context)
+
+
+def item_detial(request, pk):
+    item = Item.objects.get(id=pk)
+    images = ImageTable.objects.filter(item=item)
+    context = {'item': item, 'images': images}
+    return render(request, 'app_reg_login/item_details.html', context)
+
+
+
+
+
+
+
+
+
+
+

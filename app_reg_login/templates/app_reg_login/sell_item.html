@@ -4,16 +4,13 @@
 
     <form method="POST" action="" enctype="multipart/form-data" >
         {% csrf_token %}
-{#        <label for="room_topic">Enter a Topic</label>#}
-{#        <input type="text" value="{{ room.topic.name }}" name="topic" required list="topic-list"/>#}
-{#            <select id="room_topic">#}
-{#                {% for category in categories %}#}
-{#                    <option value="{{ category.name }}">{{ category.name }}</option>#}
-{#                {% endfor %}#}
-{#            </select>#}
-
         <label>Category</label>
-        {{ form.category }}
+{#        {{ form.category }}#}
+        <select name="category">
+            <option value="{% url 'register' %}">Shoe</option>
+            <option>Book</option>
+            <option>Art</option>
+        </select>
         <br>
         <br>
         <label>Title</label>
@@ -29,7 +26,8 @@
         <br>
         <br>
         <label>Images</label>
-        {{ form.item_image }}
+        <input required name="upload_images" type="file" multiple>
+{#        {{ form.item_image }}#}
         <br>
         <br>
         <label>Reverse Price</label>

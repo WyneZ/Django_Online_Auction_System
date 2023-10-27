@@ -44,10 +44,9 @@
             </a>
 
             <select>
-                <option value="shoes">Shoes</option>
-                <option value="books_comics">Books & Comics</option>
-                <option value="jewellery">Jewellery</option>
-                <option value="art">Art</option>
+                <option value="{% url 'home' %}">Shoes</option>
+                <option value="{% url 'home' %}">Book</option>
+                <option value="{% url 'home' %}">Art</option>
             </select>
 
             <input style="height: 50px; width: 300px; font-size: 20px; margin-top: 20px" placeholder="Search for auctions..... ">

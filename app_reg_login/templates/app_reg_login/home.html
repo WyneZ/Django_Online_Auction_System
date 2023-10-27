@@ -46,12 +46,16 @@
     <p>Latest Auction Items</p>
     <div class="scrollmenu">
 
-        {% for item in latest_items %}
-            <a>
-                <img src="{{ item.item_image.url }}" style="width: 100px; height: 100px">
-                <p>Title: {{ item.title }}</p>
+        {% for item, image in related_dict.items %}
+            <a href="{% url 'item_detail' item.id %}">
+{#            {% for image in all_images %}#}
+{#            	{% if image.item.id == item.id %}#}
+{#                    <img src="{{ image.image_url.url }}" style="width: 100px; height: 100px">#}
+{#            	{% endif %}#}
+{#            {% endfor %}#}
+                <img src="{{ image }}" style="width: 100px; height: 100px">
             </a>
-
+            <p>{{ item.title }}</p>
         {% endfor %}
     </div>
     <hr>

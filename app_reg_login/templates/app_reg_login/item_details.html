@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for item in latest_items %}
-        <h1>{{ item.seller.name }}</h1>
+{#    {% for item in latest_items %}#}
+        <h5>Id: {{ item.id }}</h5>
+        <h1>Seller: {{ item.seller }}</h1>
         <p>Title: {{ item.title }}</p>
-        <img src="{{ item.item_image.url }}">
+
+    {% for image in images %}
+        <img src="{{ image.image_url.url }}" style="width: 100px; height: 100px">
+    {% endfor %}
+
         <p>Name: {{ item.item_name }}</p>
         <p>Description: {{ item.description }}</p>
         <p>Condition: {{ item.item_condition }}</p>
         <p>Reverse Price: {{ item.reverse_price }}</p>
         <p>Start Date: {{ item.start_date }}</p>
-    {% endfor %}
+{#    {% endfor %}#}
 
 {% endblock %}
