@@ -7,7 +7,8 @@
         <label>Category</label>
 {#        {{ form.category }}#}
         <select name="category">
-            <option value="{% url 'register' %}">Shoe</option>
+{#            <option selected>Other</option>#}
+            <option>Shoe</option>
             <option>Book</option>
             <option>Art</option>
         </select>
@@ -27,7 +28,7 @@
         <br>
         <label>Images</label>
         <input required name="upload_images" type="file" multiple>
-
+        {{ image_form.as_p }}
 {#        {{ form.item_image }}#}
         <br>
         <br>

@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 
-from .forms import MyUserCreationForm, UserForm, SellForm
-from .models import User, Category, Item, ImageTable
+from .forms import MyUserCreationForm, UserForm, SellForm, ImageForm
+from .models import User, Category, Item, ImageTable, Bids
 
 # for login required to enter home
 from django.contrib.auth import authenticate, login, logout
@@ -29,6 +29,11 @@ class MyView(View):
     def get(self, request):
         latest_items = Item.objects.all()
         all_images = ImageTable.objects.all()
+
+        # delete image if user account is deleted
+        for image in all_images:
+            if image.item.seller is None:
+                image.delete()
 
         related_dict = create_related_dict(latest_items, all_images)
 
@@ -102,6 +107,8 @@ def profile(request, pk):
 
     related_dict = create_related_dict(item_list, images)
 
+    # auction_history =
+
     if request.method == 'POST':
         logout(request)
         user.delete()
@@ -156,14 +163,36 @@ def sellItem(request):
 def item_detail(request, pk):
     item = Item.objects.get(id=pk)
     images = ImageTable.objects.filter(item=item)
-    context = {'item': item, 'images': images}
+    item_bids = item.bids_set.all()
+    participants = item.participants.all()
+    print("167 Auctioneers:", participants, type(participants))
+
+    if item.highest_price == 0:
+        item.highest_price = item.reverse_price
+
+    if request.method == "POST":
+        amount = int(request.POST.get('amount'))
+        if amount > item.highest_price:
+            item.highest_price = amount
+            item.save()
+            bid = Bids.objects.create(
+                bidder=request.user,
+                item=item,
+                amount=int(request.POST.get('amount'))
+            )
+            item.participants.add(request.user)
+
+        return redirect('item_detail', pk=item.id)
+
+    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants}
     return render(request, 'app_reg_login/item_details.html', context)
 
 
 def item_edit(request, pk):
     item = Item.objects.get(id=pk)
-    images = ImageTable.objects.get(item=item)
+    images = ImageTable.objects.all().filter(item=item)
     form = SellForm(instance=item)
+    image_form = ImageForm(instance=images)
 
     if request.user != item.seller:
         return HttpResponse('Your are not allowed here!!')
@@ -174,11 +203,24 @@ def item_edit(request, pk):
             form.save()
             return redirect('item_detail', pk)
 
-    context = {'form': form, 'item': item, 'images': images, 'edit': 'edit'}
+    context = {'form': form, 'image_form': image_form, 'item': item, 'edit': 'edit'}
     return render(request, 'app_reg_login/sell_item.html', context)
 
 
+def item_delete(request, pk):
+    item = Item.objects.get(id=pk)
+    images = ImageTable.objects.all()
+    count = 0
 
+    if request.method == 'POST':
+        for image in images:
+            if item == image.item:
+                print(count)
+                count += 1
+                image.delete()
+        return redirect('home')
+    context = {'item': item}
+    return render(request, 'app_reg_login/item_delete.html', context)
 
 
 

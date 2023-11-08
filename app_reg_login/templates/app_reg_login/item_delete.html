@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <p>Are you sure to delete this item?</p>
+    {{ item.id }} |
+    {{ item.seller }} |
+    {{ item.category }} |
+    {{ item.title }} |
+    {{ item.item_name }} |
+    {{ item.category }} |
+    {{ item.reverse_price }} |
+    {{ item.item_condition }} |
+    <hr>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+    </form>
+
+{% endblock %}

@@ -4,10 +4,11 @@
 
     {% if request.user == item.seller %}
     	<a href="{% url 'item_edit' item.id %}"><button>Edit</button></a>
+    	<a href="{% url 'item_delete' item.id %}"><button style="background-color: red">Delete</button></a>
         <hr>
     {% endif %}
     <h5>Id: {{ item.id }}</h5>
-    <h1>Seller: {{ item.seller }}</h1>
+    <h1>Seller: {{ item.seller.name }}</h1>
     <p>Title: {{ item.title }}</p>
 
     {% for image in images %}
@@ -19,5 +20,35 @@
     <p>Condition: {{ item.item_condition }}</p>
     <p>Reverse Price: {{ item.reverse_price }}</p>
     <p>Start Date: {{ item.start_date }}</p>
+
+    <h3>Participants</h3>
+    <ol>
+        {% for participant in participants %}
+            <li>{{ participant.name }}</li>
+        {% endfor %}
+    </ol>
+
+    <hr>
+
+    <h1>Current Price:{{ item.highest_price }}</h1>
+
+    <hr>
+    {% for bid in bids %}
+        <a href="{% url 'profile' bid.bidder.id %}">
+            <img src="{{ bid.bidder.avatar.url }}" style="width: 50px; height: 50px">
+            <span>@{{ bid.bidder.username }}</span>
+        </a><br>
+        <span>{{ bid.created|timesince }} ago</span><br>
+        <h2>{{ bid.amount }}</h2>
+        <hr>
+    {% endfor %}
+    
+    <hr>
+    {% if request.user != item.seller %}
+    	<form action="" method="POST">
+            {% csrf_token %}
+            <input type="number" name="amount" placeholder="Write your amount here..." />
+        </form>
+    {% endif %}
 
 {% endblock %}

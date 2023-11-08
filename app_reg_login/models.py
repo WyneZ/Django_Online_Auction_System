@@ -13,11 +13,13 @@ class User(AbstractUser):
 
     avatar = models.ImageField(null=True, default="avatar.svg")
 
+    # auction_list = models.ManyToManyField(Item, related_name="auction_list", blank=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
 
 class Category(models.Model):
@@ -29,6 +31,7 @@ class Category(models.Model):
 
 class Item(models.Model):
     seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    participants = models.ManyToManyField(User, related_name='participants', blank=True)
     # category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
     title = models.CharField(max_length=100, null=False)
@@ -55,11 +58,18 @@ class ImageTable(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     image_url = models.ImageField(upload_to='images/', null=False)
 
-    # def __str__(self):
-    #     return self.image_url
 
+class Bids(models.Model):
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    amount = models.IntegerField(null=False)
+    created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created']
 
+    def __str__(self):
+        return self.amount
 
 
 

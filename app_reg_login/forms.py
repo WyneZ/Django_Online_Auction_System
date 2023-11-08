@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 
 from .models import User, Item, ImageTable
 from django.contrib.auth.forms import UserCreationForm
@@ -22,15 +22,12 @@ class SellForm(ModelForm):
     class Meta:
         model = Item
         fields = '__all__'
-        exclude = ['seller', 'highest_price']
+        exclude = ['seller', 'highest_price', 'participants']
 
 
-# class ImageForm(ModelForm):
-#     images = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-#
-#     class Meta:
-#         model = ImageTable
-#         fields = ['image_url']
+class ImageForm(ModelForm):
+    images = forms.FileField()
 
-
-
+    class Meta:
+        model = ImageTable
+        fields = ['images']
