@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <style>
+        div.scrollmenu {
+          overflow: auto;
+          white-space: nowrap;
+        }
+
+        div.scrollmenu a {
+          display: inline-block;
+            color: black;
+            border-color: green;
+            border: solid 4px;
+          text-align: center;
+          padding: 14px;
+          text-decoration: none;
+        }
+
+        div.scrollmenu a:hover {
+          background-color: #777;
+        }
+    </style>
+
+    <h1>{{ sItem }}</h1>
+    <hr>
+<!--    {% for item in items %}-->
+<!--        <div class="scrollmenu">-->
+<!--            -->
+<!--            -->
+<!--            {% for item, image in image_dict.items %}-->
+<!--                <a href="{% url 'item_detail' item.id %}">-->
+<!--                    <img src="{{ image.url }}" style="width: 200px; height: 200px">-->
+<!--                    <p>{{ item.title }}</p>-->
+<!--                    <p>${{ item.reverse_price }}</p>-->
+<!--                </a>-->
+<!--            {% endfor %}-->
+<!--            -->
+<!--            <p>Name: {{ item.item_name }}</p>-->
+<!--            <p>${{ item.price }}</p>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--    {% endfor %}-->
+
+<!--    {{ image_list }}-->
+
+        {% for item, image in show_dict.items %}
+            <a href="{% url 'item_detail' item.id %}">
+                <img src="{{ image.url }}" style="width: 200px; height: 200px">
+                <p>{{ item.title }}</p>
+                <p>${{ item.reverse_price }}</p>
+            </a>
+            <hr>
+        {% endfor %}
+
+{% endblock %}

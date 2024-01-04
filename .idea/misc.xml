@@ -3,5 +3,8 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.11 (OAS_1_reg_login)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (OAS_1_reg_login)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (reg_login-upload_image-)" project-jdk-type="Python SDK" />
+  <component name="PyCharmProfessionalAdvertiser">
+    <option name="shown" value="true" />
+  </component>
 </project>

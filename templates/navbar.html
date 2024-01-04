@@ -49,7 +49,10 @@
                 <option value="{% url 'home' %}">Art</option>
             </select>
 
-            <input style="height: 50px; width: 300px; font-size: 20px; margin-top: 20px" placeholder="Search for auctions..... ">
+
+            <form action="{% url 'search_item' %}">
+                <input name='sItem' style="height: 50px; width: 300px; font-size: 20px; margin-top: 20px" placeholder="Search for auctions..... ">
+            </form>
 
             {% if request.user.is_authenticated %}
 

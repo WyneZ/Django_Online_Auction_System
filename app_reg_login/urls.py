@@ -18,6 +18,14 @@ urlpatterns = [
     path('item_detail/<str:pk>', views.item_detail, name="item_detail"),
     path('item_edit/<str:pk>', views.item_edit, name="item_edit"),
     path('item_delete/<str:pk>', views.item_delete, name="item_delete"),
+
+    # rating
+    path('like_item/', views.like_item, name="like_item"),
+
+    # search
+    path('search_item/', views.search_item, name="search_item"),
+
+
 ]
 
 

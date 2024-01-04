@@ -70,6 +70,3 @@ class Bids(models.Model):
 
     def __str__(self):
         return self.amount
-
-
-

@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
@@ -71,7 +72,10 @@ def signup(request):
 def loginUser(request):
     page = 'login'
     if request.user.is_authenticated:
-        return redirect('home')
+        if request.user.is_staff:
+            return redirect('home')
+        else:
+            return redirect('login')
 
     if request.method == 'POST':
         email = request.POST['email']
@@ -222,6 +226,24 @@ def item_delete(request, pk):
     context = {'item': item}
     return render(request, 'app_reg_login/item_delete.html', context)
 
+
+def search_item(request):
+    sItem = request.GET.get('sItem') if request.GET.get('sItem') is not None else ''
+    sItem_list = Item.objects.filter(
+        Q(item_name__icontains=sItem) |
+        Q(title__icontains=sItem)
+    )
+    image_list = ImageTable.objects.all()
+
+    show_dict = create_related_dict(sItem_list, image_list)
+
+    # context = {'sItem': sItem, 'items': sItem_list, 'image_list': image_dict}
+    context = {'sItem': sItem, 'show_dict': show_dict}
+    return render(request, 'app_reg_login/search.html', context)
+
+
+def like_item(request, pk):
+    return redirect('/')
 
 
 
