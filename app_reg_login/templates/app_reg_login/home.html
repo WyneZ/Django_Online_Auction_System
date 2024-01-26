@@ -50,6 +50,15 @@
                 <img src="{{ image.url }}" style="width: 200px; height: 200px">
                 <p>{{ item.title }}</p>
                 <p>${{ item.reverse_price }}</p>
+                <form method="POST" action="{% url 'like_item' item.id %}">
+                    {% csrf_token %}
+                    {% if user in item.liked_users.all %}
+                        <button style="background-color:blue">Liked</button>
+                    {% else %}
+                        <button style="background-color:red">Like</button>
+                    {% endif %}
+                </form>
+                <p>{{ item.like_count }}</p>
             </a>
         {% endfor %}
     </div>

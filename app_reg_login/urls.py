@@ -20,7 +20,7 @@ urlpatterns = [
     path('item_delete/<str:pk>', views.item_delete, name="item_delete"),
 
     # rating
-    path('like_item/', views.like_item, name="like_item"),
+    path('like_item/<str:pk>', views.like_item, name="like_item"),
 
     # search
     path('search_item/', views.search_item, name="search_item"),

@@ -22,7 +22,7 @@ class SellForm(ModelForm):
     class Meta:
         model = Item
         fields = '__all__'
-        exclude = ['seller', 'highest_price', 'participants']
+        exclude = ['seller', 'highest_price', 'participants', 'liked_users']
 
 
 class ImageForm(ModelForm):

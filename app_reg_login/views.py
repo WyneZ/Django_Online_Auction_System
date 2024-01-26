@@ -38,7 +38,7 @@ class MyView(View):
 
         related_dict = create_related_dict(latest_items, all_images)
 
-        context = {'latest_items': latest_items, "all_images": all_images, "related_dict": related_dict}
+        context = {'latest_items': latest_items, "all_images": all_images, "related_dict": related_dict, "rUser": request.user}
         return render(request, 'app_reg_login/home.html', context)
 
     # this is for Logout button
@@ -243,6 +243,22 @@ def search_item(request):
 
 
 def like_item(request, pk):
+    item = Item.objects.get(id=pk)
+    liked_users = item.liked_users.all()
+    print(248, 'early liked_users>>', liked_users)
+
+    # user = item.liked_users.filter()
+
+    if request.method == "POST":
+        if request.user in liked_users:
+            item.liked_users.remove(request.user)
+            item.like_count = item.like_count - 1
+        else:
+            item.liked_users.add(request.user)
+            item.like_count = item.like_count + 1
+        item.save()
+        print(252, item.liked_users.all())
+
     return redirect('/')
 
 

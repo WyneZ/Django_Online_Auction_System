@@ -32,6 +32,8 @@ class Category(models.Model):
 class Item(models.Model):
     seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     participants = models.ManyToManyField(User, related_name='participants', blank=True)
+    liked_users = models.ManyToManyField(User, related_name='liked_users', blank=True)
+    like_count = models.IntegerField(default=0)
     # category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
     title = models.CharField(max_length=100, null=False)
