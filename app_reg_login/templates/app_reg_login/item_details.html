@@ -20,6 +20,8 @@
     <p>Condition: {{ item.item_condition }}</p>
     <p>Reverse Price: {{ item.reverse_price }}</p>
     <p>Start Date: {{ item.start_date }}</p>
+    <p>Due Date: {{ item.due_date }}</p>
+    <p> Remain Time: <p id="countdown"></p> </p>
 
     <h3>Participants</h3>
     <ol>
@@ -56,5 +58,36 @@
             <input type="number" name="amount" placeholder="Write your amount here..." />
         </form>
     {% endif %}
+
+
+    <script>
+        $(document).ready(function() {
+            // Set the countdown date (replace with your desired date)
+            // var endDate = "2024-02-09T23:06"
+            var endDate = "{{ eDate }}"; // get_eDate_ from django
+            var countdownDate = new Date(endDate).getTime();
+
+            document.getElementById("Test").innerHTML = "2024-03-09T23:06";
+
+            var x = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = countdownDate - now;
+
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+        });
+    </script>
+
 
 {% endblock %}

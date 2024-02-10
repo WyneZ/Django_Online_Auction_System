@@ -142,12 +142,16 @@ def sellItem(request):
     items = Item.objects.all()
 
     if request.method == 'POST':
+        print("145 Doing!!")
         form = SellForm(request.POST, request.FILES)
-        print('Sell:', request.POST['category'], type(request.POST['category']))
+        # print(147, "Test due date", str(request.POST.get('dueDatePicker', False)))
 
         if form.is_valid():
+            print("150 Form is valid!!!!")
             item = form.save()
             item.seller = request.user
+            item.due_date = str(request.POST.get('dueDatePicker', False))
+            print(152, "This is due date", item.due_date)
             item.save()
 
             images = request.FILES.getlist('upload_images')
@@ -156,8 +160,9 @@ def sellItem(request):
                     item=item,
                     image_url=image
                 )
-        category_name = request.POST.get('category')
-        category, start_date = Category.objects.get_or_create(name=category_name)
+
+        else:
+            print("Form is invalid!!")
 
         return redirect('home')
     context = {'form': form}

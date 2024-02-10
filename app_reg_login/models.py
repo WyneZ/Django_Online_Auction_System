@@ -47,7 +47,7 @@ class Item(models.Model):
     highest_price = models.IntegerField(null=True, default=0)
     item_condition = models.CharField(max_length=100, null=True, blank=False)
     start_date = models.DateTimeField(auto_now_add=True)
-    # end_date =
+    due_date = models.CharField(max_length=100, null=True)
 
     class Meta:
         ordering = ['-start_date']
