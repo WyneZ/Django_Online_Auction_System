@@ -50,7 +50,17 @@
         </div>
 
         <div>
-            Recent Activity
+            <h2>Transaction History</h2>
+            <hr>
+            {% for transaction in transactions_history %}
+                <p><b>Coin Amount:</b> {{ transaction.coin_amount }}</p>
+                <p><b>Bought Date:</b> {{ transaction.buying_time }}</p>
+                <p><b>Payment Method:</b> {{ transaction.payment_method }}</p>
+                <p><b>Invoice Image:</b> <img src="{{ transaction.invoice_img.url }}" style="width: 100px; height: 100px"></p>
+                <hr>
+            {% endfor %}
+
+
         </div>
     </div>
 

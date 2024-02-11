@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <form method="POST" action="" enctype="multipart/form-data" >
+            {% csrf_token %}
+{#            {{ form.as_p }}#}
+
+            {% for field in form %}
+                {{ field.label }}
+                {{ field }}
+                <br>
+                <br>
+            {% endfor %}
+
+            <input type="submit" value="Buy"/>
+        </form>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import User, Item, ImageTable
+from .models import User, Item, ImageTable, Transition
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -30,3 +30,9 @@ class ImageForm(ModelForm):
     class Meta:
         model = ImageTable
         fields = ['images']
+
+
+class TransitionForm(ModelForm):
+    class Meta:
+        model = Transition
+        fields = ['coin_amount', 'invoice_no', 'payment_method', 'invoice_img']

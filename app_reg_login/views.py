@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 
-from .forms import MyUserCreationForm, UserForm, SellForm, ImageForm
-from .models import User, Category, Item, ImageTable, Bids
+from .forms import MyUserCreationForm, UserForm, SellForm, ImageForm, TransitionForm
+from .models import User, Category, Item, ImageTable, Bids, Transition
 
 # for login required to enter home
 from django.contrib.auth import authenticate, login, logout
@@ -108,7 +108,14 @@ def profile(request, pk):
     user = User.objects.get(id=pk)
     item_list = user.item_set.all()
     images = ImageTable.objects.all()
+    transactions = Transition.objects.all()
+    transactions_history = []
 
+    for transaction in transactions:
+        if transaction.buyer == user:
+            transactions_history.append(transaction)
+
+    print(118, transactions_history)
     related_dict = create_related_dict(item_list, images)
 
     # auction_history =
@@ -118,7 +125,7 @@ def profile(request, pk):
         user.delete()
         return redirect('home')
 
-    context = {'user': user, 'related_dict': related_dict}
+    context = {'user': user, 'related_dict': related_dict, 'transactions_history': transactions_history}
     return render(request, 'app_reg_login/profile.html', context)
 
 
@@ -266,6 +273,40 @@ def like_item(request, pk):
 
     return redirect('/')
 
+
+@login_required(login_url='login')
+def buying_coin(request):
+    form = TransitionForm
+    buyer = request.user
+    if request.method == "POST":
+        print("Get into Transtion:")
+        form = TransitionForm(request.POST, request.FILES)
+        if form.is_valid():
+            print("TransitionForm is valid")
+            transition = form.save()
+            transition.buyer = buyer
+            transition.save()
+
+            if buyer.coin_amount == 0:
+                buyer.coin_amount = transition.coin_amount
+                print(285, buyer.coin_amount)
+            else:
+                buyer.coin_amount = buyer.coin_amount + transition.coin_amount
+            request.user.save()
+
+            print(f'Buyer: {transition.buyer.name} '
+                  f'Coin Amount: {transition.coin_amount} '
+                  f'Invoice No: {transition.invoice_no} '
+                  f'Payment Method: {transition.payment_method} '
+                  f'Invoice Img: {transition.invoice_img}'
+                  f'Buying Time: {transition.buying_time}')
+
+            return redirect('home')
+        else:
+            messages.error(request, 'An error occurs when buying coin')
+
+    context = {'form': form}
+    return render(request, 'app_reg_login/buying_coin.html', context)
 
 
 

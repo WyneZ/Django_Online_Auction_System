@@ -60,9 +60,15 @@
                     <img width="50px" height="50px" src="{{ request.user.avatar.url }}"/>
                     <p>{{ request.user.name }}</p>
                 </a>
+
                 <a href="{% url 'sell' %}">
                     <p>SELL</p>
                 </a>
+
+                <a href="{% url 'buying_coin' %}">
+                    <p>{{ request.user.coin_amount }} Coins</p>
+                </a>
+
             {% else %}
                 <a href="{% url 'login' %}">
                     <img src="{% static 'images/avatar.svg' %}"/>

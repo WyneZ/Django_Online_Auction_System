@@ -13,6 +13,8 @@ class User(AbstractUser):
 
     avatar = models.ImageField(null=True, default="avatar.svg")
 
+    coin_amount = models.IntegerField(default=0)
+
     # auction_list = models.ManyToManyField(Item, related_name="auction_list", blank=True)
 
     USERNAME_FIELD = 'email'
@@ -72,3 +74,16 @@ class Bids(models.Model):
 
     def __str__(self):
         return self.amount
+
+
+class Transition(models.Model):
+    buyer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    coin_amount = models.IntegerField(default=0)
+    invoice_no = models.CharField(max_length=100, null=False)
+    payment_method = models.CharField(max_length=50, null=False)
+    invoice_img = models.ImageField(null=False)
+    buying_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.invoice_no
+

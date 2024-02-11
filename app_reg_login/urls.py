@@ -25,122 +25,16 @@ urlpatterns = [
     # search
     path('search_item/', views.search_item, name="search_item"),
 
+    # buying coin
+    path('buying_coin/', views.buying_coin, name="buying_coin"),
+
 
 ]
 
 
-
-# In Django, you can implement multiple user login functionality to allow multiple users to log in at the same time. Here's a step-by-step guide on how to achieve this:
 #
-# 1. Install Django:
-#    If you haven't already, you should install Django on your system. You can use pip to install it:
-#
-#    ```
-#    pip install django
-#    ```
-#
-# 2. Create a Django Project and App:
-#    Create a new Django project and app if you haven't already. You can do this using the following commands:
-#
-#    ```
-#    django-admin startproject projectname
-#    cd projectname
-#    python manage.py startapp appname
-#    ```
-#
-# 3. Configure Authentication:
-#    To enable user authentication, make sure you have the necessary settings in your project's `settings.py` file. You need to include the following applications in the `INSTALLED_APPS` list:
-#
-#    ```python
-#    INSTALLED_APPS = [
-#        # ...
-#        'django.contrib.auth',
-#        'django.contrib.contenttypes',
-#        'django.contrib.sessions',
-#        'django.contrib.messages',
-#        'django.contrib.staticfiles',
-#        # ...
-#    ]
-#    ```
-#
-#    You also need to set up the authentication backend by adding the following line to your `settings.py`:
-#
-#    ```python
-#    AUTHENTICATION_BACKENDS = (
-#        'django.contrib.auth.backends.ModelBackend',
-#    )
-#    ```
-#
-# 4. Create User Models:
-#    Django provides a built-in User model, but you can create your own custom user model if you have specific requirements. To create a custom user model, define a model class in your app's `models.py` file and inherit from `AbstractBaseUser` and `PermissionsMixin`. Here's an example of how to create a custom user model:
-#
-#    ```python
-#    from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-#    from django.db import models
-#
-#    class CustomUserManager(BaseUserManager):
-#        def create_user(self, email, password=None, **extra_fields):
-#            if not email:
-#                raise ValueError('The Email field must be set')
-#            email = self.normalize_email(email)
-#            user = self.model(email=email, **extra_fields)
-#            user.set_password(password)
-#            user.save(using=self._db)
-#            return user
-#
-#        def create_superuser(self, email, password=None, **extra_fields):
-#            extra_fields.setdefault('is_staff', True)
-#            extra_fields.setdefault('is_superuser', True)
-#
-#            if extra_fields.get('is_staff') is not True:
-#                raise ValueError('Superuser must have is_staff=True.')
-#            if extra_fields.get('is_superuser') is not True:
-#                raise ValueError('Superuser must have is_superuser=True.')
-#
-#            return self.create_user(email, password, **extra_fields)
-#
-#    class CustomUser(AbstractBaseUser, PermissionsMixin):
-#        email = models.EmailField(unique=True)
-#        # Add any additional fields you need for your user model
-#        is_active = models.BooleanField(default=True)
-#        is_staff = models.BooleanField(default=False)
-#
-#        objects = CustomUserManager()
-#
-#        USERNAME_FIELD = 'email'
-#        REQUIRED_FIELDS = []
-#
-#        def __str__(self):
-#            return self.email
-#    ```
-#
-# 5. Configure Authentication Settings:
-#    In your `settings.py`, specify your custom user model by adding the following line:
-#
-#    ```python
-#    AUTH_USER_MODEL = 'appname.CustomUser'
-#    ```
-#
-#    Replace `'appname'` with the actual name of your app.
-#
-# 6. Create URLs and Views for Login:
-#    Create URLs and views to handle user authentication, such as login, logout, and registration. You can use Django's built-in views or create custom views for these purposes.
-#
-# 7. Create Templates:
-#    Create HTML templates for login, registration, and other authentication-related pages, and use Django's templating engine to render these pages.
-#
-# 8. Test Your Implementation:
-#    Run your development server and test the authentication functionality to ensure that multiple users can log in simultaneously.
-#
-# That's it! You've now set up multiple user login in Django with a custom user model. You can customize the authentication and user management features further to suit your application's needs.
-
-
-
-
-
-
-#
-# Implementing SMS OTP (One-Time Password) authentication in Django involves using a third-party SMS service to send OTP codes to users' mobile numbers. Here's a step-by-step guide on how to add SMS OTP authentication to your Django project:
+# Implementing SMS OTP (One-Time Password) authentication in Django involves using a third-party SMS service
+# to send OTP codes to users' mobile numbers. Here's a step-by-step guide on how to add SMS OTP authentication to your Django project:
 #
 # 1. Choose an SMS Service Provider:
 #    Select an SMS service provider that suits your needs. Some popular choices include Twilio, Nexmo (now Vonage), or Plivo. Sign up for an account with your chosen provider and obtain the necessary API credentials (account SID, token, etc.).
