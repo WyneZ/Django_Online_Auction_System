@@ -87,3 +87,6 @@ class Transition(models.Model):
     def __str__(self):
         return self.invoice_no
 
+
+
+

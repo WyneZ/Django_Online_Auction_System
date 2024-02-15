@@ -48,12 +48,14 @@
 <!--    {{ image_list }}-->
 
         {% for item, image in show_dict.items %}
-            <a href="{% url 'item_detail' item.id %}">
-                <img src="{{ image.url }}" style="width: 200px; height: 200px">
-                <p>{{ item.title }}</p>
-                <p>${{ item.reverse_price }}</p>
-            </a>
-            <hr>
+            {% if item.due_date != "expired" %}
+                <a href="{% url 'item_detail' item.id %}">
+                    <img src="{{ image.url }}" style="width: 200px; height: 200px">
+                    <p>{{ item.title }}</p>
+                    <p>${{ item.reverse_price }}</p>
+                </a>
+                <hr>
+            {% endif %}
         {% endfor %}
 
 {% endblock %}

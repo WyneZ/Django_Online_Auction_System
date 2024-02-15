@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -30,6 +32,21 @@ class MyView(View):
     def get(self, request):
         latest_items = Item.objects.all()
         all_images = ImageTable.objects.all()
+
+        # when item expired
+        for item in latest_items:
+            print("\nid:", item.id)
+            print('Due Date:', item.due_date)
+            now = datetime.now()
+            if item.due_date != "expired":
+                due_date = datetime.strptime(item.due_date, "%Y-%m-%dT%H:%M")
+                # print(42, due_date-now-timedelta(hours=6, minutes=30))
+
+                final_date = due_date-now-timedelta(hours=6, minutes=30)
+                print("Type", type(final_date))
+                if final_date < timedelta(minutes=1):
+                    item.due_date = "expired"
+                    item.save()
 
         # delete image if user account is deleted
         for image in all_images:
@@ -241,15 +258,15 @@ def item_delete(request, pk):
 
 def search_item(request):
     sItem = request.GET.get('sItem') if request.GET.get('sItem') is not None else ''
-    sItem_list = Item.objects.filter(
+
+    sItem_querySet = Item.objects.filter(
         Q(item_name__icontains=sItem) |
         Q(title__icontains=sItem)
     )
+
     image_list = ImageTable.objects.all()
 
-    show_dict = create_related_dict(sItem_list, image_list)
-
-    # context = {'sItem': sItem, 'items': sItem_list, 'image_list': image_dict}
+    show_dict = create_related_dict(sItem_querySet, image_list)
     context = {'sItem': sItem, 'show_dict': show_dict}
     return render(request, 'app_reg_login/search.html', context)
 
@@ -258,8 +275,6 @@ def like_item(request, pk):
     item = Item.objects.get(id=pk)
     liked_users = item.liked_users.all()
     print(248, 'early liked_users>>', liked_users)
-
-    # user = item.liked_users.filter()
 
     if request.method == "POST":
         if request.user in liked_users:
@@ -279,7 +294,7 @@ def buying_coin(request):
     form = TransitionForm
     buyer = request.user
     if request.method == "POST":
-        print("Get into Transtion:")
+        print("Get into Transaction:")
         form = TransitionForm(request.POST, request.FILES)
         if form.is_valid():
             print("TransitionForm is valid")

@@ -31,35 +31,42 @@
 
     <hr>
 
-    Remain Time: <h1><p id="countdown"></p></h1>
+    Remain Time: <h3><p id="countdown"></p></h3>
     <script type="text/javascript">
         $(document).ready(function() {
             // var endDate = "2024-02-11T12:56"
             var endDate = "{{ item.due_date }}";
-            var countdownDate = new Date(endDate).getTime();
 
-            var x = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = countdownDate - now;
+            if (endDate != "expired") {
+                var countdownDate = new Date(endDate).getTime();
 
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                var x = setInterval(function() {
+                    var now = new Date().getTime();
+                    var distance = countdownDate - now;
 
-            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if (distance < 0) {
-                clearInterval(x);
+                    document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("countdown").innerHTML = "EXPIRED";
+                    }
+                }, 1000);
+            }
+            else {
                 document.getElementById("countdown").innerHTML = "EXPIRED";
             }
-        }, 1000);
+
         });
     </script>
 
     <hr>
 
-    <h1>Current Price:{{ item.highest_price }}</h1>
+    <h1>Current Coins:{{ item.highest_price }}</h1>
 
     <hr>
     {% for bid in bids %}
@@ -102,9 +109,9 @@
                 document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
 
-                if (distance < 0) {
+                if (distance < 0 || endDate == "expired") {
                     clearInterval(x);
-                    document.getElementById("countdown").innerHTML = "EXPIRED";
+                    document.getElementById("countdown").innerHTML = {{ item.due_date }};
                 }
             }, 1000);
         });
