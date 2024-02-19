@@ -215,6 +215,12 @@ def item_detail(request, pk):
     participants = item.participants.all()
 
     comments = item.comment_set.all()
+    replies = []
+    for comment in comments:
+        if comment.parent_comment is not None:
+            replies.append(comment)
+            print(221, replies[0].item.title)
+    print(218, type(comments))
     print("167 Auctioneers:", participants, type(participants))
 
     if item.sell_price == 0:
@@ -248,7 +254,7 @@ def item_detail(request, pk):
 
         return redirect('item_detail', pk=item.id)
 
-    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants, 'comments': comments}
+    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants, 'comments': comments, 'replies': replies}
     return render(request, 'app_reg_login/item_details.html', context)
 
 
@@ -374,18 +380,22 @@ def comment_section(request, pk):
         print(372, "Commented Successfully!!!!!!")
         print(375, request.POST.get("comment_text"))
         return redirect('item_detail', pk)
-    context = {}
-    return render(request, 'app_reg_login/item_details.html', context)
+    return render(request, 'app_reg_login/item_details.html')
 
 
 def reply_section(request, comment_id):
     parent_comment = Comment.objects.get(id=comment_id)
     item = parent_comment.item
-    context = {}
     if request.method == "POST":
+        Comment.objects.create(
+            user=request.user,
+            item=item,
+            text=str(request.POST.get('reply_text')),
+            parent_comment=parent_comment
+        )
         return redirect('item_detail', item.id)
 
-    return render(request, 'app_reg_login/item_details.html', context)
+    return render(request, 'app_reg_login/item_details.html')
 
 
 # OTP password

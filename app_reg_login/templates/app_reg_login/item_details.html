@@ -104,13 +104,30 @@
 
     <hr>
     {% for comment in comments %}
-        <a href="{% url 'profile' comment.user.id %}">
-            <img src="{{ comment.user.avatar.url }}" style="width: 50px; height: 50px">
-            <span>@{{ comment.user.username }}</span>
-        </a><br>
-        <span>{{ comment.created_at|timesince }} ago</span><br>
-        <h4>{{ comment.text }}</h4>
+        {% if comment.parent_comment == None %}
+            <a href="{% url 'profile' comment.user.id %}">
+                <img src="{{ comment.user.avatar.url }}" style="width: 50px; height: 50px">
+                <span>@{{ comment.user.username }}</span>
+            </a><br>
+            <span>{{ comment.created_at|timesince }} ago</span><br>
+            <h4>{{ comment.text }}</h4>
+            <h5>This is parent comment: {{ comment.parent_comment }}</h5>
+            {% for reply in replies %}
+                {% if reply.parent_comment == comment %}
+                    <p style="margin-left:50px">Replied from {{ reply.user.username }}</p>
+                    <span style="margin-left:50px">{{ reply.text }}</span>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
 
+
+
+        <form method="POST" action="{% url 'reply_section' comment.id %}">
+            {% csrf_token %}
+            <input type="text" name="reply_text" placeholder="Reply here">
+<!--            <button type="submit"></button>-->
+        </form>
         <hr>
     {% endfor %}
     <hr>
