@@ -5,12 +5,19 @@
     <form method="POST" action="" enctype="multipart/form-data" >
         {% csrf_token %}
         <label>Category</label>
-{#        {{ form.category }}#}
         <select name="category">
-{#            <option selected>Other</option>#}
-            <option>Shoe</option>
-            <option>Book</option>
-            <option>Art</option>
+                <option>Clothing</option>
+                <option>Jewellery</option>
+                <option>Vehicles</option>
+                <option>Wine & Whiskey</option>
+                <option>Luxury & Accessories</option>
+                <option>Books</option>
+                <option>Shoes</option>
+                <option>Electronics Devices</option>
+                <option>Music, Movies & Cameras</option>
+                <option>Art</option>
+                <option>Funitrues</option>
+                <option>Others</option>
         </select>
         <br>
         <br>
@@ -18,25 +25,37 @@
         {{ form.title }}
         <br>
         <br>
-        <label>Name</label>
-        {{ form.item_name }}
-        <br>
-        <br>
         <label>Description</label>
         {{ form.description }}
         <br>
         <br>
-        <label>Images</label>
+        <label>Images(6)</label>
         <input required name="upload_images" type="file" multiple>
         {{ image_form.as_p }}
+        <br>
+        <br>
+        <label>Number of Items</label>
+        {{ form.number_of_items }}
+        <br>
+        <br>
+        <label>Country of Origin</label>
+        {{ form.country_of_origin }}
+        <br>
+            <br>
+        <label>Estimated Period/Era</label>
+        {{ form.estimated_era }}
+        <br>
+        <br>
+        <label>Item's Condition</label>
+        {{ form.item_condition }}
         <br>
         <br>
         <label>Reverse Coin</label>
         {{ form.reverse_price }}
         <br>
         <br>
-        <label>Condition</label>
-        {{ form.item_condition }}
+        <label>Once_Up</label>
+        {{ form.once_up }}
         <br>
         <br>
         End Date: <input type="datetime-local" name="dueDatePicker">

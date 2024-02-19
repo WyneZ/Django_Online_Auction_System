@@ -68,18 +68,26 @@ def signup(request):
     form = MyUserCreationForm()
     if request.method == "POST":
         print("Ok signUp:")
-        form = MyUserCreationForm(request.POST, request.FILES)
+        form = MyUserCreationForm(request.POST)
+        print(72, request.POST)
         if form.is_valid():
+            print(74,form.data.get('username'))
+            mutable_form = form.data.copy()
+            mutable_form['username'] = "WyneZ"
+
+            print(75, mutable_form.get('username'))
             print("Form is valid")
             user = form.save()
-            user.username = user.username.lower()
+            # user = mutable_form
+            # user.username = user.name.lower()
             user.save()
-            print(f'Name: {user.name} '
+            print(f'Name: UserName:{user.username}'
                   f'Email: {user.email} '
                   f'Phone: {user.phone} ')
             login(request, user)
             return redirect('home')
         else:
+            print("SignUp Form failed.")
             messages.error(request, 'An error occurs during signup')
 
     context = {'form': form}
@@ -139,6 +147,11 @@ def profile(request, pk):
 
     if request.method == 'POST':
         logout(request)
+        items = Item.objects.all()
+        for item in items:
+            if item.winner == str(request.user):
+                item.winner = "none"
+                item.save()
         user.delete()
         return redirect('home')
 
@@ -185,6 +198,8 @@ def sellItem(request):
                     image_url=image
                 )
 
+            print(193, str(request.POST.get("category")))
+            print(194, type(request.POST.get("category")))
         else:
             print("Form is invalid!!")
 
@@ -200,20 +215,34 @@ def item_detail(request, pk):
     participants = item.participants.all()
     print("167 Auctioneers:", participants, type(participants))
 
-    if item.highest_price == 0:
-        item.highest_price = item.reverse_price
+    if item.sell_price == 0:
+        item.sell_price = item.reverse_price
+
+    else:
+        # when winner deleted account
+        related_bids_querySet = Bids.objects.filter(item=item)
+        sell_price = related_bids_querySet[0].amount
+        for bid in related_bids_querySet:
+            if bid.amount > sell_price:
+                sell_price = bid.amount
+
+        item.sell_price = sell_price
+        item.save()
+        print("217 This is new sell price:", item.sell_price)
 
     if request.method == "POST":
         amount = int(request.POST.get('amount'))
-        if amount > item.highest_price:
-            item.highest_price = amount
+        if amount >= (item.sell_price+int(item.once_up)):
+            item.sell_price = amount
+            item.winner = str(request.user)
             item.save()
-            bid = Bids.objects.create(
+            Bids.objects.create(
                 bidder=request.user,
                 item=item,
                 amount=int(request.POST.get('amount'))
             )
             item.participants.add(request.user)
+            print("Winner:", item.winner)
 
         return redirect('item_detail', pk=item.id)
 
@@ -271,7 +300,7 @@ def search_item(request):
     return render(request, 'app_reg_login/search.html', context)
 
 
-def like_item(request, pk):
+def like_item(request, pk, page):
     item = Item.objects.get(id=pk)
     liked_users = item.liked_users.all()
     print(248, 'early liked_users>>', liked_users)
@@ -285,6 +314,9 @@ def like_item(request, pk):
             item.like_count = item.like_count + 1
         item.save()
         print(252, item.liked_users.all())
+
+        if page == 'detail':
+            return redirect('item_detail', item.id)
 
     return redirect('/')
 
@@ -324,8 +356,9 @@ def buying_coin(request):
     return render(request, 'app_reg_login/buying_coin.html', context)
 
 
+def trading_coin(request):
+    return 0
 
 
-
-
-
+# OTP password
+# texl rorl pfog xhwe

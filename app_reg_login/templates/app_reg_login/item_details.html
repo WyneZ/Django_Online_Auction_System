@@ -15,12 +15,13 @@
         <img src="{{ image.image_url.url }}" style="width: 100px; height: 100px">
     {% endfor %}
 
-    <p>Name: {{ item.item_name }}</p>
+    <p>Category: {{ item.category }}</p>
     <p>Description: {{ item.description }}</p>
     <p>Condition: {{ item.item_condition }}</p>
     <p>Reverse Price: {{ item.reverse_price }}</p>
-    <p>Start Date: {{ item.start_date }}</p>
+    <p>Start Date: {{ item.post_date }}</p>
     <p>Due Date: {{ item.due_date }}</p>
+    <p>Once Up: {{ item.once_up }}</p>
 
     <h3>Participants</h3>
     <ol>
@@ -66,7 +67,18 @@
 
     <hr>
 
-    <h1>Current Coins:{{ item.highest_price }}</h1>
+    <p>{{ item.like_count }}</p>
+    <form method="POST" action="{% url 'like_item' item.id 'detail' %}">
+        {% csrf_token %}
+        {% if user in item.liked_users.all %}
+        <button style="background-color:blue">Liked</button>
+        {% else %}
+        <button style="background-color:red">Like</button>
+        {% endif %}
+    </form>
+
+    <hr>
+    <h1>Current Coins:{{ item.sell_price }}</h1>
 
     <hr>
     {% for bid in bids %}
@@ -83,39 +95,15 @@
     {% if request.user != item.seller %}
     	<form action="" method="POST">
             {% csrf_token %}
-            <input type="number" name="amount" placeholder="Write your amount here..." />
+            <input type="number" name="amount" placeholder="Enter your amount here..." />
         </form>
     {% endif %}
-
-
-    <script>
-        $(document).ready(function() {
-            // Set the countdown date (replace with your desired date)
-            // var endDate = "2024-02-09T23:06"
-            var endDate = "{{ eDate }}"; // get_eDate_ from django
-            var countdownDate = new Date(endDate).getTime();
-
-            document.getElementById("Test").innerHTML = "2024-03-09T23:06";
-
-            var x = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = countdownDate - now;
-
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-
-                if (distance < 0 || endDate == "expired") {
-                    clearInterval(x);
-                    document.getElementById("countdown").innerHTML = {{ item.due_date }};
-                }
-            }, 1000);
-        });
-    </script>
+    <hr>
+    <h4>This is comment section</h4>
+    <form action="" method="">
+        {% csrf_token %}
+        <input type="text" name="comment" placeholder="Write your review here...">
+    </form>
 
 
 {% endblock %}

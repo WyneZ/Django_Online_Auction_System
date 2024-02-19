@@ -6,16 +6,14 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(unique=True, null=True)
-    # password = models.CharField(max_length=200, null=False)
-    phone = models.CharField(max_length=11)
-    address = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=20)
+    address = models.CharField(max_length=500, null=True)
+    nrc_no = models.CharField(max_length=150, null=True)
     registered_date = models.DateTimeField(auto_now_add=True)
 
     avatar = models.ImageField(null=True, default="avatar.svg")
 
     coin_amount = models.IntegerField(default=0)
-
-    # auction_list = models.ManyToManyField(Item, related_name="auction_list", blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -34,25 +32,27 @@ class Category(models.Model):
 class Item(models.Model):
     seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     participants = models.ManyToManyField(User, related_name='participants', blank=True)
+
     liked_users = models.ManyToManyField(User, related_name='liked_users', blank=True)
     like_count = models.IntegerField(default=0)
-    # category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-
-    title = models.CharField(max_length=100, null=False)
 
     category = models.CharField(max_length=100, null=True)
-
-    item_name = models.CharField(max_length=200, null=False)
+    title = models.CharField(max_length=100, null=False)
+    # item_name = models.CharField(max_length=200, null=False)
     description = models.TextField(null=True, blank=True)
-    # item_image = models.ImageField(null=True, default='avatar.svg')
-    reverse_price = models.IntegerField(null=False)
-    highest_price = models.IntegerField(null=True, default=0)
+    number_of_items = models.IntegerField(default=1, null=True)
+    estimated_era = models.CharField(max_length=20, null=True)
+    country_of_origin = models.CharField(max_length=50, null=True)
     item_condition = models.CharField(max_length=100, null=True, blank=False)
-    start_date = models.DateTimeField(auto_now_add=True)
+    reverse_price = models.IntegerField(null=False)
+    once_up = models.IntegerField(null=False, default=0)
+    sell_price = models.IntegerField(null=True, default=0)
+    post_date = models.DateTimeField(auto_now_add=True)
     due_date = models.CharField(max_length=100, null=True)
+    winner = models.CharField(max_length=50, null=True)
 
     class Meta:
-        ordering = ['-start_date']
+        ordering = ['-post_date']
 
     def __str__(self):
         return self.title
@@ -72,9 +72,6 @@ class Bids(models.Model):
     class Meta:
         ordering = ['-created']
 
-    def __str__(self):
-        return self.amount
-
 
 class Transition(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -87,6 +84,8 @@ class Transition(models.Model):
     def __str__(self):
         return self.invoice_no
 
+
+# class Comment(models.Model):
 
 
 

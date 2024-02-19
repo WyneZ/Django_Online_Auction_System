@@ -40,15 +40,10 @@
 
         <div class="topnav">
             <a id='home_logo' href="{% url 'home' %}">
-                <img src="{% static 'images/icons/auction_logo1.png' %}"/>
+                <img src="{% static 'images/auction_logo1.png' %}"/>
             </a>
 
-            <select>
-                <option value="{% url 'home' %}">Shoes</option>
-                <option value="{% url 'home' %}">Book</option>
-                <option value="{% url 'home' %}">Art</option>
-            </select>
-
+            <h3><a href="categories.html" >Categories</a></h3>
 
             <form action="{% url 'search_item' %}">
                 <input name='sItem' style="height: 50px; width: 300px; font-size: 20px; margin-top: 20px" placeholder="Search for auctions..... ">

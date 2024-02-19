@@ -65,7 +65,7 @@
                     <img src="{{ image.url }}" style="width: 200px; height: 200px">
                     <p>{{ item.title }}</p>
                     <p>${{ item.reverse_price }}</p>
-                    <form method="POST" action="{% url 'like_item' item.id %}">
+                    <form method="POST" action="{% url 'like_item' item.id 'home' %}">
                         {% csrf_token %}
                         {% if user in item.liked_users.all %}
                             <button style="background-color:blue">Liked</button>
