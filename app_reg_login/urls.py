@@ -22,6 +22,12 @@ urlpatterns = [
     # rating
     path('like_item/<str:pk>/<str:page>', views.like_item, name="like_item"),
 
+    # comment section
+    path('comment_section/<str:pk>', views.comment_section, name="comment_section"),
+
+    # reply section
+    path('reply_section/<str:comment_id>', views.reply_section, name="reply_section"),
+
     # search
     path('search_item/', views.search_item, name="search_item"),
 

@@ -76,6 +76,7 @@ class Bids(models.Model):
 class Transition(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     coin_amount = models.IntegerField(default=0)
+    # user_nrc_no = models.CharField(max_length=20, null=False)
     invoice_no = models.CharField(max_length=100, null=False)
     payment_method = models.CharField(max_length=50, null=False)
     invoice_img = models.ImageField(null=False)
@@ -85,7 +86,18 @@ class Transition(models.Model):
         return self.invoice_no
 
 
-# class Comment(models.Model):
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
+    text = models.CharField(max_length=500, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.text
 
 
 

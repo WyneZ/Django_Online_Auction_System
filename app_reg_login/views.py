@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.views import View
 
 from .forms import MyUserCreationForm, UserForm, SellForm, ImageForm, TransitionForm
-from .models import User, Category, Item, ImageTable, Bids, Transition
+from .models import User, Item, ImageTable, Bids, Transition, Comment
 
 # for login required to enter home
 from django.contrib.auth import authenticate, login, logout
@@ -213,6 +213,8 @@ def item_detail(request, pk):
     images = ImageTable.objects.filter(item=item)
     item_bids = item.bids_set.all()
     participants = item.participants.all()
+
+    comments = item.comment_set.all()
     print("167 Auctioneers:", participants, type(participants))
 
     if item.sell_price == 0:
@@ -246,7 +248,7 @@ def item_detail(request, pk):
 
         return redirect('item_detail', pk=item.id)
 
-    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants}
+    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants, 'comments': comments}
     return render(request, 'app_reg_login/item_details.html', context)
 
 
@@ -358,6 +360,32 @@ def buying_coin(request):
 
 def trading_coin(request):
     return 0
+
+
+def comment_section(request, pk):
+    item = Item.objects.get(id=pk)
+    print(365, "This is comment section")
+    if request.method == "POST":
+        Comment.objects.create(
+            user=request.user,
+            item=item,
+            text=str(request.POST.get('comment_text'))
+        )
+        print(372, "Commented Successfully!!!!!!")
+        print(375, request.POST.get("comment_text"))
+        return redirect('item_detail', pk)
+    context = {}
+    return render(request, 'app_reg_login/item_details.html', context)
+
+
+def reply_section(request, comment_id):
+    parent_comment = Comment.objects.get(id=comment_id)
+    item = parent_comment.item
+    context = {}
+    if request.method == "POST":
+        return redirect('item_detail', item.id)
+
+    return render(request, 'app_reg_login/item_details.html', context)
 
 
 # OTP password
