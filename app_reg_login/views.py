@@ -33,19 +33,26 @@ class MyView(View):
         latest_items = Item.objects.all()
         all_images = ImageTable.objects.all()
 
+        ending_dict = ending_soon_items()
+        popular_dict = popular_items()
+
         # when item expired
         for item in latest_items:
-            print("\nid:", item.id)
-            print('Due Date:', item.due_date)
+            # print("\nid:", item.id)
+            # print('Due Date:', item.due_date)
             now = datetime.now()
             if item.due_date != "expired":
                 due_date = datetime.strptime(item.due_date, "%Y-%m-%dT%H:%M")
                 # print(42, due_date-now-timedelta(hours=6, minutes=30))
 
                 final_date = due_date-now-timedelta(hours=6, minutes=30)
-                print("Type", type(final_date))
                 if final_date < timedelta(minutes=1):
+                    print(48, item.title)
                     item.due_date = "expired"
+                    print(50, len(item.participants.all()))
+                    if len(item.participants.all()) > 0:
+                        item.seller.coin_amount = item.seller.coin_amount + item.sell_price
+                        item.seller.save()
                     item.save()
 
         # delete image if user account is deleted
@@ -55,13 +62,29 @@ class MyView(View):
 
         related_dict = create_related_dict(latest_items, all_images)
 
-        context = {'latest_items': latest_items, "all_images": all_images, "related_dict": related_dict, "rUser": request.user}
+        print(68, ending_dict)
+
+        context = {"ending_dict": ending_dict, "latest_dict": related_dict, "popular_dict": popular_dict, "rUser": request.user}
         return render(request, 'app_reg_login/home.html', context)
 
     # this is for Logout button
     def post(self, request):
         logout(request)
         return redirect('login')
+
+
+def ending_soon_items():
+    eItem_querySet = Item.objects.all().order_by('due_date')
+    image_list = ImageTable.objects.all()
+    show_dict = create_related_dict(eItem_querySet, image_list)
+    return show_dict
+
+
+def popular_items():
+    pItem_querySet = Item.objects.all().order_by('-like_count')
+    image_list = ImageTable.objects.all()
+    show_dict = create_related_dict(pItem_querySet, image_list)
+    return show_dict
 
 
 def signup(request):
@@ -117,7 +140,7 @@ def loginUser(request):
             login(request, user)
             return redirect('home')
         else:
-            print('54 Login Error!!')
+            print('123 Login Error!!')
     context = {'page': page}
     return render(request, 'app_reg_login/reg_login.html', context)
 
@@ -213,7 +236,6 @@ def item_detail(request, pk):
     images = ImageTable.objects.filter(item=item)
     item_bids = item.bids_set.all()
     participants = item.participants.all()
-
     comments = item.comment_set.all()
     replies = []
     for comment in comments:
@@ -221,7 +243,6 @@ def item_detail(request, pk):
             replies.append(comment)
             print(221, replies[0].item.title)
     print(218, type(comments))
-    print("167 Auctioneers:", participants, type(participants))
 
     if item.sell_price == 0:
         item.sell_price = item.reverse_price
@@ -239,8 +260,25 @@ def item_detail(request, pk):
         print("217 This is new sell price:", item.sell_price)
 
     if request.method == "POST":
+        user_count = 0
+        for participant in participants:
+            user_count += 1
+            print(252, "uc:", user_count)
+            print(253, "participants:", participants[0])
+
         amount = int(request.POST.get('amount'))
-        if amount >= (item.sell_price+int(item.once_up)):
+        once_up = item.sell_price+int(item.once_up)
+        if (request.user.coin_amount >= amount) and (amount >= once_up):
+
+            # give back coin to second winner
+            if user_count > 1:
+                print(260, "Before:", participants[1].coin_amount)
+                participants[1].coin_amount = participants[1].coin_amount + item.sell_price
+                participants[1].save()
+                print((262, "After:", participants[1].coin_amount))
+
+            request.user.coin_amount = request.user.coin_amount - amount
+            request.user.save()
             item.sell_price = amount
             item.winner = str(request.user)
             item.save()
@@ -296,8 +334,10 @@ def item_delete(request, pk):
 def search_item(request):
     sItem = request.GET.get('sItem') if request.GET.get('sItem') is not None else ''
 
+    print(342, sItem)
+
     sItem_querySet = Item.objects.filter(
-        Q(item_name__icontains=sItem) |
+        # Q(item_name__icontains=sItem) |
         Q(title__icontains=sItem)
     )
 
@@ -364,8 +404,11 @@ def buying_coin(request):
     return render(request, 'app_reg_login/buying_coin.html', context)
 
 
-def trading_coin(request):
+def trading_coin(request, ):
     return 0
+
+
+# def coin_handling(request, participants, )
 
 
 def comment_section(request, pk):

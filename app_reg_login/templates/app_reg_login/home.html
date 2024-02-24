@@ -50,21 +50,16 @@
 
 
     <div class="scrollmenu">
-        <a href="#home">Home</a>
-        <a href="#news">News</a>
-        <a href="#contact">Contact</a>
-    </div>
-    <hr>
-
-    <p>Latest Auction Items</p>
-    <div class="scrollmenu">
-        {% for item, image in related_dict.items %}
+        {% for item, image in ending_dict.items %}
             {% if item.due_date != "expired" %}
 
                 <a href="{% url 'item_detail' item.id %}">
                     <img src="{{ image.url }}" style="width: 200px; height: 200px">
                     <p>{{ item.title }}</p>
                     <p>${{ item.reverse_price }}</p>
+                    {% if item.sell_price > 0 %}
+                        <p>CB: ${{ item.sell_price }}</p>
+                    {% endif %}
                     <form method="POST" action="{% url 'like_item' item.id 'home' %}">
                         {% csrf_token %}
                         {% if user in item.liked_users.all %}
@@ -75,29 +70,83 @@
                     </form>
                     <p>{{ item.like_count }}</p>
 <!--                    <p>End Date: {{ item.due_date }}</p>-->
-                        <p id="{{ request.user }} {{ item.id }}"></p>
-                    <script type="text/javascript">
+                    <p id="{{ request.user }} {{ item.id }} ending"></p>
+                    <script>
                         $(document).ready(function() {
-                            // var endDate = "2024-02-11T12:56"
-                            var endDate = "{{ item.due_date }}";
-                            var countdownDate = new Date(endDate).getTime();
+                        // var endDate = "2024-02-11T12:56"
+                        var endDate = "{{ item.due_date }}";
+                        var countdownDate = new Date(endDate).getTime();
 
-                            var x = setInterval(function() {
-                                var now = new Date().getTime();
-                                var distance = countdownDate - now;
+                        var x = setInterval(function() {
+                            var now = new Date().getTime();
+                            var distance = countdownDate - now;
 
-                                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                                document.getElementById("{{ request.user }} {{ item.id }}").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                            document.getElementById("{{ request.user }} {{ item.id }} ending").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
-                                if (distance < 0) {
-                                    clearInterval(x);
-                                    document.getElementById("{{ request.user }} {{ item.id }}").innerHTML = "EXPIRED";
-                                }
-                            }, 1000);
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("{{ request.user }} {{ item.id }} ending").innerHTML = "EXPIRED";
+                               }
+                           }, 1000);
+                        });
+                    </script>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <hr>
+
+    <p>Latest Auction Items</p>
+    <div class="scrollmenu">
+        {% for item, image in latest_dict.items %}
+            {% if item.due_date != "expired" %}
+
+                <a href="{% url 'item_detail' item.id %}">
+                    <img src="{{ image.url }}" style="width: 200px; height: 200px">
+                    <p>{{ item.title }}</p>
+                    <p>${{ item.reverse_price }}</p>
+                    {% if item.sell_price > 0 %}
+                        <p>CB: ${{ item.sell_price }}</p>
+                    {% endif %}
+                    <form method="POST" action="{% url 'like_item' item.id 'home' %}">
+                        {% csrf_token %}
+                        {% if user in item.liked_users.all %}
+                            <button style="background-color:blue">Liked</button>
+                        {% else %}
+                            <button style="background-color:red">Like</button>
+                        {% endif %}
+                    </form>
+                    <p>{{ item.like_count }}</p>
+<!--                    <p>End Date: {{ item.due_date }}</p>-->
+                    <p id="{{ request.user }} {{ item.id }} latest"></p>
+
+                    <script>
+                        $(document).ready(function() {
+                        // var endDate = "2024-02-11T12:56"
+                        var endDate = "{{ item.due_date }}";
+                        var countdownDate = new Date(endDate).getTime();
+
+                        var x = setInterval(function() {
+                            var now = new Date().getTime();
+                            var distance = countdownDate - now;
+
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                            document.getElementById("{{ request.user }} {{ item.id }} latest").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("{{ request.user }} {{ item.id }} latest").innerHTML = "EXPIRED";
+                               }
+                           }, 1000);
                         });
                     </script>
                 </a>
@@ -107,9 +156,55 @@
     <hr>
     <p>Popular Auction Items</p>
     <div class="scrollmenu">
-        <a href="#home">Home</a>
-        <a href="#news">News</a>
-        <a href="#contact">Contact</a>
+        {% for item, image in popular_dict.items %}
+            {% if item.due_date != "expired" %}
+
+                <a href="{% url 'item_detail' item.id %}">
+                    <img src="{{ image.url }}" style="width: 200px; height: 200px">
+                    <p>{{ item.title }}</p>
+                    <p>${{ item.reverse_price }}</p>
+                    {% if item.sell_price > 0 %}
+                        <p>CB: ${{ item.sell_price }}</p>
+                    {% endif %}
+                    <form method="POST" action="{% url 'like_item' item.id 'home' %}">
+                        {% csrf_token %}
+                        {% if user in item.liked_users.all %}
+                            <button style="background-color:blue">Liked</button>
+                        {% else %}
+                            <button style="background-color:red">Like</button>
+                        {% endif %}
+                    </form>
+                    <p>{{ item.like_count }}</p>
+<!--                    <p>End Date: {{ item.due_date }}</p>-->
+                    <p id="{{ request.user }} {{ item.id }} popular"></p>
+
+                    <script>
+                        $(document).ready(function() {
+                        // var endDate = "2024-02-11T12:56"
+                        var endDate = "{{ item.due_date }}";
+                        var countdownDate = new Date(endDate).getTime();
+
+                        var x = setInterval(function() {
+                            var now = new Date().getTime();
+                            var distance = countdownDate - now;
+
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                            document.getElementById("{{ request.user }} {{ item.id }} popular").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("{{ request.user }} {{ item.id }} popular").innerHTML = "EXPIRED";
+                               }
+                           }, 1000);
+                        });
+                    </script>
+                </a>
+            {% endif %}
+        {% endfor %}
     </div>
     <hr>
 

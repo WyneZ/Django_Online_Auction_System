@@ -3,7 +3,9 @@
 {% block content %}
 
     {% if request.user == item.seller %}
-    	<a href="{% url 'item_edit' item.id %}"><button>Edit</button></a>
+        {% if item.due_date != "expired" %}
+    	    <a href="{% url 'item_edit' item.id %}"><button>Edit</button></a>
+        {% endif %}
     	<a href="{% url 'item_delete' item.id %}"><button style="background-color: red">Delete</button></a>
         <hr>
     {% endif %}
@@ -22,11 +24,13 @@
     <p>Start Date: {{ item.post_date }}</p>
     <p>Due Date: {{ item.due_date }}</p>
     <p>Once Up: {{ item.once_up }}</p>
+    <p>Current Winner: {{ item.winner }}</p>
 
     <h3>Participants</h3>
     <ol>
+        {{ participants }}
         {% for participant in participants %}
-            <li>{{ participant.name }}</li>
+            <li>{{ participant.username }}</li>
         {% endfor %}
     </ol>
 
@@ -92,7 +96,7 @@
     {% endfor %}
     
     <hr>
-    {% if request.user != item.seller %}
+    {% if request.user != item.seller and request.user.email != item.winner %}
     	<form action="" method="POST">
             {% csrf_token %}
             <input type="number" name="amount" placeholder="Enter your amount here..." />
@@ -121,8 +125,6 @@
             {% endfor %}
         {% endif %}
 
-
-
         <form method="POST" action="{% url 'reply_section' comment.id %}">
             {% csrf_token %}
             <input type="text" name="reply_text" placeholder="Reply here">
@@ -131,10 +133,12 @@
         <hr>
     {% endfor %}
     <hr>
-    <form method="POST" action="{% url 'comment_section' item.id %}">
-        {% csrf_token %}
-        <input type="text" name="comment_text" placeholder="Write your review here...">
-    </form>
+    {% if item.due_date != "expired" %}
+        <form method="POST" action="{% url 'comment_section' item.id %}">
+            {% csrf_token %}
+            <input type="text" name="comment_text" placeholder="Write your review here...">
+        </form>
+    {% endif %}
 
 
 {% endblock %}
