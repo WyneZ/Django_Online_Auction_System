@@ -8,14 +8,16 @@ from django.contrib.auth.forms import UserCreationForm
 class MyUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['avatar', 'username', 'email', 'password1', 'password2', 'nrc_no', 'phone', 'address']
+        fields = ['avatar', 'name', 'username', 'email', 'nrc_no', 'phone', 'address', 'password']
+        # fields = ['avatar', 'username', 'email', 'password1', 'password2', 'nrc_no', 'phone', 'address']
         # fields = '__all__'
 
 
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ['avatar', 'name', 'username', 'email', 'phone', 'address']
+        fields = ['avatar', 'name', 'username', 'email', 'nrc_no', 'phone', 'address', 'password']
+        # fields = ['avatar', 'name', 'username', 'email', 'phone', 'address']
 
 
 class SellForm(ModelForm):

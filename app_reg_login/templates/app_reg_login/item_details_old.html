@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user == item.seller %}
+        {% if item.due_date != "expired" %}
+    	    <a href="{% url 'item_edit' item.id %}"><button>Edit</button></a>
+        {% endif %}
+    	<a href="{% url 'item_delete' item.id %}"><button style="background-color: red">Delete</button></a>
+        <hr>
+    {% endif %}
+    <h5>Id: {{ item.id }}</h5>
+    <h1>Seller: {{ item.seller.username }}</h1>
+    <p>Title: {{ item.title }}</p>
+
+    {% for image in images %}
+        <img src="{{ image.image_url.url }}" style="width: 100px; height: 100px">
+    {% endfor %}
+
+    <p>Category: {{ item.category }}</p>
+    <p>Description: {{ item.description }}</p>
+    <p>Condition: {{ item.item_condition }}</p>
+    <p>Reverse Price: {{ item.reverse_price }}</p>
+    <p>Start Date: {{ item.post_date }}</p>
+    <p>Due Date: {{ item.due_date }}</p>
+    <p>Once Up: {{ item.once_up }}</p>
+    <p>Current Winner: {{ item.winner }}</p>
+
+    <h3>Participants</h3>
+    <ol>
+        {{ participants }}
+        {% for participant in participants %}
+            <li>{{ participant.username }}</li>
+        {% endfor %}
+    </ol>
+
+    <hr>
+
+    Remain Time: <h3><p id="countdown"></p></h3>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // var endDate = "2024-02-11T12:56"
+            var endDate = "{{ item.due_date }}";
+
+            if (endDate != "expired") {
+                var countdownDate = new Date(endDate).getTime();
+
+                var x = setInterval(function() {
+                    var now = new Date().getTime();
+                    var distance = countdownDate - now;
+
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("countdown").innerHTML = "EXPIRED";
+                    }
+                }, 1000);
+            }
+            else {
+                document.getElementById("countdown").innerHTML = "EXPIRED";
+            }
+
+        });
+    </script>
+
+    <hr>
+
+    <p>{{ item.like_count }}</p>
+    <form method="POST" action="{% url 'like_item' item.id 'detail' %}">
+        {% csrf_token %}
+        {% if user in item.liked_users.all %}
+        <button style="background-color:blue">Liked</button>
+        {% else %}
+        <button style="background-color:red">Like</button>
+        {% endif %}
+    </form>
+
+    <hr>
+    <h1>Current Coins:{{ item.sell_price }}</h1>
+
+    <hr>
+    {% for bid in bids %}
+        <a href="{% url 'profile' bid.bidder.id %}">
+            <img src="{{ bid.bidder.avatar.url }}" style="width: 50px; height: 50px">
+            <span>@{{ bid.bidder.username }}</span>
+        </a><br>
+        <span>{{ bid.created|timesince }} ago</span><br>
+        <h2>{{ bid.amount }}</h2>
+        <hr>
+    {% endfor %}
+    
+    <hr>
+    {% if request.user != item.seller and request.user.email != item.winner %}
+    	<form action="" method="POST">
+            {% csrf_token %}
+            <input type="number" name="amount" placeholder="Enter your amount here..." />
+        </form>
+    {% endif %}
+    <hr>
+
+    <h4>This is comment section</h4>
+
+    <hr>
+    {% for comment in comments %}
+        {% if comment.parent_comment == None %}
+            <a href="{% url 'profile' comment.user.id %}">
+                <img src="{{ comment.user.avatar.url }}" style="width: 50px; height: 50px">
+                <span>@{{ comment.user.username }}</span>
+            </a><br>
+            <span>{{ comment.created_at|timesince }} ago</span><br>
+            <h4>{{ comment.text }}</h4>
+            <h5>This is parent comment: {{ comment.parent_comment }}</h5>
+            {% for reply in replies %}
+                {% if reply.parent_comment == comment %}
+                    <p style="margin-left:50px">Replied from {{ reply.user.username }}</p>
+                    <span style="margin-left:50px">{{ reply.text }}</span>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'reply_section' comment.id %}">
+            {% csrf_token %}
+            <input type="text" name="reply_text" placeholder="Reply here">
+<!--            <button type="submit"></button>-->
+        </form>
+        <hr>
+    {% endfor %}
+    <hr>
+    {% if item.due_date != "expired" %}
+        <form method="POST" action="{% url 'comment_section' item.id %}">
+            {% csrf_token %}
+            <input type="text" name="comment_text" placeholder="Write your review here...">
+        </form>
+    {% endif %}
+
+
+{% endblock %}

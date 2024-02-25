@@ -1,0 +1,85 @@
+/* Google Fonts - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e3f2fd;
+}
+.input-field {
+  position: relative;
+  height: 50px;
+  width: 350px;
+  margin-top:40px;
+  margin-left: 40px;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.input-field input{
+  height: 100%;
+  width: 100%;
+  border:2px solid transparent;
+  outline: none;
+  border-radius: 6px;
+  padding: 0 35px 0 15px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+}
+input::placeholder {
+  color: #b4b4b4;
+}
+.input-field .email-icon,.see-icon {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 20px;
+	color: #b4b4b4;
+	
+}
+#show{
+	display:none;
+}
+/* sinUP */
+.singup_inputfield{
+	position: relative;
+	height: 50px;
+	width: 100%;
+	margin-bottom:20px;
+	border-radius: 6px;
+	background-color: #fffefe;
+
+  }
+
+  .singup_inputfield input,select{
+	height: 100%;
+	width: 100%;
+	border:1px solid rgb(63, 62, 62);
+	outline: none;
+	border-radius: 6px;
+	padding: 0 30px 0 15px;
+	font-size: 15px;
+	font-weight: 400;
+	color: #000000;
+  }
+  button{
+	height: 50px;
+  }
+  .singup_inputfield .icon{
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 20px;
+	color: #b4b4b4;
+	
+}

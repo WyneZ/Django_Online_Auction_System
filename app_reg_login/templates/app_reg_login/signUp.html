@@ -4,103 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signUp</title>
+    <link rel="stylesheet" type="text/css" href="singIn.css">
     <link rel="stylesheet" type="text/css" href="bs\css\bootstrap.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-3 rounded-4 position-absolute top-50 start-50 translate-middle" style = "width:50rem; background-color: #ccc7aa;">
+    <div class="container shadow p-3 mb-5  rounded position-absolute top-50 start-50 translate-middle" style = "width:50rem;">
         <h1 class="text-center pt-5">Sign Up</h1>
         <form class="row p-5">
+            <!-- *Name -->
             <div class="col-md-6">
-              <label for="validationServer01" class="form-label">First name</label>
-              <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Enter your First name"required>
-              <div class="valid-feedback">
-                Perfect!
+              <label for="validationServer01" class="form-label">Name</label>
+              <div class="singup_inputfield">
+                <input type="text" class="bg-body-" id="name" placeholder="Enter your name"required>
               </div>
             </div>
-            <div class="col-md-6">
-              <label for="validationServer02" class="form-label">Last name</label>
-              <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Enter your Last name" required>
-              <div class="valid-feedback">
-                Perfect!
-              </div>
-            </div>
+
+            <!-- *Email -->
             <div class="col-md-6">
               <label for="validationServerUsername" class="form-label">Email</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Enter your Email"required>
-                <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                  Please choose a username.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label for="validationServer03" class="form-label">Address</label>
-              <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
-              <div id="validationServer03Feedback" class="invalid-feedback">
-                Please provide a valid Address.
-              </div>
-            </div>
-            <div class="col-md-6">
-                <label for="validationServer04" class="form-label">City</label>
-                <input type="text" class="form-control is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
-                <div id="validationServer04Feedback" class="invalid-feedback">
-                  Please provide a valid city.
+              <div class="singup_inputfield">
+                  <input type="email" class="" id="email" placeholder="Enter your email" required>          
+                  <i class="icon fa-regular fa-circle-check"></i>
                 </div>
             </div>
-            
-            <div class="col-md-3">
-              <label for="validationServer05" class="form-label">State</label>
-              <select class="form-select is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-                <option selected disabled value="">Choose...</option>
 
-                <option>Myanmar</option>
-                <option>Cambodia</option>
-                <option>Lao</option>
-            
-              </select>
-              <div id="validationServer05Feedback" class="invalid-feedback">
-                Please select a valid state.
-              </div>
-            </div>
-            <div class="col-md-3">
-              <label for="validationServer06" class="form-label">Zip</label>
-              <input type="text" class="form-control is-invalid" id="validationServer06" aria-describedby="validationServer06Feedback" required>
-              <div id="validationServer06Feedback" class="invalid-feedback">
-                Please provide a valid zip.
-              </div>
-            </div>
+            <!-- *NRC -->
             <div class="col-md-6">
-                <label for="validationServer07" class="form-label">Password</label>
-                <input type="text" class="form-control is-invalid" id="validationServer07" aria-describedby="validationServer7Feedback" required>
-                <div id="validationServer07Feedback" class="invalid-feedback">
-                  Please Your Password.
+              <label for="validationServer08" class="form-label" >NRC.No</label>
+              <div class="singup_inputfield row row-cols-4">
+                <div class="col">
+                  <select class="code_select text-center p-0 me-1 w-100">
+                    <option value="1">၁</option>
+                    <option value="2">၂</option>
+                    <option value="3">၃</option>
+                    <option value="4">၄</option>
+                    <option value="5">၅</option>
+                    <option value="6">၆</option>
+                    <option value="7">၇</option>
+                    <option value="8">၈</option>
+                    <option value="9">၉</option>
+                    <option value="10">၁၀</option>
+                    <option value="11">၁၁</option>
+                    <option value="12">၁၂</option>
+                    <option value="13">၁၃</option>
+                    <option value="14">၁၄</option>
+                  </select>
+
                 </div>
-              </div>
-              <div class="col-md-6">
-                <label for="validationServer08" class="form-label">Comfirm Password</label>
-                <input type="text" class="form-control is-invalid" id="validationServer08" aria-describedby="validationServer08Feedback" required>
-                <div id="validationServer08Feedback" class="invalid-feedback">
-                  Please Comfirm Your Password.
+                  <!-- -------------- -->
+                <div class="col p-0">
+                  <input type="text" class="p-0 w-100">
                 </div>
-              </div>
-            <div class="col-12 mb-lg-3 mt-lg-3" >
-              <div class="form-check">
-                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
-                <label class="form-check-label" for="invalidCheck3">
-                  Agree to terms and conditions
-                </label>
-                <div id="invalidCheck3Feedback" class="invalid-feedback ">
-                  You must agree before submitting.
+                <!-- --------------- -->
+                <div class="col">
+                  <select class="select p-0 me-1">
+                    <option value="1">(နိုင်)</option>
+                    <option value="2">(ဧည့်)</option>
+                    <option value="3">(ပြု)</option>
+                  </select> 
+                </div>
+                <!-- ----------------- -->
+                <div class="col p-0">
+                  <input type="text" class="p-0 w-100 " onkeyup="numberonly(this)" maxlength="6" >    
                 </div>
               </div>
             </div>
-            <div class="col text-center">        
-              <button class="btn btn-dark" type="submit" >Submit</button>
+
+            <!-- *Region -->
+            <div class="col-md-6">
+              <label for="validationServer05" class="form-label">State/Region</label>
+              <div class="singup_inputfield">
+                <select id="state" required>
+                  <option>Choose...</option>
+                  <option value="1">Kachin State</option>
+                  <option value="2">Kayah State</option>
+                  <option value="3">Kayin State</option>
+                  <option value="4">Chin State</option>
+                  <option value="5">Shan State</option>
+                  <option value="6">Mon State</option>
+                  <option value="7">Rakhine State</option>
+                  <option value="8">Yangon Region</option>
+                  <option value="9">Mandalay Region</option>
+                  <option value="10">Ayeyarwady Region</option>
+                  <option value="11">Bago Region</option>
+                  <option value="12">Magwe Region</option>
+                  <option value="13">Sagaing Region</option>
+                  <option value="14">Mandalay Region</option>   
+                </select>            
+              </div>
             </div>
+  
+            <!-- *City -->
+            <div class="col-md-6">
+              <label for="validationServer04" class="form-label">City</label>
+              <div class="singup_inputfield">
+                <input type="text" class="" id="city" placeholder="Enter your city" required>                         
+              </div>
+            </div>   
+            <!-- *PH.NO -->
+            <div class="col-md-6 ">
+              <label for="validationServer08" class="form-label">Ph.No</label>
+              <div class="singup_inputfield input-group flex-nowrap">
+                <span class=" input-group-text bg-body-secondary" id="addon-wrapping">+959</span>
+                <input type="text"  id="phNo"  maxlength="9">
+                <i class="icon fa-regular fa-circle-check"></i>
+              </div>       
+            </div>
+            
+            <!-- *Address -->
+            <div class="col-md-12 me-5">
+              <label for="validationServer03" class="form-label">Address(.No/Street/Quarters/Township)</label>
+              <div class="singup_inputfield">
+                <input type="text" class="" id="address " aria-describedby="validationServer03Feedback" placeholder=".No/Street/Quarters/Township" required>             
+              </div>
+            </div>
+
+            <!-- *Password -->
+            <div class="col-md-6">
+              <label for="validationServer07" >Password</label>
+              <div class="singup_inputfield">
+                <input type="text" id="password" required>               
+                <span id="error" style="font-size:14px;color: rgb(146, 136, 136);">*contain letter,number& special characher*</span>
+              </div>
+            </div>
+             
+            <!-- *Comfirm_Password -->
+            <div class="col-md-6">
+              <label for="validationServer08">Comfirm Password</label>
+              <div class="singup_inputfield">
+                <input type = "text" id="com_pass" required>
+                <i class="icon fa-regular fa-circle-check"></i>
+              </div>
+            </div>
+            
+            <!-- *Button -->
+            <div class="col text-center mt-5">        
+              <button class="btn btn-dark px-5" type="submit">Submit</button>
+            </div>
+
+            <div>      
+              <a  href="signIn.html">Sing In</a>
+          </div> 
           </form>
     </div>
+    <script>
+      const name = document.querySelector("#name");
+      const email = document.querySelector("#email");
+      const address = document.querySelector("#address");
+      const city = document.querySelector("#city");
+      const password = document.querySelector("#password");
+      const com_pass = document.querySelector("#com_pass");
+      const icon = document.querySelectorAll(".icon");
+
+      console.log(icon);
+        
+          email.addEventListener("keyup", () =>{
+            let pattern = /^[a-zA-Z0-9._%+-]+(@gmail.com){1}$/;
+            if(email.value === ""){         
+              return icon[0].style.color = "#b4b4b4";
+            }
+    
+            if(email.value.match(pattern)){       
+               return icon[0].style.color = "#4bb543";  
+            }
+    
+            icon[0].style.color = "#de0611";
+          })
+          // ################# //
+
+          // #######//
+          let phNo = document.getElementById("phNo");
+          let nrcNo = document.getElementById("nrcNo");
+        
+          phNo.addEventListener("keyup", () =>{
+
+            var regex = /[^0-9]/;
+
+            phNo.value = phNo.value.replace(regex,"");
+
+            if(phNo.value === ""){         
+              return icon[1].style.color = "#b4b4b4"; //normal
+            }
+    
+            if(phNo.value.length < 10 && phNo.value.length > 5 ){       
+               return icon[1].style.color = "#4bb543";  //green
+            }
+    
+            icon[1].style.color = "#de0611"; //red
+          })
+
+          function numberonly(nrcNo){
+            var regex = /[^0-9]/;
+            nrcNo.value = nrcNo.value.replace(regex,"");
+          }
+          // ####### //
+          password.addEventListener("keyup", () =>{
+            var pass = password.value;
+            var regularExpression  =  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,15}$/;
+
+            if(pass === ""){
+              return error.style.color = "rgb(146, 136, 136)";
+            }
+
+            if(!regularExpression.test(pass)) {
+            return error.style.color = "rgb(230, 52, 52)";;
+          
+            } 
+              error.style.color = "rgb(55, 128, 7)";  
+            
+          }) 
+          com_pass.addEventListener("keyup", () =>{
+           
+            
+            if(com_pass.value === ""){         
+              return icon[2].style.color = "#b4b4b4"; //normal
+            }
+    
+            if( password.value === com_pass.value){       
+               return icon[2].style.color = "#4bb543";  //green
+            }
+    
+            icon[2].style.color = "#de0611";  
+            
+          })  
+
+
+    </script>
 </body>
 </html>

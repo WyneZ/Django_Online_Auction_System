@@ -65,7 +65,7 @@ class MyView(View):
         print(68, ending_dict)
 
         context = {"ending_dict": ending_dict, "latest_dict": related_dict, "popular_dict": popular_dict, "rUser": request.user}
-        return render(request, 'app_reg_login/home.html', context)
+        return render(request, 'app_reg_login/home_old.html', context)
 
     # this is for Logout button
     def post(self, request):
@@ -88,33 +88,65 @@ def popular_items():
 
 
 def signup(request):
-    form = MyUserCreationForm()
+    # form = MyUserCreationForm()
     if request.method == "POST":
-        print("Ok signUp:")
-        form = MyUserCreationForm(request.POST)
-        print(72, request.POST)
-        if form.is_valid():
-            print(74,form.data.get('username'))
-            mutable_form = form.data.copy()
-            mutable_form['username'] = "WyneZ"
+        print(93, "register section.")
+        username = request.POST.get('name')
+        email = request.POST.get('email')
+        print(96, str(request.POST.get('front')+"/"+request.POST.get('middle_1')+request.POST.get('middle_2')+request.POST.get('back')), type(request.POST.get('middle_2')))
+        nrc_no = request.POST.get('front') + "/" + request.POST.get('middle_1') + request.POST.get('middle_2') + request.POST.get('back')
+        address = request.POST.get('address') + " | " + request.POST.get('city') + " | " + request.POST.get('state')
+        print(99, address)
+        ph_no = request.POST.get('phNo')
+        password = request.POST.get('password')
+        print(101)
+        print(f'name: {username} '
+              f'email: {email} '
+              f'nrc: {nrc_no} '
+              f'address: {address} '
+              f'ph: {ph_no} '
+              f'password: {password}')
 
-            print(75, mutable_form.get('username'))
-            print("Form is valid")
-            user = form.save()
-            # user = mutable_form
-            # user.username = user.name.lower()
-            user.save()
-            print(f'Name: UserName:{user.username}'
-                  f'Email: {user.email} '
-                  f'Phone: {user.phone} ')
-            login(request, user)
-            return redirect('home')
-        else:
-            print("SignUp Form failed.")
-            messages.error(request, 'An error occurs during signup')
+        user = User.objects.create(
+            name=str(username),
+            username=username.strip(' '),
+            user_email=email,
+            nrc_no=nrc_no,
+            address=address,
+            phone=ph_no,
+            password=password
+        )
+        user.email = user.user_email
+        # user.username = username.strip(' ')
+        user.save()
+        print(119, user)
+        login(request, user)
+        return redirect('home')
 
-    context = {'form': form}
-    return render(request, 'app_reg_login/reg_login_old.html', context)
+        # form = MyUserCreationForm(request.POST)
+        # if form.is_valid():
+        #     print(74,form.data.get('username'))
+        #     mutable_form = form.data.copy()
+        #     mutable_form['username'] = "WyneZ"
+        #
+        #     print(75, mutable_form.get('username'))
+        #     print("Form is valid")
+        #     user = form.save()
+        #     # user = mutable_form
+        #     # user.username = user.name.lower()
+        #     user.save()
+        #     print(f'Name: UserName:{user.username}'
+        #           f'Email: {user.email} '
+        #           f'Phone: {user.phone} ')
+        #     login(request, user)
+        #     return redirect('home')
+        # else:
+        #     print("SignUp Form failed.")
+        #     messages.error(request, 'An error occurs during signup')
+
+    # context = {'form': form}
+    context = {}
+    return render(request, 'app_reg_login/reg_login.html', context)
 
 
 def loginUser(request):
@@ -154,6 +186,10 @@ def logoutUser(request):
 @login_required(login_url='login')
 def profile(request, pk):
     user = User.objects.get(id=pk)
+    print(186)
+    user.email = user.user_email
+    user.save()
+    print(188, user.email)
     item_list = user.item_set.all()
     images = ImageTable.objects.all()
     transactions = Transition.objects.all()
@@ -238,10 +274,14 @@ def item_detail(request, pk):
     participants = item.participants.all()
     comments = item.comment_set.all()
     replies = []
+
+    review_count = 0
     for comment in comments:
         if comment.parent_comment is not None:
             replies.append(comment)
             print(221, replies[0].item.title)
+        else:
+            review_count += 1
     print(218, type(comments))
 
     if item.sell_price == 0:
@@ -292,8 +332,13 @@ def item_detail(request, pk):
 
         return redirect('item_detail', pk=item.id)
 
-    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants, 'comments': comments, 'replies': replies}
+    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants, 'comments': comments, 'replies': replies, 'review_count': review_count}
     return render(request, 'app_reg_login/item_details.html', context)
+
+
+def item_bid_btn(request, amount):
+    return render(request)
+
 
 
 def item_edit(request, pk):
@@ -345,7 +390,7 @@ def search_item(request):
 
     show_dict = create_related_dict(sItem_querySet, image_list)
     context = {'sItem': sItem, 'show_dict': show_dict}
-    return render(request, 'app_reg_login/search.html', context)
+    return render(request, 'app_reg_login/search_old.html', context)
 
 
 def like_item(request, pk, page):
@@ -423,7 +468,7 @@ def comment_section(request, pk):
         print(372, "Commented Successfully!!!!!!")
         print(375, request.POST.get("comment_text"))
         return redirect('item_detail', pk)
-    return render(request, 'app_reg_login/item_details.html')
+    return render(request, 'app_reg_login/item_details_old.html')
 
 
 def reply_section(request, comment_id):
@@ -438,7 +483,7 @@ def reply_section(request, comment_id):
         )
         return redirect('item_detail', item.id)
 
-    return render(request, 'app_reg_login/item_details.html')
+    return render(request, 'app_reg_login/item_details_old.html')
 
 
 # OTP password

@@ -1,0 +1,446 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Inclusive+Sans&family=Mate+SC&family=Rubik+Moonrocks&family=Ysabeau+SC:wght@200&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family:'Quattrocento Sans', sans-serif;
+    font-size: large;
+}
+.logo_name{
+    font-size: xx-large;
+    font-family:'Rubik Moonrocks', sans-serif;   
+}
+.logo{
+    width: 40px;
+    height: 40px;
+  }
+.search .btn{
+    position:absolute;
+    border:none;
+}
+.cata{
+    display:none;
+    margin: 0 10px 0 30px;
+}
+.form-control{
+  width: 300px;
+}
+ 
+.header{
+    margin-top:9rem;
+    margin-bottom:50px;
+}
+.notice_board{
+    font-family:'Rubik Moonrocks', sans-serif;
+}
+.cards-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.card{
+    margin: 0 0.5em;
+    box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+    border-radius: 0;
+    border: none;
+}
+.currentBid{
+  font-size: 25px;
+  
+}
+
+/* ? poloularBox */
+
+.polpuimgBox{
+  height:600px;
+  padding:0%;
+
+}
+.polpular_img{
+  height:100%;
+  width:100%;
+
+}
+.adsBox {
+  height: 300px;
+  padding: 0%;
+}
+.ads_img{
+  width: 100%;
+  height: 100%;
+  padding: 0%;
+  border:none;
+  margin:0%;
+  border-radius: 0%;
+  
+}
+
+.coin{
+  border: none;
+}
+
+
+/* * HeatRate */
+
+.img_card{
+    position: relative;
+}
+.rating{
+    position: absolute;
+    top:50%;
+    left:80%; 
+    display: flex;
+    cursor: pointer;
+}
+.rating .rate{
+  background: none;
+  padding:3px 2px;
+  border: 0;
+  
+}
+.rating .rate i{
+    display: block;
+    font-size: 20px;
+    transition: 0.2s ease;
+}
+#reactBefore{
+    display: block;
+}
+#reactAfter{
+    display: block;
+}
+
+.detail_page{
+    height:10rem;
+}
+
+/* *trem */
+.followUs{
+  display: block;
+  font-size: 30px;
+}
+
+.termBox{
+  margin-top:100px;
+}
+.termBox h3{
+  font-family:'Cinzel', serif;
+}
+.explore_ul{
+  line-height:3;
+  padding-bottom: 100px;
+
+}
+.explore_ul a{
+ list-style: none;
+ color: rgb(104, 99, 99);
+ font-size:15px;
+ text-decoration: none;
+
+}
+
+
+/**detail */
+
+.imagebox{
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  padding: 0%;
+  margin: 0%;
+}
+
+.thumbnail{
+  object-fit: cover;
+  max-width: 100px;
+  max-height: 100px;
+  cursor: pointer;
+  margin:1px 0px;
+  opacity: 0.5;
+
+}
+.thumbnail:hover{
+	opacity:1;
+}
+
+.active_thumbnail{
+	opacity: 1;
+  border: 2px solid rgb(166, 168, 166);
+}
+
+.product{
+  width:100px;
+  margin: auto;
+} 
+.detail_title{
+  text-transform: uppercase;
+  font-family:'Cinzel', serif;
+}
+.rateForm{
+  width:80px;
+  cursor: pointer;
+
+}
+.rateForm .rate i{
+  display:block;
+  font-size: 20px;
+  transition: 0.2s ease;
+}
+.content{
+  padding-right:30px;
+}
+.ulList{
+  list-style:none;
+  width:50%;
+  height:300px;
+  padding:0;
+
+}
+.ulList li{
+  width:100%;
+  margin:50px 0px;
+}
+.ulList li>p {
+  text-transform: uppercase;
+  font-size:14px;
+  font-family:'Cinzel', serif;
+ 
+}
+.bidBox p {
+  text-transform: uppercase;
+  font-size:14px;
+  font-family:'Cinzel', serif;
+}
+.review p{
+  font-size:16px;
+  font-weight: bold;
+}
+.review span{
+  font-size:15px;
+  color: rgb(117, 117, 117);
+  font-family:'Cinzel', serif;
+}
+.reply_box{
+  font-size:15px;
+}
+.reply_cmt{
+  margin-top:10px;
+  margin-left:50px;
+}
+
+.reply_cmt p{
+  font-size:15px;
+  font-weight: bold;
+  color: rgb(73, 73, 73);
+}
+.reply_cmt span,a{
+  font-size:15px;
+  color: rgb(117, 117, 117);
+  font-family:'Cinzel', serif;
+}
+
+.cmtBox{
+  width:500px;
+  height:50px;
+  border:2px solid black;
+}
+.sentBtn{
+  border-radius:0%;
+  height: 50px;
+}
+.bidForm{
+  height:100%;
+}
+.colseIn span{
+  font-size: larger;
+}
+.bid{
+  width:30px;
+  height:30px;
+}
+.bidBtn{
+  width: 100px;
+  border-radius: 0%;
+  margin:10px 0;
+}
+.bidInput{
+  height: 50px;
+  margin:20px 0px;
+  padding-left:10px;
+}
+.setBid{
+  padding:0 20px;
+  height: 50px;
+  margin:20px 5px;
+  border-radius: 0%;
+  font-family:'Cinzel', serif;
+}
+.table td{
+font-size: small;
+font-weight:bold;
+ border: none;
+ padding-top:0;
+ padding-bottom:0;
+}
+.bidderHour span{
+  font-size: small;
+  }
+.bidCoin span{
+  font-size: small;
+  
+  }
+.dueDate{
+  color: #595b5e;
+}
+.dueDate span{
+  font-weight: bold;
+  font-size: small;
+}
+.bidForm{
+  position:sticky;
+  top:100px;
+}
+/* ?Searching */
+.img_box{
+  height:300px;
+}
+.search_img{
+  max-height:300px;
+}
+.startBid{
+  color: #595b5e;
+  font-size:15px;
+  font-weight:bold;
+  font-family:'Cinzel', serif;
+}
+.search_detail{
+  width:100%;
+  height:50px;
+}
+/** catagory.*/
+
+.cata-img{
+  height:70%;
+  margin-top:20px;
+  padding-right:15px;
+}
+.cata-img img{
+  height:100%;
+}
+
+.cata_card{
+  height:150px;
+}
+
+
+/**media  */
+@media (max-width:1200px) {
+  .form-control{
+    width:200px;
+  }
+  .logo_name{
+    font-size:25px;
+  }
+  .logo{
+    width: 37px;
+    height: 37px;
+  }
+}
+
+@media (max-width:991px) {
+  * {
+    font-size: small;
+  }
+
+  .form-control{
+    width:150px;
+  }
+  .logo_name{
+    display: none;
+    font-size:20px;
+  }
+  .user{
+    width: 37px;
+    height: 37px;
+  }
+  .polpuimgBox{
+    height:300px;
+  }
+  .adsBox {
+    height: 150px;
+    padding: 0%;
+  }
+  .thumbnail{
+    max-width: 50px;
+    max-height: 50px;
+    
+  }
+  .product{
+    width:50px;
+  } 
+  .coin{
+    width: 20px;
+    height: 20px;
+  }
+  .currentBid{
+    font-size: 20px;
+  }
+  .post-coin{
+    width: 20px;
+    height: 20px;
+  }
+  .count{
+    font-size:medium;
+  }
+  .logo{
+    width: 30px;
+    height: 30px;
+  }
+
+}
+@media (max-width:768px) {
+
+  .form-control{
+    width:120px;
+  }
+  .logo_name{
+    display: none;
+    font-size:20px;
+  }
+  .logo{
+    margin-left:20px;
+  }
+  .user{
+    width: 30px;
+    height: 30px;
+  }
+
+  .noti{
+    width: 20px;
+    height: 20px;
+  }
+  .search_png{
+    width: 20px;
+    height: 20px;
+  }
+  .catago{
+    display: none;
+  }
+  .cata{
+    display: block ;
+  }
+  .coin_num{
+    padding-top:5px;
+  }
+  .thumbnail{
+    max-width: 30px;
+    max-height: 30px;
+    
+  }
+  .product{
+    width:30px;
+  } 
+  .items{
+    font-size: 30px;
+  }
+}
+

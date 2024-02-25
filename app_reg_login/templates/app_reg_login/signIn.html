@@ -3,39 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>signin</title>
-{#    <link rel="stylesheet" type="text/css" href="bs\css\bootstrap.css">#}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <title>Sign In</title>
+    <link rel="stylesheet" type="text/css" href="singIn.css">    <link rel="stylesheet" type="text/css" href="bs\css\bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-3 rounded-4 text-center position-absolute top-50 start-50 translate-middle" style = "width:28rem;background-color: #ccc7aa;">
+    <form class="container shadow p-3 bg-body-tertiary rounded position-absolute top-50 start-50 translate-middle" id="form" style = "width:30rem;">
         <h1 class="text-center pt-5 mb-5">Sign In</h1>
-        <div class="container " style = "width:20rem;">
 
-            <div class="col mb-3">
-              <label for="validationServerUsername" class="form-label">Email</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Enter your Email" required>
-              </div>
-            </div>        
-            <div class="col">
-                <label for="validationServer07" class="form-label">Password</label>
-                <input type="text" class="form-control is-invalid" id="validationServer07" aria-describedby="validationServer7Feedback" placeholder="Enter your Password" required>
-            </div>
-           
-            <div class="col p-5">        
-              <button class="btn btn-dark mx-3" type="submit" >Sign In</button>
-              <a href="signUp.html">
-                  <button class="btn btn-dark" >Sign Up</button>
-              </a>
-            </div>
-          </form>
+        <div class="container text-center">
 
-        </div>
+            <div class="input-field text-center">
+              <input type="text" id="email"  placeholder="name@gmail.com">
+              <i class="email-icon fa-regular fa-envelope"></i>
+            </div>
+    
+            <div class="input-field text-center">
+              <input type="password" id="password"   placeholder="Enter your password">
+              <span class="see-icon" onclick="showhide()">
+                  <i class=" fa-regular fa-eye-slash " id="hide"></i>
+                  <i class=" fa-regular fa-eye" style="color: rgb(0, 0, 0);" id="show" ></i>
+              </span>
+            </div>
+            <span id="error" style="font-size:14px;color: rgb(146, 136, 136);">*contain letter,number& special characher*</span>
        
-    </div>
+            <div class=" text-center mt-5">        
+                <button class="btn btn-dark"  type="submit">Sing In</button>
+            </div>    
+          </div>    
+          <div class="mt-5">      
+              <a  href="signUp.html">create new account</a>
+          </div> 
+   </form>
+    <!-- Script -->
+     <script>
+      
+      const email = document.querySelector("#email");
+      const emailIcon = document.querySelector(".email-icon");
+      var password = document.getElementById('password');      
+      let hide = document.getElementById("hide");
+      let show = document.getElementById("show");
+      let error = document.getElementById("error");
+ 
+      email.addEventListener("keyup", () =>{
+        let pattern = /^[a-zA-Z0-9._%+-]+(@gmail.com){1}$/;
+        if(email.value === ""){
+          emailIcon.classList.replace("fa-circle-check", "fa-envelope");
+          return emailIcon.style.color = "#b4b4b4";
+
+        }
+        if(email.value.match(pattern)){
+          emailIcon.classList.replace("fa-envelope", "fa-circle-check");
+          return emailIcon.style.color = "#4bb543";
+          
+        }
+        emailIcon.classList.replace("fa-circle-check", "fa-envelope");
+        emailIcon.style.color = "#de0611";
+      })
+
+      function showhide(){
+        console.log("hide");
+      
+        if( password.type === "password"){
+          password.type = "text" ;
+          hide.style.display = "none";
+          show.style.display = "block";
+          
+          
+        }else{
+          
+          password.type = 'password';
+          hide.style.display = "block";
+          show.style.display = "none";
+        }
+      
+      }  
+        
+      password.addEventListener("keyup", () =>{
+        var pass = password.value;
+        var regularExpression  =  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,15}$/;
+
+        if(pass === ""){
+          return error.style.color = "rgb(146, 136, 136)";
+        }
+
+        if(!regularExpression.test(pass)) {
+        return error.style.color = "rgb(230, 52, 52)";;
+       
+        } 
+          error.style.color = "rgb(55, 128, 7)";  
+        
+        })  
+
+    </script> 
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
 </body>
 </html>

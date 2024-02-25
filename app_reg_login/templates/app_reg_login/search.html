@@ -1,61 +1,319 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-{% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boot</title>
+    <link rel="stylesheet" type="text/css" href="bs\css\bootstrap.min.css">
+    <link rel="stylesheet"  href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN">
+    
+</head>
+<body>
 
-{% block content %}
+  <nav class="navbar fixed-top"  style="background-color: #ffffff;">
+    
+    <div class="navBar container ps-0">
+      <div class="right m-1 d-flex">
+        <a class="link-dark link-underline-opacity-0 d-flex" href="index.html">
+          <img src="image/bid3.png" alt="Logo" class="logo d-inline-block align-text-top ">
+          <div>
+            <span class=" text logo_name me-3 ms-2">EAGLE Auction</span>
+          </div>
+        </a>
+        <a class="link-dark link-underline-opacity-0 d-flex" href="catagory.html">
+          <div class="catago navbar-text mt-1 pt-2">
+            <span class="text-black">CATAGORIES</span>
+          </div> 
+          <img src="image/cata.png" width="25" height="25" class="cata my-2">
+        </a>
+      </div>   
 
-    <style>
-        div.scrollmenu {
-          overflow: auto;
-          white-space: nowrap;
-        }
+      <div class=" search ">
+        <form class="search d-flex p-auto me-3" role="search">
+          <input class="form-control ms-5 me-3" type="search" placeholder="Search"  aria-label="Search">
+          <button type="button" class="btn">
+            <a href="search.html" >
+              <img class="search_png" src="image/search.svg " style="width:25px;" >
+            </a>          
+          </button>
+        </form>  
+      </div>
 
-        div.scrollmenu a {
-          display: inline-block;
-            color: black;
-            border-color: green;
-            border: solid 4px;
-          text-align: center;
-          padding: 14px;
-          text-decoration: none;
-        }
+      <div class="left d-flex">  
+        <a class="nav-link" href="#">
+         <img src="image/coin (3).png"  width="25" height="25" class="coin my-2">
+       </a>
+       <div class="coin_num my-2 me-4">    
+         <span class="ms-1 fw-bold">100000</span>
+       </div>
+         <img src="image/noti.png" width="23" height="23" class="noti my-2 ">
+        <div>    
+          <span class=" my-2 me-4">1</span>
+        </div>
+        <a class="nav-link me-3" href="signIn.html" >
+          <img class="user"  src="image/user.svg" width="40" height="40" class="user p-0" alt="profile">
+        </a>
+      </div>
+    </div>
+  </nav>
 
-        div.scrollmenu a:hover {
-          background-color: #777;
-        }
-    </style>
+  <!-- *Search Page -->
+    <div class = "container header">
+      <h2 class="search_header my-5  text-uppercase fw-semibold">shoes</h2>
+    </div>
+    <div class="container search_box">
+          <div class="card mb-3">
+              <div class="row g-0 ">
+                <div class="col-md-6 position-relative" style="background-color: #f5f2f2;">
+                    <form type="submit" class="rateForm shadow rounded-pill position-absolute">
+                        <button class="rate btn btn-light border-0 rounded-pill" id="1">
+                          <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                        </button>
+                        <button class="rate btn btn-light border-0 d-none rounded-pill" id="2">
+                          <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                        </button>
+                        <span class="count heart_count">12</span>
+                    </form> 
+                    <a href="detail.html">
+                        <div class="img_box">
+                            <img src="image/113.png" class="search_img img-fluid rounded-start position-absolute top-50 start-50 translate-middle" alt="...">
+                        </div>
+                    </a>
+                </div>
 
-    <h1>{{ sItem }}</h1>
-    <hr>
-<!--    {% for item in items %}-->
-<!--        <div class="scrollmenu">-->
-<!--            -->
-<!--            -->
-<!--            {% for item, image in image_dict.items %}-->
-<!--                <a href="{% url 'item_detail' item.id %}">-->
-<!--                    <img src="{{ image.url }}" style="width: 200px; height: 200px">-->
-<!--                    <p>{{ item.title }}</p>-->
-<!--                    <p>${{ item.reverse_price }}</p>-->
-<!--                </a>-->
-<!--            {% endfor %}-->
-<!--            -->
-<!--            <p>Name: {{ item.item_name }}</p>-->
-<!--            <p>${{ item.price }}</p>-->
-<!--        </div>-->
-<!--        <hr>-->
-<!--    {% endfor %}-->
+                <div class="col-md-6 position-relative">
+                    <a class="link-dark link-underline-opacity-0" href="detail.html">
+                        <div class="card-body">
+                            <h3 class=" card-title ms-2 fw-semibold">Card title</h3>
+                            <div class="search_detail overflow-hidden mx-2 position-relative">
+                              This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                            </div>                       
+                            <div class="position-absolute bottom-0 start-0 ms-4 mb-3" >
+                              
+                                <div class="start_bid"> 
+                                    <p class="startBid m-0">STARTING BID</p>
+                                    <img src="image/coin (3).png"  width="30" height="30" class="coin mb-3">
+                                    <span class="fs-3 fw-semibold">200</span>
+                                </div>
+                                <div class="dueDate d-flex">
+                                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                                    <span>Closes:</span>
+                                    <div class="d-flex mx-1">
+                                      <span class="date ">0</span>
+                                      <span>d</span>
+                                    </div>
+                                    <div class="d-flex me-1">
+                                      <span class="month ">february</span>
+                                    </div>
+                                    <div class="d-flex me-1">
+                                      <span class="hour">00:</span>
+                                      <span class="minutes">00</span>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- */Search Page -->
+    <div class="search_box container">
+         <div class="card mb-3">
+             <div class="row g-0 ">
+                <div class="col-md-6 position-relative" style="background-color: #f5f2f2;">
+                    <form type="submit" class="rateForm shadow rounded-pill position-absolute">
+                        <button class="rate btn btn-light border-0 rounded-pill" id="1">
+                          <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                        </button>
+                        <button class="rate btn btn-light border-0 d-none rounded-pill" id="2">
+                          <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                        </button>
+                        <span class="count heart_count">12</span>
+                    </form> 
+                    <a href="detail.html">
+                        <div class="img_box">
+                            <img src="image/113.png" class="search_img img-fluid rounded-start position-absolute top-50 start-50 translate-middle" alt="...">
+                        </div>
+                    </a>
+                </div>
 
-<!--    {{ image_list }}-->
+                <div class="col-md-6 position-relative">
+                    <a class="link-dark link-underline-opacity-0" href="detail.html">
+                        <div class="card-body">
+                            <h3 class="card-title ms-2 fw-semibold">Card title</h3>
+                          
+                            <div class="search_detail overflow-hidden mx-2">
+                              This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                            </div>                               
+                            <div class="position-absolute bottom-0 start-0 ms-4 mb-3" >
+                             
+                                <div class="start_bid"> 
+                                    <p class="startBid m-0">STARTING BID</p>
+                                    <img src="image/coin (3).png"  width="30" height="30" class="coin mb-3">
+                                    <span class="fs-3 fw-semibold">200</span>
+                                </div>
+                                <div class="dueDate d-flex">
+                                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                                    <span>Closes:</span>
+                                    <div class="d-flex mx-1">
+                                      <span class="date ">0</span>
+                                      <span>d</span>
+                                    </div>
+                                    <div class="d-flex me-1">
+                                      <span class="month ">february</span>
+                                    </div>
+                                    <div class="d-flex me-1">
+                                      <span class="hour">00:</span>
+                                      <span class="minutes">00</span>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </a>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>   
 
-        {% for item, image in show_dict.items %}
-            {% if item.due_date != "expired" %}
-                <a href="{% url 'item_detail' item.id %}">
-                    <img src="{{ image.url }}" style="width: 200px; height: 200px">
-                    <p>{{ item.title }}</p>
-                    <p>${{ item.reverse_price }}</p>
-                </a>
-                <hr>
-            {% endif %}
-        {% endfor %}
+<!-- */Search Page -->
+ <!-- */Search Page -->
+ <div class="search_box container">
+  <div class="card mb-3">
+      <div class="row g-0 ">
+         <div class="col-md-6 position-relative" style="background-color: #f5f2f2;">
+             <form type="submit" class="rateForm shadow rounded-pill position-absolute">
+                 <button class="rate btn btn-light border-0 rounded-pill" id="1">
+                   <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                 </button>
+                 <button class="rate btn btn-light border-0 d-none rounded-pill" id="2">
+                   <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                 </button>
+                 <span class="count heart_count">12</span>
+             </form> 
+             <a href="detail.html">
+                 <div class="img_box">
+                     <img src="image/113.png" class="search_img img-fluid rounded-start position-absolute top-50 start-50 translate-middle" alt="...">
+                 </div>
+             </a>
+         </div>
 
-{% endblock %}
+         <div class="col-md-6 position-relative">
+             <a class="link-dark link-underline-opacity-0" href="detail.html">
+                 <div class="card-body">
+                     <h3 class="card-title ms-2 fw-semibold">Card title</h3>
+                   
+                     <div class="search_detail overflow-hidden mx-2">
+                      This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                    </div>   
+                     <div class="position-absolute bottom-0 start-0 ms-4 mb-3" >
+                      
+                         <div class="start_bid"> 
+                             <p class="startBid m-0">STARTING BID</p>
+                             <img src="image/coin (3).png"  width="30" height="30" class="coin mb-3">
+                             <span class="fs-3 fw-semibold">200</span>
+                         </div>
+                         <div class="dueDate d-flex">
+                             <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                             <span>Closes:</span>
+                             <div class="d-flex mx-1">
+                               <span class="date ">0</span>
+                               <span>d</span>
+                             </div>
+                             <div class="d-flex me-1">
+                               <span class="month ">february</span>
+                             </div>
+                             <div class="d-flex me-1">
+                               <span class="hour">00:</span>
+                               <span class="minutes">00</span>
+                             </div>
+                         </div>  
+                     </div>
+                 </div>
+             </a>
+        </div>
+     </div>
+ </div>
+</div>
+</div>   
+
+<!-- */Search Page -->
+ <!-- */Search Page -->
+ <div class="search_box container">
+  <div class="card mb-3">
+      <div class="row g-0 ">
+         <div class="col-md-6 position-relative" style="background-color: #f5f2f2;">
+             <form type="submit" class="rateForm shadow rounded-pill position-absolute">
+                 <button class="rate btn btn-light border-0 rounded-pill" id="1">
+                   <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                 </button>
+                 <button class="rate btn btn-light border-0 d-none rounded-pill" id="2">
+                   <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                 </button>
+                 <span class="count heart_count">12</span>
+             </form> 
+             <a href="detail.html">
+                 <div class="img_box">
+                     <img src="image/113.png" class="search_img img-fluid rounded-start position-absolute top-50 start-50 translate-middle" alt="...">
+                 </div>
+             </a>
+         </div>
+
+         <div class="col-md-6 position-relative">
+             <a class="link-dark link-underline-opacity-0" href="detail.html">
+                 <div class="card-body">
+                     <h3 class="card-title ms-2 fw-semibold">Card title</h3>
+                   
+                     <div class="search_detail overflow-hidden mx-2">
+                      This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                    </div>   
+                     <div class="position-absolute bottom-0 start-0 ms-4 mb-3" >
+                      
+                         <div class="start_bid"> 
+                             <p class="startBid m-0">STARTING BID</p>
+                             <img src="image/coin (3).png"  width="30" height="30" class="coin mb-3">
+                             <span class="fs-3 fw-semibold">200</span>
+                         </div>
+                         <div class="dueDate d-flex">
+                             <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                             <span>Closes:</span>
+                             <div class="d-flex mx-1">
+                               <span class="date ">0</span>
+                               <span>d</span>
+                             </div>
+                             <div class="d-flex me-1">
+                               <span class="month ">february</span>
+                             </div>
+                             <div class="d-flex me-1">
+                               <span class="hour">00:</span>
+                               <span class="minutes">00</span>
+                             </div>
+                         </div>  
+                     </div>
+                 </div>
+             </a>
+        </div>
+     </div>
+ </div>
+</div>
+</div>   
+
+<!-- */Search Page -->
+
+
+
+
+</body>
+<!-- Script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script src="index.js"></script>
+</body>
+
+</html>

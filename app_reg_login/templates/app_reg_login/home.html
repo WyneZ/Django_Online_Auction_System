@@ -1,211 +1,1250 @@
 {% extends 'base.html' %}
 
 {% load static %}
-
 {% block content %}
 
+<!-- Header popular catagory -->
 
+  <div id="catagories" class="header container p-0">
+    <div class="container-fluid row h-auto p-0">
+      <div class="container-fluid col-sm-7 m-0 p-0">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide mt-0 p-0">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5" aria-label="Slide 6"></button>
+          </div>
 
-    {% if request.user.is_authenticated %}
-        <a href="{% url 'profile' request.user.id %}"><button style="margin-top: 10px" >Profile</button></a>
-        <hr>
-        <form method="POST" >
-            {% csrf_token %}
-            <input type="submit" value="Logout" style="background-color: crimson">
-        </form>
-    {% else %}
-        <a href="{% url 'register' %}"><button>Signup</button></a>
-        <a href="{% url 'login' %}"><button>Login</button></a>
-    {% endif %}
-    <hr>
-
-    <img width="300px" height="300px" src="{{ request.user.avatar.url }}" style="border:solid"/>
-    <img width="300px" height="300px" src="{{ request.user.avatar.url }}" style="border:solid"/>
-    <img width="300px" height="300px" src="{{ request.user.avatar.url }}" style="border:solid"/>
-    <img width="300px" height="300px" src="{{ request.user.avatar.url }}" style="border:solid"/>
-
-
-    <hr>
-    <p>Ending Soon Items</p>
-    <style>
-        div.scrollmenu {
-          overflow: auto;
-          white-space: nowrap;
-        }
-
-        div.scrollmenu a {
-          display: inline-block;
-            color: black;
-            border-color: green;
-            border: solid 4px;
-          text-align: center;
-          padding: 14px;
-          text-decoration: none;
-        }
-
-        div.scrollmenu a:hover {
-          background-color: #777;
-        }
-    </style>
-
-
-    <div class="scrollmenu">
-        {% for item, image in ending_dict.items %}
-            {% if item.due_date != "expired" %}
-
-                <a href="{% url 'item_detail' item.id %}">
-                    <img src="{{ image.url }}" style="width: 200px; height: 200px">
-                    <p>{{ item.title }}</p>
-                    <p>${{ item.reverse_price }}</p>
-                    {% if item.sell_price > 0 %}
-                        <p>CB: ${{ item.sell_price }}</p>
-                    {% endif %}
-                    <form method="POST" action="{% url 'like_item' item.id 'home' %}">
-                        {% csrf_token %}
-                        {% if user in item.liked_users.all %}
-                            <button style="background-color:blue">Liked</button>
-                        {% else %}
-                            <button style="background-color:red">Like</button>
-                        {% endif %}
-                    </form>
-                    <p>{{ item.like_count }}</p>
-<!--                    <p>End Date: {{ item.due_date }}</p>-->
-                    <p id="{{ request.user }} {{ item.id }} ending"></p>
-                    <script>
-                        $(document).ready(function() {
-                        // var endDate = "2024-02-11T12:56"
-                        var endDate = "{{ item.due_date }}";
-                        var countdownDate = new Date(endDate).getTime();
-
-                        var x = setInterval(function() {
-                            var now = new Date().getTime();
-                            var distance = countdownDate - now;
-
-                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                            document.getElementById("{{ request.user }} {{ item.id }} ending").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-                            if (distance < 0) {
-                                clearInterval(x);
-                                document.getElementById("{{ request.user }} {{ item.id }} ending").innerHTML = "EXPIRED";
-                               }
-                           }, 1000);
-                        });
-                    </script>
+          <div class="carousel-inner">
+            <div class="carousel-item active " data-bs-interval="1000">
+              <div class="row">
+                <div class="polpuimgBox col w-100">
+                  <img src="{% static 'image/art6.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
+                </div>
+                <div class="polpuimgBox col w-100">
+                  <img src="{% static 'image/art3.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
+                </div>
+              </div>
+              <div class="carousel-caption d-none d-md-block bg-gradient  w-auto">
+                <h2 class="fw-semibold text-light">Wine & Whiskey</h2>
+              </div>
+            </div>
+            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
+              <div class="row">
+                <div class="polpuimgBox col w-100">
+                  <img src="{% static 'image/jrl9.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
+                </div>
+                <div class="polpuimgBox col w-100">
+                  <img src="{% static 'image/jel3.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
+                </div>
+              </div>              
+              <div class="carousel-caption d-none d-md-block">
+                <h2 class="fw-semibold text-light">Jewelry</h2>
+              </div>
+            </div>
+            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
+              <div class="row">
+                <div class="polpuimgBox col w-100">
+                  <img src="image/art6.jpg" class="polpular_img img-fluid d-block" alt="...">
+                </div>
+                <div class="polpuimgBox col w-100">
+                  <img src="{% static 'image/art3.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
+                </div>
+              </div>              
+              <div class="carousel-caption d-none d-md-block">
+                <h2 class="fw-semibold">Art</h2>
+              </div>
+            </div>
+            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
+              <img src="{% static 'image/jel0.jpg' %}" class="polpular_img img-fluid d-block w-100" alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                <h2 class="fw-semibold">Accessories</h2>
+              </div>
+            </div>
+            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
+              <img src="{% static 'image/jel0.jpg' %}" class="polpular_img img-fluid d-block w-100" alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                <h2 class="fw-semibold">Electronic</h2>
+              </div>
+            </div>
+            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
+              <img src="image/jel0.jpg" class="polpular_img img-fluid d-block w-100" alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                <h2 class="fw-semibold">Jewelry</h2>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev rounded-circle my-auto" type="button" style="height:5vh; width:5vh; background-color: #9e9e9ea1;" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next rounded-circle my-auto" type="button" style="height:5vh; width:5vh; background-color: #9e9e9ea1;" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="container-fluid col h-auto ps-2 ">
+        <div class=" adsBox container-fluid col-12">
+          <div id="carouselExampleSlidesOnly" class=" carousel slide h-100 pb-2" data-bs-ride="carousel">
+            <div class="carousel-inner h-100 ">
+              <div class="carousel-item active h-100 ">
+                <a href="detail.html">
+                  <img src="image/jel8.jpg" class="ads_img img-fluid img-thumbnail" alt="...">
                 </a>
-            {% endif %}
-        {% endfor %}
+                <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
+                  <p class="notice_board card-text m-0">CURRENT BID</p>
+                  <img src="image/coin (3).png"  width="20" height="20" class="coin mb-1">
+                  <span class="notice_board currentBid">5000</span>
+                </div>
+              </div>
+                <div class=" carousel-item h-100">
+                  <a href="detail.html">
+                    <img src="image/car4.jpg" class="ads_img img-thumbnail border-0" alt="...">
+                  </a>
+                  <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
+                    <p class="notice_board card-text m-0">CURRENT BID</p>
+                    <img src="image/coin (3).png"  width="20" height="20" class="coin mb-1 ">
+                    <span class="notice_board currentBid">5000</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+          <div class="container-fluid h-auto p-0">
+            <div class=" adsBox container-fluid col-12">
+              <div id="carouselExampleSlidesOnly" class=" carousel slide h-100" data-bs-ride="carousel">
+                <div class="carousel-inner h-100">
+                  <div class="carousel-item active h-100">
+                    <a href="detail.html">
+                      <img src="image/shoes3.jpg" class="ads_img img-fluid img-thumbnail" alt="...">
+                    </a>
+                    <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
+                      <p class="notice_board card-text m-0">CURRENT BID</p>
+                      <img src="image/coin (3).png"  width="20" height="20" class="coin mb-1">
+                      <span class="notice_board currentBid">5000</span>
+                    </div>
+                  </div>
+                  <div class="adsBox carousel-item h-100">
+                    <a href="detail.html">
+                      <img src="image/bag1.png" class="ads_img img-thumbnail border-0" alt="...">
+                    </a>
+                    <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
+                      <p class="notice_board card-text m-0">CURRENT BID</p>
+                      <img src="image/coin (3).png"  width="20" height="20" class="coin mb-1">
+                      <span class="notice_board currentBid">5000</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+          </div>
+      </div>
+    </div>  
+  </div>  
+  <!------------------- /popular catagory ---------->
+  
+  <!-- Ending soon -->
+  <div id="ending_soon" class="items container my-5">
+    <div class="text d-flex justify-content-between">
+      <h5 class="text px-3 pb-3 fw-semibold">Ending Soon</h5>
+      <a class="link-secondary link-underline-opacity-0 " href="search.html">
+        <p class="text px-3 pb-3">See More</p>
+      </a>
     </div>
-    <hr>
-
-    <p>Latest Auction Items</p>
-    <div class="scrollmenu">
-        {% for item, image in latest_dict.items %}
-            {% if item.due_date != "expired" %}
-
-                <a href="{% url 'item_detail' item.id %}">
-                    <img src="{{ image.url }}" style="width: 200px; height: 200px">
-                    <p>{{ item.title }}</p>
-                    <p>${{ item.reverse_price }}</p>
-                    {% if item.sell_price > 0 %}
-                        <p>CB: ${{ item.sell_price }}</p>
-                    {% endif %}
-                    <form method="POST" action="{% url 'like_item' item.id 'home' %}">
-                        {% csrf_token %}
-                        {% if user in item.liked_users.all %}
-                            <button style="background-color:blue">Liked</button>
-                        {% else %}
-                            <button style="background-color:red">Like</button>
-                        {% endif %}
-                    </form>
-                    <p>{{ item.like_count }}</p>
-<!--                    <p>End Date: {{ item.due_date }}</p>-->
-                    <p id="{{ request.user }} {{ item.id }} latest"></p>
-
-                    <script>
-                        $(document).ready(function() {
-                        // var endDate = "2024-02-11T12:56"
-                        var endDate = "{{ item.due_date }}";
-                        var countdownDate = new Date(endDate).getTime();
-
-                        var x = setInterval(function() {
-                            var now = new Date().getTime();
-                            var distance = countdownDate - now;
-
-                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                            document.getElementById("{{ request.user }} {{ item.id }} latest").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-                            if (distance < 0) {
-                                clearInterval(x);
-                                document.getElementById("{{ request.user }} {{ item.id }} latest").innerHTML = "EXPIRED";
-                               }
-                           }, 1000);
-                        });
-                    </script>
+    <div id="carouselExample" class="carousel carousel-dark slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="cards-wrapper">
+            <div class="container border border-0 card p-0 mx-2" id="postId">
+              <div class="container card-header border border-0">
+                <a href="detail.html">               
+                  <img src="{% static 'image/17.png' %}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
                 </a>
-            {% endif %}
-        {% endfor %}
+              </div>                    
+              <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  
+              <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container card d-none border border-0 d-md-block p-0 mx-2">
+          </div>
+            <div class="container card d-none border border-0 d-md-block p-0 mx-2">
+            <div class="container card-header border border-0">
+              <a href="detail.html">               
+                <img src="image/13.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+              </a>            
+            </div>                 
+            <div class="img_card card-body">
+              <h5 class="card-title fw-semibold my-2">Title</h5>
+              <p class="startBid card-text my-0 ">Current Bid</p>
+              <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+              <span class="currentBid fw-semibold">5000 </span>
+              <div class="dueDate d-flex mt-2">
+                <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                <span>Closes:</span>
+                <div class="d-flex mx-1">
+                  <span class="date ">0</span>
+                  <span>d</span>
+                </div>
+                <div class="d-flex me-1">
+                  <span class="month ">february</span>
+                </div>
+                <div class="d-flex me-1">
+                  <span class="hour">00:</span>
+                  <span class="minutes">00</span>
+                </div>
+            </div>                  
+            <form class="rating">
+                <button class="rate ms-1" id="1">
+                  <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                </button>
+                <button class="rate" id="2">
+                  <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                </button>
+                <span class="count heart_count" >12</span>
+              </form> 
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="cards-wrapper">
+            <div class="container-sm card border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="{% static 'image/12.png' %}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                  
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/1.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                   
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  
+              <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/15.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                  
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="cards-wrapper">
+            <div class="container-sm card border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/14.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/16.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                  
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/17.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                  
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+          </div>
+        </div>      
+        <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
-    <hr>
-    <p>Popular Auction Items</p>
-    <div class="scrollmenu">
-        {% for item, image in popular_dict.items %}
-            {% if item.due_date != "expired" %}
+  </div>
+  <!---------------- /Ending Soon ------------------->              
 
-                <a href="{% url 'item_detail' item.id %}">
-                    <img src="{{ image.url }}" style="width: 200px; height: 200px">
-                    <p>{{ item.title }}</p>
-                    <p>${{ item.reverse_price }}</p>
-                    {% if item.sell_price > 0 %}
-                        <p>CB: ${{ item.sell_price }}</p>
-                    {% endif %}
-                    <form method="POST" action="{% url 'like_item' item.id 'home' %}">
-                        {% csrf_token %}
-                        {% if user in item.liked_users.all %}
-                            <button style="background-color:blue">Liked</button>
-                        {% else %}
-                            <button style="background-color:red">Like</button>
-                        {% endif %}
-                    </form>
-                    <p>{{ item.like_count }}</p>
-<!--                    <p>End Date: {{ item.due_date }}</p>-->
-                    <p id="{{ request.user }} {{ item.id }} popular"></p>
-
-                    <script>
-                        $(document).ready(function() {
-                        // var endDate = "2024-02-11T12:56"
-                        var endDate = "{{ item.due_date }}";
-                        var countdownDate = new Date(endDate).getTime();
-
-                        var x = setInterval(function() {
-                            var now = new Date().getTime();
-                            var distance = countdownDate - now;
-
-                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                            document.getElementById("{{ request.user }} {{ item.id }} popular").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-                            if (distance < 0) {
-                                clearInterval(x);
-                                document.getElementById("{{ request.user }} {{ item.id }} popular").innerHTML = "EXPIRED";
-                               }
-                           }, 1000);
-                        });
-                    </script>
-                </a>
-            {% endif %}
-        {% endfor %}
+  <!-- Lasted -->
+  <div id="lasted" class="items container">
+    <hr>  
+    <div class="text d-flex justify-content-between">
+      <h5 class="text px-3 pb-3 fw-semibold">Lasted Post</h5>
+      <a class="link-secondary link-underline-opacity-0" href="search.html">
+        <p class="text px-3 pb-3 te">See More</p>
+      </a>
     </div>
-    <hr>
+    <div id="carouselExample1" class="carousel carousel-dark slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="cards-wrapper">
+            <!-- 1 -->
+            <div class="container border border-0 card p-0 mx-2" id="postId">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/10.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                   
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container card d-none border border-0 d-md-block p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/110.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div> 
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container card d-none border border-0 d-md-block p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/2.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="cards-wrapper">
+            <div class="container-sm card border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/3.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                 
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/1.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                  
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/4.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                  
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="cards-wrapper">
+            <div class="container-sm card border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/5.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                  
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/6.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                   
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/1.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+               </div>                 
+               <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+            </div>
+          </div>
+        </div>      
+        <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample1" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample1" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!----------------- /Lasted --------------------------->
+    <!-- Popular -->
+    <div id="popular" class="items container">
+      <hr>  
+      <div class="text d-flex justify-content-between">
+        <h5 class="text px-3 pb-3 fw-semibold">Popular Post</h5>
+        <a class="link-secondary link-underline-opacity-0" href="search.html">
+          <p class="text px-3 pb-3 te">See More</p>
+        </a>
+      </div>
+      <div id="carouselExample2" class="carousel carousel-dark slide">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="cards-wrapper">
+              <!-- 1 -->
+              <div class="container border border-0 card p-0 mx-2" id="postId">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/10.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div>                   
+                 <div class="img_card card-body">
+                  <h5 class="card-title fw-semibold my-2">Title</h5>
+                  <p class="startBid card-text my-0 ">Current Bid</p>
+                  <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                  <span class="currentBid fw-semibold">5000 </span>
+                  <div class="dueDate d-flex mt-2">
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <span>Closes:</span>
+                    <div class="d-flex mx-1">
+                      <span class="date ">0</span>
+                      <span>d</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="month ">february</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="hour">00:</span>
+                      <span class="minutes">00</span>
+                    </div>
+                </div>                  <form class="rating">
+                    <button class="rate ms-1" id="1">
+                      <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                    </button>
+                    <button class="rate" id="2">
+                      <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                    </button>
+                    <span class="count heart_count">12</span>
+                  </form> 
+                </div>
+              </div>
+              <div class="container card d-none border border-0 d-md-block p-0 mx-2">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/110.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div> 
+                 <div class="img_card card-body">
+                  <h5 class="card-title fw-semibold my-2">Title</h5>
+                  <p class="startBid card-text my-0 ">Current Bid</p>
+                  <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                  <span class="currentBid fw-semibold">5000 </span>
+                  <div class="dueDate d-flex mt-2">
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <span>Closes:</span>
+                    <div class="d-flex mx-1">
+                      <span class="date ">0</span>
+                      <span>d</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="month ">february</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="hour">00:</span>
+                      <span class="minutes">00</span>
+                    </div>
+                </div>                  <form class="rating">
+                    <button class="rate ms-1" id="1">
+                      <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                    </button>
+                    <button class="rate" id="2">
+                      <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                    </button>
+                    <span class="count heart_count">12</span>
+                  </form> 
+                </div>
+              </div>
+              <div class="container card d-none border border-0 d-md-block p-0 mx-2">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/2.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div>                
+             <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="cards-wrapper">
+              <div class="container-sm card border border-0 p-0 mx-2">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/3.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div>                 
+             <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+              </div>
+              <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/1.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div>                  
+             <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+              </div>
+              <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/4.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div>                  
+             <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="cards-wrapper">
+              <div class="container-sm card border border-0 p-0 mx-2">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/5.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div>                  
+             <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+              </div>
+              <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/6.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div>                   
+             <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+              </div>
+              <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+                <div class="container-sm card-header border border-0">
+                  <a href="detail.html">               
+                    <img src="image/1.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                  </a>             
+                 </div>                 
+             <div class="img_card card-body">
+                <h5 class="card-title fw-semibold my-2">Title</h5>
+                <p class="startBid card-text my-0 ">Current Bid</p>
+                <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                <span class="currentBid fw-semibold">5000 </span>
+                <div class="dueDate d-flex mt-2">
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <span>Closes:</span>
+                  <div class="d-flex mx-1">
+                    <span class="date ">0</span>
+                    <span>d</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="month ">february</span>
+                  </div>
+                  <div class="d-flex me-1">
+                    <span class="hour">00:</span>
+                    <span class="minutes">00</span>
+                  </div>
+              </div>                  <form class="rating">
+                  <button class="rate ms-1" id="1">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" id="2">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="count heart_count">12</span>
+                </form> 
+              </div>
+              </div>
+            </div>
+          </div>      
+          <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample2" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample2" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!----------------- /Popular --------------------------->
+
+    <!-- -----------Follow us------------- -->
+    <div class="termBox container-fluid bg-body-secondary" style="height: 90px;">
+      <div class="container">
+        <div class="container py-4">
+          <div class=" list-unstyled d-flex justify-content-around m-0">
+            <h3 class="fw-semibold col-2">Follow Us</h3>
+            <i class="followUs fa-brands fa-facebook" style="color: rgb(0, 0, 0);"></i>
+            <i class="followUs fa-brands fa-twitter" style="color: #000000;"></i>
+            <i class="followUs fa-brands fa-instagram" style="color: #000000;"></i>
+            <i class="followUs fa-brands fa-youtube" style="color: #000000;"></i>
+            <i class="followUs fa-brands fa-linkedin" style="color: #000000;"></i>
+          </div>
+      </div>
+    </div>
+    <!-- ------------Trems------------ -->
+      <div class="termBox container d-flex justify-content-between ">
+        <ul class="explore_ul list-unstyled ms-5">
+          <li class="fw-semibold text-black">About Eagle Auction</li>
+          <li><a href="">About Eagle Auction</a></li>
+          <li><a href="">Our Experts</a></li>
+          <li><a href="">Careers</a></li>
+        </ul>
+  
+        <ul class="explore_ul  list-unstyled">
+          <li class="fw-semibold text-black">Buy</a></li>
+          <li><a href="">How to Buy</a></li>
+          <li><a href="">Buyer Protection</a></li>
+          <li><a href="">Buyer terms</a></li>
+        </ul>
+  
+        <ul class="explore_ul  list-unstyled">
+          <li class="fw-semibold text-black">Sell</a></li>
+          <li><a href="">How to Sell</a></li>
+          <li><a href="">Seller Tips</a></li>
+          <li><a href="">Seller terms</a></li>
+        </ul>
+  
+        <ul class="explore_ul  list-unstyled">
+          <li class="fw-semibold text-black">My Eagle</a></li>
+          <li><a href="">Sign in</a></li>
+          <li><a href="">Register</a></li>
+          <li><a href="">Help Centre</a></li>
+        </ul>
+  
+        <hr> 
+      </div>
+</body>
+<!-- Script -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
 {% endblock %}
