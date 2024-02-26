@@ -15,16 +15,6 @@
 
         <div>
             {% if request.user.is_authenticated %}
-                <a href="{% url 'update' %}"><button>Update</button></a>
-                <a href="{% url 'logout' %}"><button>Logout</button></a>
-                <a href="{% url 'sell' %}"><button>SELL</button></a>
-
-                <hr>
-                <form method="POST">
-                    {% csrf_token %}
-                    <input type="submit" value="Delete Account" style="background-color: red">
-                </form>
-                <hr>
 
                 <img width="100px" height="100px" src="{{ user.avatar.url }}">
                 <p>Id: {{ user.id }}</p>
@@ -35,6 +25,17 @@
                 <p>Phone: {{ user.phone }}</p>
                 <p>Address: {{ user.address }}</p>
                 <p>Registered Date: {{ user.registered_date }}</p>
+                <hr>
+
+                <a href="{% url 'update' %}"><button>Update</button></a>
+                <a href="{% url 'logout' %}"><button>Logout</button></a>
+                <a href="{% url 'sell' %}"><button>SELL</button></a>
+
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete Account" style="background-color: red">
+                </form>
                 <hr>
 
                 <div>

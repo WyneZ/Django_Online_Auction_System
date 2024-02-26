@@ -14,18 +14,19 @@
 
     {% if page == 'login' %}
         <body>
-            <form class="container shadow p-3 bg-body-tertiary rounded position-absolute top-50 start-50 translate-middle" id="form" style = "width:30rem;">
+            <form method="POST" class="container shadow p-3 bg-body-tertiary rounded position-absolute top-50 start-50 translate-middle" id="form" style = "width:30rem;">
+                {% csrf_token %}
                 <h1 class="text-center pt-5 mb-5">Sign In</h1>
 
                 <div class="container text-center">
 
                     <div class="input-field text-center">
-                      <input type="text" id="login_email"  placeholder="name@gmail.com">
+                      <input type="text" name="login_email"  placeholder="name@gmail.com">
                       <i class="email-icon fa-regular fa-envelope"></i>
                     </div>
 
                     <div class="input-field text-center">
-                      <input type="password" id="login_password"   placeholder="Enter your password">
+                      <input type="password" name="login_password"   placeholder="Enter your password">
                       <span class="see-icon" onclick="showhide()">
                           <i class=" fa-regular fa-eye-slash " id="hide"></i>
                           <i class=" fa-regular fa-eye" style="color: rgb(0, 0, 0);" id="show" ></i>

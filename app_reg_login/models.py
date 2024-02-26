@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-# Create your models here.
 class User(AbstractUser):
     name = models.CharField(max_length=200, null=True)
     user_email = models.CharField(max_length=100, null=True)
@@ -10,21 +9,23 @@ class User(AbstractUser):
     nrc_no = models.CharField(max_length=150, null=True)
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=500, null=True)
-    password = models.CharField(max_length=100)
+    user_password = models.CharField(max_length=100)
     registered_date = models.DateTimeField(auto_now_add=True)
 
     avatar = models.ImageField(null=True, default="avatar.svg")
 
     coin_amount = models.IntegerField(default=0)
 
-    # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
-    # def __str__(self):
-    #     return self.name
+    # objects = UserManager()
+
+    def __str__(self):
+        return self.name
 
     class Meta:
-        managed = False
+        managed = True
 
 
 class Category(models.Model):

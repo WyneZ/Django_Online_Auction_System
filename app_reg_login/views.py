@@ -23,8 +23,26 @@ def create_related_dict(item_list, image_list):
                 image_dict = {item: image.image_url}
                 related_dict.update(image_dict)
                 break
-
     return related_dict
+
+
+def create_item_list(item_dict):
+    item_list: list = []
+    item_count = 1
+    for item in item_dict:
+        if item_count < 10 and item.due_date != "expired":
+            item_count += 1
+            item_list.append(item)
+        elif item_count == 10:
+            break
+    return item_list
+
+
+def create_img_list(item_list, item_dict):
+    image_list: list = []
+    for item in item_list:
+        image_list.append(item_dict[item])
+    return image_list
 
 
 class MyView(View):
@@ -32,9 +50,6 @@ class MyView(View):
     def get(self, request):
         latest_items = Item.objects.all()
         all_images = ImageTable.objects.all()
-
-        ending_dict = ending_soon_items()
-        popular_dict = popular_items()
 
         # when item expired
         for item in latest_items:
@@ -45,7 +60,7 @@ class MyView(View):
                 due_date = datetime.strptime(item.due_date, "%Y-%m-%dT%H:%M")
                 # print(42, due_date-now-timedelta(hours=6, minutes=30))
 
-                final_date = due_date-now-timedelta(hours=6, minutes=30)
+                final_date = due_date - now - timedelta(hours=6, minutes=30)
                 if final_date < timedelta(minutes=1):
                     print(48, item.title)
                     item.due_date = "expired"
@@ -60,12 +75,27 @@ class MyView(View):
             if image.item.seller is None:
                 image.delete()
 
-        related_dict = create_related_dict(latest_items, all_images)
+        ending_dict = ending_soon_items()
+        ending_list = create_item_list(ending_dict)
+        ending_img_list = create_img_list(ending_list, ending_dict)
 
-        print(68, ending_dict)
+        latest_dict = create_related_dict(latest_items, all_images)
+        latest_list = create_item_list(latest_dict)
+        latest_img_list = create_img_list(latest_list, latest_dict)
 
-        context = {"ending_dict": ending_dict, "latest_dict": related_dict, "popular_dict": popular_dict, "rUser": request.user}
-        return render(request, 'app_reg_login/home_old.html', context)
+        popular_dict = popular_items()
+        popular_list = create_item_list(popular_dict)
+        popular_img_list = create_img_list(popular_list, popular_dict)
+
+        print(98, popular_list)
+        print(99, popular_dict)
+
+        # context = {"ending_dict": ending_dict, "latest_dict": related_dict, "popular_dict": popular_dict, "ending_list": ending_list, "ending_img_list": ending_img_list}
+        context = {"ending_list": ending_list, "ending_img_list": ending_img_list,
+                   "latest_list": latest_list, "latest_img_list": latest_img_list,
+                   "popular_list": popular_list, "popular_img_list": popular_img_list}
+
+        return render(request, 'app_reg_login/home.html', context)
 
     # this is for Logout button
     def post(self, request):
@@ -93,10 +123,9 @@ def signup(request):
         print(93, "register section.")
         username = request.POST.get('name')
         email = request.POST.get('email')
-        print(96, str(request.POST.get('front')+"/"+request.POST.get('middle_1')+request.POST.get('middle_2')+request.POST.get('back')), type(request.POST.get('middle_2')))
-        nrc_no = request.POST.get('front') + "/" + request.POST.get('middle_1') + request.POST.get('middle_2') + request.POST.get('back')
+        nrc_no = request.POST.get('front') + "/" + request.POST.get('middle_1') + request.POST.get(
+            'middle_2') + request.POST.get('back')
         address = request.POST.get('address') + " | " + request.POST.get('city') + " | " + request.POST.get('state')
-        print(99, address)
         ph_no = request.POST.get('phNo')
         password = request.POST.get('password')
         print(101)
@@ -111,15 +140,15 @@ def signup(request):
             name=str(username),
             username=username.strip(' '),
             user_email=email,
+            email=email,
             nrc_no=nrc_no,
             address=address,
             phone=ph_no,
-            password=password
+            password=password,
+            user_password=password,
         )
-        user.email = user.user_email
-        # user.username = username.strip(' ')
         user.save()
-        print(119, user)
+        print("134 DONE REGISTRATION", user)
         login(request, user)
         return redirect('home')
 
@@ -158,14 +187,17 @@ def loginUser(request):
             return redirect('login')
 
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+        email = request.POST['login_email']
+        password = request.POST['login_password']
+        print(f'173, Lemail: {email} | Lpassword: {password}')
+        user = None
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(user_email=email)
+            print(176, user)
         except:
             print("User Not Found!!!")
 
-        user = authenticate(request, email=email, password=password)
+        # user = authenticate(request, email=email, password=password)
         print('authenticated >>', user)
 
         if user is not None:
@@ -215,7 +247,7 @@ def profile(request, pk):
         return redirect('home')
 
     context = {'user': user, 'related_dict': related_dict, 'transactions_history': transactions_history}
-    return render(request, 'app_reg_login/profile.html', context)
+    return render(request, 'app_reg_login/profile_old.html', context)
 
 
 @login_required(login_url='login')
@@ -246,6 +278,7 @@ def sellItem(request):
             print("150 Form is valid!!!!")
             item = form.save()
             item.seller = request.user
+            item.category = str(request.POST.get("category"))
             item.due_date = str(request.POST.get('dueDatePicker', False))
             print(152, "This is due date", item.due_date)
             item.save()
@@ -270,6 +303,7 @@ def sellItem(request):
 def item_detail(request, pk):
     item = Item.objects.get(id=pk)
     images = ImageTable.objects.filter(item=item)
+    print(279, type(images))
     item_bids = item.bids_set.all()
     participants = item.participants.all()
     comments = item.comment_set.all()
@@ -307,9 +341,9 @@ def item_detail(request, pk):
             print(253, "participants:", participants[0])
 
         amount = int(request.POST.get('amount'))
-        once_up = item.sell_price+int(item.once_up)
-        if (request.user.coin_amount >= amount) and (amount >= once_up):
+        once_up = item.sell_price + int(item.once_up)
 
+        if (request.user.coin_amount >= amount) and (amount >= once_up):
             # give back coin to second winner
             if user_count > 1:
                 print(260, "Before:", participants[1].coin_amount)
@@ -332,13 +366,19 @@ def item_detail(request, pk):
 
         return redirect('item_detail', pk=item.id)
 
-    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants, 'comments': comments, 'replies': replies, 'review_count': review_count}
+    related_querySet = Item.objects.filter(category=item.category)
+    related_dict = create_related_dict(related_querySet, ImageTable.objects.all())
+    related_list = create_item_list(related_dict)
+    related_img_list = create_img_list(related_list, related_dict)
+    print(374, related_list)
+
+    context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants, 'comments': comments,
+               'replies': replies, 'review_count': review_count, 'related_list': related_list, 'related_img_list': related_img_list}
     return render(request, 'app_reg_login/item_details.html', context)
 
 
 def item_bid_btn(request, amount):
     return render(request)
-
 
 
 def item_edit(request, pk):
@@ -382,7 +422,6 @@ def search_item(request):
     print(342, sItem)
 
     sItem_querySet = Item.objects.filter(
-        # Q(item_name__icontains=sItem) |
         Q(title__icontains=sItem)
     )
 
@@ -390,7 +429,7 @@ def search_item(request):
 
     show_dict = create_related_dict(sItem_querySet, image_list)
     context = {'sItem': sItem, 'show_dict': show_dict}
-    return render(request, 'app_reg_login/search_old.html', context)
+    return render(request, 'app_reg_login/search.html', context)
 
 
 def like_item(request, pk, page):
@@ -484,7 +523,6 @@ def reply_section(request, comment_id):
         return redirect('item_detail', item.id)
 
     return render(request, 'app_reg_login/item_details_old.html')
-
 
 # OTP password
 # texl rorl pfog xhwe

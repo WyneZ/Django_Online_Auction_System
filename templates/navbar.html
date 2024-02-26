@@ -99,10 +99,10 @@
       </div>
 
       <div class=" search ">
-        <form class="search d-flex p-auto me-3" role="search">
-          <input class="form-control ms-5 me-3" type="search" placeholder="Search"  aria-label="Search">
+        <form action="{% url 'search_item' %}" class="search d-flex p-auto me-3" role="search">
+          <input name="sItem" class="form-control ms-5 me-3" type="search" placeholder="Search"  aria-label="Search">
           <button type="button" class="btn">
-            <a href="search.html" >
+            <a href="{% url 'search_item' %}" >
               <img class="search_png" src="{% static 'image/search.svg' %}" style="width:25px;" >
             </a>
           </button>
