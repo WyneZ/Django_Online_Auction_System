@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bs/css/bootstrap.min.css' %}">
+    <link rel="stylesheet"  href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN">
+    
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+<!-- ..............................-->
+      <div>
+        <div class="container-fluid bg-body-tertiary">
+          <div class="row">
+
+    <!-- //////////// -->
+            <div class="col container-fluid">
+              <div class="side_left">
+
+                <div class="bg-white profile_header d-flex shadow p-3 rounded-top">
+                  <h3 class="py-3 ms-1 m-0">History</h3>
+                </div>        
+                <ul class="nav nav-tabs bg-white rounded-bottom" id="myTab" role="tablist">
+                  <li class=" nav-item" role="presentation">
+                    <a class="nav-link  active text-dark"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bidded</a>
+                  </li>   
+                  <li class="nav-item text-secondary" role="presentation">
+                    <a class="nav-link text-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Win</a>
+                  </li>
+                  <li class="nav-item text-secondary" role="presentation">
+                    <a class="nav-link text-dark" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Coin</a>
+                  </li>             
+                </ul>
+                <div class="overflow-y-scroll tab-content" style="height:650px ;" id="myTabContent">
+
+                  <!-- *******Bidded List**********-->
+                      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                          {% for item,image in bidded_dict.items %}
+                            {% if item.winner != request.user.username %}
+                                <div class="mt-3 search_box">
+                          <div class="card mb-3 mx-0 mx-0">
+                              <div class="row g-0 ">
+                                <div class="col-md-6 position-relative" style="background-color: #f5f2f2;">
+                                    <a href="{% url 'item_detail' item.id %}">
+                                        <div style="height:200px;">
+                                            <img src="{{ image.url }}" style="max-height:200px;" class="search_img img-fluid rounded-start position-absolute top-50 start-50 translate-middle" alt="...">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 position-relative">
+                                    <a class="link-dark link-underline-opacity-0" href="{% url 'item_detail' item.id %}">
+                                        <div class="card-body">
+                                            <h5 class=" history-title ms-2 fw-semibold overflow-hidden">  {{ item.title }}</h5>
+                                            <div class="position-absolute bottom-0 start-0 ms-4 mb-3" >
+
+                                                {% if item.due_date == "expired" %}
+                                                    <div class="start_bid">
+                                                        <p class="startBid m-0">Final Bid</p>
+                                                        <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
+                                                        <span class="fs-5 fw-semibold">{{ item.sell_price }}</span>
+                                                    </div>
+                                                    <div class="dueDate d-flex">
+                                                        <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
+                                                        <span>Bidding Closed</span>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="start_bid">
+                                                        <p class="startBid m-0">Current Bid</p>
+                                                        <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
+                                                        <span class="fs-5 fw-semibold">{{ item.sell_price }}</span>
+                                                    </div>
+                                                    <div class="dueDate d-flex">
+                                                        <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
+                                                        <span>Closes in: </span>
+                                                        <span class="date" id="countdown_{{ item.id }}"></span>
+                                                          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                                          <script>
+                                                              $(document).ready(function() {
+                                                                  // var endDate = "2024-02-11T12:56"
+                                                                  var endDate = "{{ item.due_date }}";
+
+                                                                  if (endDate != "expired") {
+                                                                      var countdownDate = new Date(endDate).getTime();
+
+                                                                      var x = setInterval(function() {
+                                                                          var now = new Date().getTime();
+                                                                          var distance = countdownDate - now;
+
+                                                                          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                                                          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                                          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                                                          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                                                          document.getElementById("countdown_{{ item.id }}").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                                                                          if (distance < 0) {
+                                                                              clearInterval(x);
+                                                                              document.getElementById("countdown_{{ item.id }}").innerHTML = "EXPIRED";
+                                                                          }
+                                                                      }, 1000);
+                                                                  }
+                                                                  else {
+                                                                      document.getElementById("countdown_{{ item.id }}").innerHTML = "EXPIRED";
+                                                                  }
+
+                                                              });
+                                                          </script>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                            {% endif %}
+                          {% endfor %}
+                     </div>
+      
+                  <!-- *******Win List******** -->
+                      <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                      <!-- *Win Item -->
+                          {% for item,image in win_dict.items %}
+                            {% if item.due_date == "expired" %}
+                            <div class="mt-3 search_box">
+                          <div class="card mb-3 mx-0 mx-0">
+                              <div class="row g-0 ">
+                                <div class="col-md-6 position-relative" style="background-color: #f5f2f2;">
+                                    <a href="{% url 'item_detail' item.id %}">
+                                        <div style="height:200px;">
+                                            <img src="{{ image.url }}" style="max-height:200px;" class="search_img img-fluid rounded-start position-absolute top-50 start-50 translate-middle" alt="...">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 position-relative">
+                                    <a class="link-dark link-underline-opacity-0" href="{% url 'item_detail' item.id %}">
+                                        <div class="card-body">
+                                            <h5 class=" history-title ms-2 fw-semibold overflow-hidden">{{ item.title }}</h5>
+                                            <div class="position-absolute bottom-0 start-0 ms-4 mb-3" >
+
+                                                <div class="start_bid">
+                                                    <p class="startBid m-0">Final Bid</p>
+                                                    <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
+                                                    <span class="fs-5 fw-semibold">{{ item.sell_price }}</span>
+                                                </div>
+                                                <div class="dueDate d-flex">
+                                                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
+                                                    <span>Bidding Closed</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                            {% endif %}
+                          {% endfor %}
+                      </div>
+      
+                  <!-- *********Coin History********* -->
+                      <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+      
+                          <!-- ? -->
+                          <div class="coin_history mt-2">
+      
+                          <div class="bg-body-secondary position-relative" style="height:50px;">
+                            <div class="position-absolute top-50 start-0 translate-middle-y ms-3">
+                              <span class="month">February</span>
+                              <span class="year">2024</span>
+                            </div>
+                          </div>
+                          <div class="">
+                            <table class="table text-center">                            
+                              <tbody>
+                                <tr>
+                                  <th scope="row" class=" border-0 text-center">
+                                    <img src="image/coin (3).png"  width="25" height="25" class="coin mb-3">
+                                  </th>
+      
+                                  <td class="text-start" colspan="2">
+                                    <p class="p-0 mt-2 mb-0">Transfer to Coin</p>
+                                    <div class="history_date d-flex">
+                                      <span class="day">18</span>
+                                      <span>/</span>
+                                      <div class="d-flex ms-1">
+                                        <span class="hour">3</span> 
+                                        <span class="hour">:</span>    
+                                        <span class="min">43</span> 
+                                        <span class="hour">:</span> 
+                                        <span class="sec">18</span>  
+                                      </div>
+                                    </div>
+                                  </td>                             
+                                  <td class="text-start">
+                                    <div class="mt-2">
+                                      <span >+</span>
+                                      <img src="image/coin (3).png"  width="20" height="20" class="coin"> 
+                                      <span class="amount">2000</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr >
+                                  <th scope="row" class=" border-0">
+                                    <img src="image/money.png"  width="20" height="20" class="coin mb-3">
+                                  </th>
+                                  <td class="text-start" colspan="2">
+                                    <p class="p-0 mt-2 mb-0">Transfer to Money</p>
+                                    <div class="history_date d-flex">
+                                      <span class="day">18</span>
+                                      <span>/</span>
+                                      <div class="d-flex ms-1">
+                                        <span class="hour">3</span> 
+                                        <span class="hour">:</span>    
+                                        <span class="min">43</span> 
+                                        <span class="hour">:</span> 
+                                        <span class="sec">18</span>  
+                                      </div>
+                                    </div>
+                                  </td>                             
+                                  <td class="text-start"">
+                                    <div class="mt-2">
+                                      <span class="fs-5">-</span>
+                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
+                                      <span class="amount">2000</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" class=" border-0">
+                                    <i class="fa-brands fa-shopify" style="color: #208a0b; font-size:25px;"></i>
+                                  </th>
+                                  <td colspan="2" class="text-start"">
+                                    <p class="p-0 mt-2 mb-0">Shopping</p>
+                                    <div class="history_date d-flex">
+                                      <span class="day">18</span>
+                                      <span>/</span>
+                                      <div class="d-flex ms-1">
+                                        <span class="hour">3</span> 
+                                        <span class="hour">:</span>    
+                                        <span class="min">43</span> 
+                                        <span class="hour">:</span> 
+                                        <span class="sec">18</span>  
+                                      </div>
+                                    </div>
+                                  </td>               
+                                  <td class="text-start"">
+                                    <div class="mt-2">
+                                      <span class="fs-5">-</span>
+                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
+                                      <span class="amount">2000</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>  
+                      <!-- ? -->
+      
+                      <!-- ? -->
+                        <div class="coin_history mt-2">
+      
+                          <div class="bg-body-secondary position-relative" style="height:50px;">
+                            <div class="position-absolute top-50 start-0 translate-middle-y ms-3">
+                              <span class="month">January</span>
+                              <span class="year">2024</span>
+                            </div>
+                          </div>
+                          <div class="">
+                            <table class="table text-center">                            
+                              <tbody>
+                                <tr>
+                                  <th scope="row" class=" border-0 text-center">
+                                    <img src="image/coin (3).png"  width="25" height="25" class="coin mb-3">
+                                  </th>
+      
+                                  <td class="text-start" colspan="2">
+                                    <p class="p-0 mt-2 mb-0">Transfer to Coin</p>
+                                    <div class="history_date d-flex">
+                                      <span class="day">18</span>
+                                      <span>/</span>
+                                      <div class="d-flex ms-1">
+                                        <span class="hour">3</span> 
+                                        <span class="hour">:</span>    
+                                        <span class="min">43</span> 
+                                        <span class="hour">:</span> 
+                                        <span class="sec">18</span>  
+                                      </div>
+                                    </div>
+                                  </td>                             
+                                  <td class="text-start">
+                                    <div class="mt-2">
+                                      <span>+</span>
+                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
+                                      <span class="amount">2000</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr >
+                                  <th scope="row" class=" border-0">
+                                    <img src="image/money.png"  width="20" height="20" class="coin mb-3">
+                                  </th>
+                                  <td class="text-start" colspan="2">
+                                    <p class="p-0 mt-2 mb-0">Transfer to Money</p>
+                                    <div class="history_date d-flex">
+                                      <span class="day">18</span>
+                                      <span>/</span>
+                                      <div class="d-flex ms-1">
+                                        <span class="hour">3</span> 
+                                        <span class="hour">:</span>    
+                                        <span class="min">43</span> 
+                                        <span class="hour">:</span> 
+                                        <span class="sec">18</span>  
+                                      </div>
+                                    </div>
+                                  </td>                             
+                                  <td class="text-start"">
+                                    <div class="mt-2">
+                                      <span class="fs-5">-</span>
+                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
+                                      <span class="amount">2000</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" class=" border-0">
+                                    <i class="fa-brands fa-shopify" style="color: #208a0b; font-size:25px;"></i>
+                                  </th>
+                                  <td colspan="2" class="text-start"">
+                                    <p class="p-0 mt-2 mb-0">Shopping</p>
+                                    <div class="history_date d-flex">
+                                      <span class="day">18</span>
+                                      <span>/</span>
+                                      <div class="d-flex ms-1">
+                                        <span class="hour">3</span> 
+                                        <span class="hour">:</span>    
+                                        <span class="min">43</span> 
+                                        <span class="hour">:</span> 
+                                        <span class="sec">18</span>  
+                                      </div>
+                                    </div>
+                                  </td>               
+                                  <td class="text-start"">
+                                    <div class="mt-2">
+                                      <span class="fs-5">-</span>
+                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
+                                      <span class="amount">2000</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>  
+                      <!--?  -->
+      
+                      </div>
+            <!-- ****************** -->   
+              </div>  
+            </div>
+           </div> 
+
+    <!-- /////////// -->
+            <div class="col-6 container-fluid " > 
+              <nav class="profile_header">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active text-black" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Sell History</button>
+                  <button class="nav-link text-black" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Sell</button> 
+                </div>
+              </nav>
+              <div class="tab-content container" id="nav-tabContent">
+            <!--********* SELL HISTORY *********  -->
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                    {% for item,image in sell_dict.items %}
+                      <div class="mt-3 search_box">
+                        <div class="card mb-3 mx-0 mx-0">
+                            <div class="row g-0 ">
+                              <div class="col-md-6 position-relative" style="background-color: #f5f2f2;">
+                                  <a href="{% url 'item_detail' item.id %}">
+                                      <div style="height:200px;">
+                                          <img src="{{ image.url }}" style="max-height:200px;" class="search_img img-fluid rounded-start position-absolute top-50 start-50 translate-middle" alt="...">
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-md-6 position-relative">
+                                  <a class="link-dark link-underline-opacity-0" href="{% url 'item_detail' item.id %}">
+                                      <div class="card-body">
+                                          <h4 class=" history-title ms-2 fw-semibold overflow-hidden">{{ item.title }}</h4>
+
+                                          {% if item.due_date != "expired" %}
+                                              <div class="position-absolute bottom-0 start-0 ms-4 mb-3" >
+                                                  <div class="start_bid">
+                                                      <p class="startBid m-0">Current Bid</p>
+                                                      <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-3">
+                                                      {% if item.sell_price <= 0 %}
+                                                            <span class="currentBid fw-semibold">{{ item.reverse_price }} </span>
+                                                        {% else %}
+                                                            <span class="currentBid fw-semibold">{{ item.sell_price }} </span>
+                                                        {% endif %}
+                                                  </div>
+                                                  <div class="dueDate d-flex">
+                                                      <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
+                                                      <span>Closes in: </span>
+                                                      <span class="date" id="countdown{{ item.id }}"></span>
+                                                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                                      <script>
+                                                          $(document).ready(function() {
+                                                              // var endDate = "2024-02-11T12:56"
+                                                              var endDate = "{{ item.due_date }}";
+
+                                                              if (endDate != "expired") {
+                                                                  var countdownDate = new Date(endDate).getTime();
+
+                                                                  var x = setInterval(function() {
+                                                                      var now = new Date().getTime();
+                                                                      var distance = countdownDate - now;
+
+                                                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                                                      document.getElementById("countdown{{ item.id }}").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                                                                      if (distance < 0) {
+                                                                          clearInterval(x);
+                                                                          document.getElementById("countdown{{ item.id }}").innerHTML = "EXPIRED";
+                                                                      }
+                                                                  }, 1000);
+                                                              }
+                                                              else {
+                                                                  document.getElementById("countdown{{ item.id }}").innerHTML = "EXPIRED";
+                                                              }
+
+                                                          });
+                                                      </script>
+                                                  </div>
+                                              </div>
+                                          {% else %}
+                                                <div class="position-absolute bottom-0 start-0 ms-4 mb-3" >
+                                                      <div class="start_bid">
+                                                          <p class="startBid m-0">Final Bid</p>
+                                                          <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-3">
+                                                          <span class="currentBid fw-semibold">{{ item.sell_price }} </span>
+                                                      </div>
+                                                      <div class="dueDate d-flex">
+                                                          <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
+                                                          <span>Bidding Closed</span>
+                                                      </div>
+                                                  </div>
+                                          {% endif %}
+                                      </div>
+                                  </a>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                </div>
+                
+            <!--********* SELL *********  -->
+                <form method="POST" action="{% url 'sell' %}" enctype="multipart/form-data" class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+              <!-- ? -->
+                    {% csrf_token %}
+                    <div class="position-relative my-3 container-fluid" style="height:50px;">
+                        <button type="submit" class="btn bg-dark shadow text-white position-absolute top-0 end-0">Sell Items</button>
+                    </div>
+                    <div class="gap-1 mt-4 row container">
+                      <label  for="addPost">
+                        <i class="fa-regular fa-images" style="color: #000000;"></i>
+                        <span>Select multiple</span>
+                      </label>
+                      <div class="col rounded p-0">
+                        <div class="container-fluid position-relative" style="height: 200px;">
+                          <input class="d-none" type="file" multiple accept="image/jpg, image/png, image/jpeg" id="single_post1" >   
+                          <label  for="single_post1">
+                            <img src="{% static 'image/sellphoto.jpg' %}" name="img1" id="sell_image" style="height: 100%;" class="img-fluid position-absolute top-50 start-50 translate-middle" alt="...">
+                          </label>                     
+                         </div>
+                      </div> 
+                      <div class="col rounded p-0" >
+                        <div class="container-fluid position-relative" style="height: 200px;">
+                          <input class="d-none" type="file" multiple accept="image/jpg, image/png, image/jpeg" id="single_post2" >   
+                          <label  for="single_post2">
+                            <img src="{% static 'image/sellphoto.jpg' %}" id="sell_image" style="height: 100%;;" class="img-fluid position-absolute top-50 start-50 translate-middle" alt="...">
+                          </label>                      
+                        </div>                   
+                       </div> 
+                      <div class="col rounded p-0" >
+                        <div class="container-fluid position-relative" style="height: 200px;">
+                          <input class="d-none" type="file" multiple accept="image/jpg, image/png, image/jpeg" id="single_post3" >   
+                          <label  for="single_post3">
+                            <img src="{% static 'image/sellphoto.jpg' %}" id="sell_image" style="height: 100%;;" class="img-fluid position-absolute top-50 start-50 translate-middle" alt="...">
+                          </label>                    
+                        </div>                    
+                      </div> 
+                    </div>     
+                  <!--///  -->
+                    <div class="gap-1 mt-1 row container">
+  
+                      <div class="col rounded p-0" >
+                        <div class="container-fluid position-relative" style="height: 200px;">
+                          <input class="d-none" type="file" multiple accept="image/jpg, image/png, image/jpeg" id="single_post4" >   
+                          <label  for="single_post4">
+                            <img src="{% static 'image/sellphoto.jpg' %}" id="sell_image" style="height: 100%;;" class="img-fluid position-absolute top-50 start-50 translate-middle" alt="...">
+                          </label>
+                        </div>                    
+                      </div> 
+                      <div class="col rounded p-0" >
+                        <div class="container-fluid position-relative" style="height: 200px;">
+                          <input class="d-none" type="file" multiple accept="image/jpg, image/png, image/jpeg" id="single_post5" >   
+                          <label  for="single_post5">
+                            <img src="{% static 'image/sellphoto.jpg' %}" id="sell_image" style="height: 100%;;" class="img-fluid position-absolute top-50 start-50 translate-middle" alt="...">
+                          </label>
+                        </div>                   
+                      </div> 
+                      <div class="col rounded p-0">
+                        <div class="container-fluid position-relative" style="height: 200px;">
+                          <input class="d-none" type="file" multiple accept="image/jpg, image/png, image/jpeg" id="single_post6" >   
+                          <label  for="single_post6">
+                            <img src="{% static 'image/sellphoto.jpg' %}" id="sell_image" style="height: 100%;;" class="img-fluid position-absolute top-50 start-50 translate-middle" alt="...">
+                          </label>                      
+                        </div>                    
+                      </div> 
+                    </div>
+                    <input class="d-none" name="sell_imgs" type="file" multiple accept="image/jpg, image/png, image/jpeg" id="addPost" required>
+
+                     <!--///  -->
+                    <div class="sell_info mt-5">
+                      <div class="container-fluid">
+                        <div class="row my-4">
+                          <div class="col-6">
+                            <label class="form-label fw-semibold">Title</label>
+                            <input name="title" type="text" class="border-0 border-bottom border-black ps-2"  style="width:100%;;height:50px;" required>
+                          </div>
+                          <div class="col-6">
+                            <label class="form-label fw-semibold">Catagory/ Type</label>
+                            <div>
+                              <select name="category" class="border-0 border-bottom border-black ps-2 bg-body" style="width:100%;;height:50px;" required>
+                                <option>Choose Catagory</option>
+                                <option value="Art/Paint">Art/Paint</option>
+                                <option value="Book/Comics/Magazine">Book/Comics/Magazine</option>
+                                <option value="Electronic Devices/Accessories">Electronic Devices/Accessories</option>
+                                <option value="Fashion/Clothings/Bag/Watch">Fashion/Clothings/Bag/Watch</option>
+                                <option value="Furnitures/Decoration<">Furnitures/Decoration</option>
+                                <option value="Jewellery">Jewellery</option>
+                                <option value="Luxury/Accessories/Perfume">Luxury/Accessories/Perfume</option>
+                                <option value="Musical-Art/Camera">Musical-Art/Camera</option>
+                                <option value="Shoes/Footwear">Shoes/Footwear</option>
+                                <option value="Vehicles">Vehicles</option>
+                                <option value="Wine/Whiskey">Wine/Whiskey</option>
+                                <option value="Other">Other</option>
+                              </select>            
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="row my-4">
+                          <div class="col-6">
+                            <label class="form-label fw-semibold">Model/ Name/ Artist</label>
+                            <input name="item_name" type="text" class="border-0 border-bottom border-black ps-2" style="width:100%;height:50px;" required>
+                          </div>
+                          <div class="col-6">
+                            <label class="form-label fw-semibold">Condition</label>
+                            <input name="item_condition" type="text" class="border-0 border-bottom border-black ps-2" style="width:100%;height:50px;" required>
+                          </div>
+                        </div>
+    
+                        <div class="row my-4">
+                          <div class="col-4">
+                            <label class="form-label fw-semibold">Estimated Period/ ERA</label>
+                            <input name="estimated_era" type="text" class="border-0 border-bottom border-black ps-2" style="width:100%;height:50px;" required>
+                          </div>
+                          <div class="col-4">
+                            <label class="form-label fw-semibold">No.of Item</label>
+                            <input name="number_of_items" type="number" class="border-0 border-bottom border-black ps-2" style="width:100%;height:50px;" required>
+                          </div>
+                          <div class="col-4">
+                            <label class="form-label fw-semibold">Country of Origin</label>
+                            <input name="country_of_origin" type="text" class="border-0 border-bottom border-black ps-2" style="width:100%;height:50px;" required>
+                          </div>
+                        </div>
+    
+                        <div class="row my-4">
+                          <div class="col-4">
+                            <label class="form-label fw-semibold">Reverse Coin</label>
+                            <input name="reverse_price" type="number" class="border-0 border-bottom border-black ps-2" style="width:100%;height:50px;" required>
+                          </div>
+                          <div class="col-4">
+                            <label class="form-label fw-semibold">Once-Up Coin</label>
+                            <input name="once_up" type="number" class="border-0 border-bottom border-black ps-2" style="width:100%;height:50px;" required>
+                          </div>
+                          <div class="col-4">
+                            <label class="form-label fw-semibold">Due Date</label>
+                            <input name="dueDatePicker" type="datetime-local"  class="border-0 border-bottom border-black ps-2" style="width:100%;height:50px;" required>
+                          </div>
+                        </div>
+    
+                        <div class="row my-4">
+                          <div class="col-12">
+                            <label class="form-label fw-semibold">Item's Description</label>
+                            <textarea name="description" type="text" class="border-black p-2" style="width:100%;height:100px;" required></textarea>
+                          </div>
+                        </div>
+    
+                      </div>
+                    </div>
+
+                  <!-- ? -->
+                </form>
+            <!-- ******************** -->
+
+              </div>
+            </div>
+            
+
+    <!-- ///////////////// -->
+            <div class="col container-fluid">
+                <form method="POST" action="{% url 'update' user.id %}">
+                    {% csrf_token %}
+              <div class="side_left">
+                <div class="bg-white shadow rounded-top"> 
+                  <div class="text-center profile_header p-5 position-relative">                
+                    <i class="fa fa-edit position-absolute top-0 end-0 p-3 " style="font-size:17px;" id="edit_btn"></i>
+                      <button type="submit">
+                          <i class="fa-solid fa-floppy-disk position-absolute top-0 end-0 p-3" style="color: #000000;" id="save_btn"></i>
+                      </button>
+                    <img  src="{{ user.avatar.url }}"  width="100" height="100px" class="rounded-circle mb-4"
+                    id="profilePic">
+                    <input class="d-none" type="file" accept="image/jpg, image/png, image/jpeg" id="inputFile">
+                    <label  for="inputFile">
+                      <i class="fa-solid fa-camera position-absolute top-50 start-50 translate-middle" id="camera" style="color: #000000;"></i>
+                    </label>
+                    <input type="text" class="fw-semibold text-center mb-4 form-control-plaintext position-absolute bottom-0 start-50 translate-middle-x" style ="max-width:200px;" readonly="true" id="info_input" name="user_username" value="{{ user.name }}">
+                  </div>
+                  <hr class="m-0">
+                </div>
+                <div class="container bg-white shadow rounded">
+<!--                  <div class="py-3 px-3 row ">-->
+<!--                    <label class="col-4 p-0 col-form-label fw-semibold">Name:</label>-->
+<!--                    <div class="col">-->
+<!--                      <input type="text" class="p-0 form-control-plaintext" readonly="true" name="username" id="info_input"  value="{{ user.username }}">-->
+<!--                    </div>-->
+<!--                  </div>-->
+                  <div class="py-3 px-3 row">
+                    <label class="col-4 p-0 col-form-label fw-semibold">NRC.No:</label>
+                    <div class="col">
+                      <input type="text"  class="p-0 form-control-plaintext" readonly="true" name="nrc_no" id="info_input"  value="{{ user.nrc_no }}">
+                    </div>
+                  </div>
+                  <div class="py-3 px-3 row">
+                    <label class="col-4 p-0 col-form-label fw-semibold">Ph.No:</label>
+                    <div class="col">
+                      <input type="text"  class="p-0 form-control-plaintext" readonly="true" name="phone" id="info_input"  value="{{ user.phone }}">
+                    </div>
+                  </div>
+                  <div class="py-3 px-3 row">
+                    <label class="col-4 p-0 col-form-label fw-semibold">Email:</label>
+                    <div class="col">
+                      <input type="text"  class="p-0 form-control-plaintext" readonly="true" name="email" id="info_input"  value="{{ user.user_email }}">
+                    </div>
+                  </div>
+                  <div class="py-3 px-3  row">
+                    <label class="col-4 p-0 col-form-label fw-semibold">Address:</label>
+                    <div class="col">
+                      <input type="text"  class="p-0 text-break form-control-plaintext" readonly="true" style ="width:100%;"  name="address" id="info_input"  value="{{ user.address }}" >
+                    </div>
+                  </div>
+<!--                  <div class="py-3  pe-5 ps-3 row">-->
+<!--                    <label class="col-4 p-0 col-form-label fw-semibold">City:</label>-->
+<!--                    <div class="col">-->
+<!--                      <input type="text"  class="py-0 ps-3 form-control-plaintext" readonly="true"  name="city" value="Yangon">-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div class="py-3  pe-5 ps-3 row">-->
+<!--                    <label class="col-4 p-0 col-form-label fw-semibold">Region:</label>-->
+<!--                    <div class="col">-->
+<!--                      <input type="text"  class="py-0 ps-3 form-control-plaintext" readonly="true"  name="state" value="Yangon">-->
+<!--                    </div>-->
+<!--                  </div>     -->
+                </div>
+                <hr class="m-0">
+                <div class="container p-0 bg-white  shadow rounded">
+                    <a>
+                        <button class="btn w-100 m-0 bg-white shadow">
+                    Log Out
+                  </button>
+                    </a>
+
+                </div>
+              </div>
+                </form>
+  
+
+            </div>
+             
+    <!-- ////////////// -->
+          </div>
+        </div>
+      </div>
+  
+<!-- Script -->
+<script>
+
+  let profilePic = document.getElementById("profilePic");
+  let inputFile = document.getElementById("inputFile");
+
+  inputFile.addEventListener("change",() => {
+  profilePic.src = URL.createObjectURL(inputFile.files[0]);
+  });
+
+  let edit_btn = document.getElementById("edit_btn");
+  let info_input = document.querySelectorAll("#info_input");
+  let camera = document.getElementById("camera");
+  let save_btn = document.getElementById("save_btn");
+
+  
+  edit_btn.addEventListener("click",() => {
+    
+    for(let i= 0 ; i<info_input.length ; i++){
+
+      info_input[i].removeAttribute("readonly");
+      camera.style.display = "block";
+      edit_btn.style.display = "none";
+      save_btn.style.display = "block";
+    }
+    
+
+  });
+
+  save_btn.addEventListener("click",() => {
+    console.log("save_btn");
+    for(let i= 0 ; i<info_input.length ; i++){
+      info_input[i].setAttribute("readonly" ,true );
+      camera.style.display = "none";
+      edit_btn.style.display = "block";
+      save_btn.style.display = "none";
+    }
+
+  });
+  let sell_image = document.querySelectorAll("#sell_image"); 
+  let addPost = document.getElementById("addPost");
+  addPost.addEventListener("change",() => {
+    for(let i=0; i < sell_image.length ; i++) {
+      sell_image[i].src = URL.createObjectURL(addPost.files[i]);
+    }
+  });
+
+  let single_post1 = document.getElementById("single_post1");
+  let single_post2 = document.getElementById("single_post2");
+  let single_post3 = document.getElementById("single_post3");
+  let single_post4 = document.getElementById("single_post4");
+  let single_post5 = document.getElementById("single_post5");
+  let single_post6 = document.getElementById("single_post6");
+
+  console.log(sell_image);
+
+    single_post1.addEventListener("change",(e) => {
+      sell_image[0].src = URL.createObjectURL(single_post1.files[0]);
+    });
+    single_post2.addEventListener("change",(e) => { 
+      sell_image[1].src = URL.createObjectURL(single_post2.files[0]);
+    });
+    single_post3.addEventListener("change",(e) => { 
+      sell_image[2].src = URL.createObjectURL(single_post3.files[0]);
+    });
+    single_post4.addEventListener("change",(e) => { 
+      sell_image[3].src = URL.createObjectURL(single_post4.files[0]);
+    });
+    single_post5.addEventListener("change",(e) => { 
+      sell_image[4].src = URL.createObjectURL(single_post5.files[0]);
+    });
+    single_post6.addEventListener("change",(e) => { 
+      sell_image[5].src = URL.createObjectURL(single_post6.files[0]);
+    });
+
+
+
+
+ 
+
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

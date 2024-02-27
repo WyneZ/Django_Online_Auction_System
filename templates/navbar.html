@@ -85,9 +85,9 @@
     <div class="navBar container ps-0">
       <div class="right m-1 d-flex">
         <a class="link-dark link-underline-opacity-0 d-flex" href="{% url 'home' %}">
-          <img src="{% static 'image/bid3.png' %}" alt="Logo" class="logo d-inline-block align-text-top ">
+          <img src="{% static 'image/eagle1.jpg' %}" alt="Logo" class="logo d-inline-block mt-1">
           <div>
-            <span class=" text logo_name me-3 ms-2">EAGLE Auction</span>
+            <span class=" text logo_name me-3 ms-2">Eagle Auction</span>
           </div>
         </a>
         <a class="link-dark link-underline-opacity-0 d-flex" href="catagory.html">
@@ -100,7 +100,7 @@
 
       <div class=" search ">
         <form action="{% url 'search_item' %}" class="search d-flex p-auto me-3" role="search">
-          <input name="sItem" class="form-control ms-5 me-3" type="search" placeholder="Search"  aria-label="Search">
+          <input name='sItem' class="form-control ms-5 me-3" type="search" placeholder="Search"  aria-label="Search">
           <button type="button" class="btn">
             <a href="{% url 'search_item' %}" >
               <img class="search_png" src="{% static 'image/search.svg' %}" style="width:25px;" >
@@ -121,10 +121,6 @@
                     </div>
                 </a>
 
-    <!--          <img src="{% static 'image/noti.png' %}" width="23" height="23" class="noti my-2 ">-->
-    <!--          <div>-->
-    <!--              <span class=" my-2 me-4">1</span>-->
-    <!--          </div>-->
                 <a class="nav-link me-3" href="{% url 'profile' request.user.id %}" >
                     <img class="my-2 rounded-circle" src="{{ request.user.avatar.url }}" width="40" height="40" class="user p-0" alt="profile">
                 </a>

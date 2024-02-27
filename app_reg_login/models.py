@@ -22,7 +22,7 @@ class User(AbstractUser):
     # objects = UserManager()
 
     def __str__(self):
-        return self.name
+        return self.username
 
     class Meta:
         managed = True
@@ -44,7 +44,7 @@ class Item(models.Model):
 
     category = models.CharField(max_length=100, null=True)
     title = models.CharField(max_length=100, null=False)
-    # item_name = models.CharField(max_length=200, null=False)
+    item_name = models.CharField(max_length=200, null=True)
     description = models.TextField(null=True, blank=True)
     number_of_items = models.IntegerField(default=1, null=True)
     estimated_era = models.CharField(max_length=20, null=True)

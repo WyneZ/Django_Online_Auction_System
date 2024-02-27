@@ -13,6 +13,8 @@ from .models import User, Item, ImageTable, Bids, Transition, Comment
 # for login required to enter home
 from django.contrib.auth import authenticate, login, logout
 
+from django.urls import reverse
+
 
 # Function to get only {item: one image} | not for images
 def create_related_dict(item_list, image_list):
@@ -222,7 +224,7 @@ def profile(request, pk):
     user.email = user.user_email
     user.save()
     print(188, user.email)
-    item_list = user.item_set.all()
+    all_items = user.item_set.all()
     images = ImageTable.objects.all()
     transactions = Transition.objects.all()
     transactions_history = []
@@ -230,11 +232,19 @@ def profile(request, pk):
     for transaction in transactions:
         if transaction.buyer == user:
             transactions_history.append(transaction)
-
     print(118, transactions_history)
-    related_dict = create_related_dict(item_list, images)
 
-    # auction_history =
+    # to get bidded history
+    bidded_querySet = Item.objects.filter(participants__email=user.user_email)
+    bidded_dict = create_related_dict(bidded_querySet, images)
+    print(239, bidded_querySet)
+
+    # to get win item history
+    win_querySet = Item.objects.filter(winner=str(user))
+    win_dict = create_related_dict(win_querySet, images)
+    print(240, win_dict)
+
+    sell_dict = create_related_dict(all_items, images)
 
     if request.method == 'POST':
         logout(request)
@@ -246,62 +256,143 @@ def profile(request, pk):
         user.delete()
         return redirect('home')
 
-    context = {'user': user, 'related_dict': related_dict, 'transactions_history': transactions_history}
-    return render(request, 'app_reg_login/profile_old.html', context)
+    context = {'user': user, 'sell_dict': sell_dict, 'bidded_dict': bidded_dict, 'win_dict': win_dict,
+               'transactions_history': transactions_history}
+    return render(request, 'app_reg_login/profile.html', context)
 
 
 @login_required(login_url='login')
-def updateUser(request):
-    user = request.user
-    form = UserForm(instance=user)
+def updateUser(request, pk):
+    # user = request.user
+    # form = UserForm(instance=user)
+    #
+    # if request.method == "POST":
+    #     form = UserForm(request.POST, request.FILES, instance=user)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('profile', user.id)
+    #
+    # context = {'form': form}
+    # return render(request, 'app_reg_login/updateUser.html', context)
 
     if request.method == "POST":
-        form = UserForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile', user.id)
+        items = Item.objects.all()
+        user = User.objects.get(pk=pk)
+        print(281, str(request.POST.get('user_username')).replace(' ', ''))
+        if user.name is None:
+            user.name = user.username
+            user.save()
+        print(278, user)
+        print(279, str(user), str(request.user))
+        for item in items:
+            if item.winner == user.username:
+                item.winner = str(request.POST.get('user_username')).strip(' ')
+                print("Before", item.winner)
+                item.save()
+                print("After", item.winner)
 
-    context = {'form': form}
-    return render(request, 'app_reg_login/updateUser.html', context)
+        user.username = str(request.POST.get('user_username')).replace(' ', '')
+        user.name = request.POST.get('user_username')
+        user.user_email = request.POST.get('email')
+        user.email = request.POST.get('email')
+        user.nrc_no = request.POST.get('nrc_no')
+        user.phone = request.POST.get('phone')
+        user.address = request.POST.get('address')
+        user.save()
+        print(302, user.name, user.username)
+    return redirect('profile', request.user.id)
 
 
 def sellItem(request):
-    form = SellForm()
-    items = Item.objects.all()
+    # form = SellForm()
+    # items = Item.objects.all()
+    #
+    # if request.method == 'POST':
+    #     print("145 Doing!!")
+    #     form = SellForm(request.POST, request.FILES)
+    #     # print(147, "Test due date", str(request.POST.get('dueDatePicker', False)))
+    #
+    #     if form.is_valid():
+    #         print("150 Form is valid!!!!")
+    #         item = form.save()
+    #         item.seller = request.user
+    #         item.category = str(request.POST.get("category"))
+    #         item.due_date = str(request.POST.get('dueDatePicker', False))
+    #         print(152, "This is due date", item.due_date)
+    #         item.save()
+    #
+    # images = request.FILES.getlist('upload_images')
+    # for image in images:
+    #     image = ImageTable.objects.create(
+    #         item=item,
+    #         image_url=image
+    #     )
+    #
+    #         print(193, str(request.POST.get("category")))
+    #         print(194, type(request.POST.get("category")))
+    #     else:
+    #         print("Form is invalid!!")
+    #
+    #     return redirect('home')
+    # context = {'form': form}
 
-    if request.method == 'POST':
-        print("145 Doing!!")
-        form = SellForm(request.POST, request.FILES)
-        # print(147, "Test due date", str(request.POST.get('dueDatePicker', False)))
+    if request.method == "POST":
+        seller = request.user
+        category = request.POST.get("category")
+        title = request.POST.get("title")
+        item_name = request.POST.get("item_name")
+        description = request.POST.get("description")
+        number_of_items = request.POST.get("number_of_items")
+        estimated_era = request.POST.get("estimated_era")
+        country_of_origin = request.POST.get("country_of_origin")
+        item_condition = request.POST.get("item_condition")
+        reverse_price = request.POST.get("reverse_price")
+        once_up = request.POST.get("once_up")
+        due_date = request.POST.get("dueDatePicker", False)
+        imgs = request.FILES['sell_imgs']
+        print(332, imgs)
+        print(f'POST>>{seller}\n'
+              f'{category}\n'
+              f'{title}\n'
+              f'{item_name}\n'
+              f'{description}\n'
+              f'{number_of_items}\n'
+              f'{estimated_era}\n'
+              f'{country_of_origin}\n'
+              f'{item_condition}\n'
+              f'{reverse_price}\n'
+              f'{once_up}\n'
+              f'{due_date}\n')
 
-        if form.is_valid():
-            print("150 Form is valid!!!!")
-            item = form.save()
-            item.seller = request.user
-            item.category = str(request.POST.get("category"))
-            item.due_date = str(request.POST.get('dueDatePicker', False))
-            print(152, "This is due date", item.due_date)
-            item.save()
+        item = Item.objects.create(
+            seller=request.user,
+            category=request.POST.get("category"),
+            title=request.POST.get("title"),
+            item_name=request.POST.get("item_name"),
+            description=request.POST.get("description"),
+            number_of_items=request.POST.get("number_of_items"),
+            estimated_era=request.POST.get("estimated_era"),
+            country_of_origin=request.POST.get("country_of_origin"),
+            item_condition=request.POST.get("item_condition"),
+            reverse_price=request.POST.get("reverse_price"),
+            once_up=request.POST.get("once_up"),
+            due_date=request.POST.get("dueDatePicker", False),
+        )
 
-            images = request.FILES.getlist('upload_images')
-            for image in images:
-                image = ImageTable.objects.create(
-                    item=item,
-                    image_url=image
-                )
+        images = request.FILES.getlist('sell_imgs')
+        for image in images:
+            image = ImageTable.objects.create(
+                item=item,
+                image_url=image
+            )
+        print(368, item.reverse_price)
 
-            print(193, str(request.POST.get("category")))
-            print(194, type(request.POST.get("category")))
-        else:
-            print("Form is invalid!!")
-
-        return redirect('home')
-    context = {'form': form}
-    return render(request, 'app_reg_login/sell_item.html', context)
+    return redirect('profile', request.user.id)
 
 
 def item_detail(request, pk):
     item = Item.objects.get(id=pk)
+    url = reverse('item_detail', kwargs={'pk': item.id})
     images = ImageTable.objects.filter(item=item)
     print(279, type(images))
     item_bids = item.bids_set.all()
@@ -370,10 +461,10 @@ def item_detail(request, pk):
     related_dict = create_related_dict(related_querySet, ImageTable.objects.all())
     related_list = create_item_list(related_dict)
     related_img_list = create_img_list(related_list, related_dict)
-    print(374, related_list)
 
     context = {'item': item, 'images': images, 'bids': item_bids, 'participants': participants, 'comments': comments,
-               'replies': replies, 'review_count': review_count, 'related_list': related_list, 'related_img_list': related_img_list}
+               'replies': replies, 'review_count': review_count, 'related_list': related_list,
+               'related_img_list': related_img_list}
     return render(request, 'app_reg_login/item_details.html', context)
 
 
@@ -485,7 +576,7 @@ def buying_coin(request):
             messages.error(request, 'An error occurs when buying coin')
 
     context = {'form': form}
-    return render(request, 'app_reg_login/buying_coin.html', context)
+    return render(request, 'app_reg_login/buying_coin_old.html', context)
 
 
 def trading_coin(request, ):
