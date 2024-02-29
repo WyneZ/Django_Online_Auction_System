@@ -19,8 +19,6 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    # objects = UserManager()
-
     def __str__(self):
         return self.username
 
@@ -81,15 +79,19 @@ class Bids(models.Model):
 
 class Transition(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    buyer_nrc = models.CharField(max_length=50, null=True)
+    buyer_ph = models.CharField(max_length=20, null=True)
     coin_amount = models.IntegerField(default=0)
-    # user_nrc_no = models.CharField(max_length=20, null=False)
-    invoice_no = models.CharField(max_length=100, null=False)
+    invoice_no = models.CharField(max_length=100, null=True)
     payment_method = models.CharField(max_length=50, null=False)
-    invoice_img = models.ImageField(null=False)
+    invoice_img = models.ImageField(null=True)
     buying_time = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.invoice_no
+    # coin in/out
+    status = models.CharField(max_length=10, null=True)
+
+    class Meta:
+        ordering = ['-buying_time']
 
 
 class Comment(models.Model):
@@ -105,5 +107,15 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+
+class Advertisement(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
+    place = models.CharField(max_length=20, null=True)
+    ad_coin = models.IntegerField(null=True)
+    ad_post_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-ad_post_date']
 
 

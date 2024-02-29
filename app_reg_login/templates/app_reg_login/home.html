@@ -25,69 +25,60 @@
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5" aria-label="Slide 6"></button>
           </div>
-
           <div class="carousel-inner">
             <div class="carousel-item active " data-bs-interval="1000">
-              <div class="row">
-                <div class="polpuimgBox col w-100">
-                  <img src="{% static 'image/art6.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
-                </div>
-                <div class="polpuimgBox col w-100">
-                  <img src="{% static 'image/art3.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
-                </div>
+                {% for item,img_list in m1_dict.items %}
+                <a href="{% url 'item_detail' item.id %}">
+                    <div class="row">
+                        {% for img in img_list %}
+                            <div class="polpuimgBox col w-100">
+                              <img src="{{ img.url }}" class="polpular_img img-fluid d-block" alt="...">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-caption d-none d-md-block bg-gradient  w-auto">
+                <h2 class="fw-semibold text-light">{{ item.title }}</h2>
               </div>
-              <div class="carousel-caption d-none d-md-block bg-gradient  w-auto">
-                <h2 class="fw-semibold text-light">Wine & Whiskey</h2>
+                </a>
+                {% endfor %}
+            </div>
+
+            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
+                {% for item,img_list in m2_dict.items %}
+                <a href="{% url 'item_detail' item.id %}">
+                    <div class="row">
+                        {% for img in img_list %}
+                                <div class="polpuimgBox col w-100">
+                                  <img src="{{ img.url }}" class="polpular_img img-fluid d-block" alt="...">
+                                </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                <h2 class="fw-semibold text-light">{{ item.title }}</h2>
               </div>
+                </a>
+                {% endfor %}
+
+
             </div>
             <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
-              <div class="row">
-                <div class="polpuimgBox col w-100">
-                  <img src="{% static 'image/jrl9.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
-                </div>
-                <div class="polpuimgBox col w-100">
-                  <img src="i{% static 'image/jel3.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
-                </div>
-              </div>              
-              <div class="carousel-caption d-none d-md-block">
-                <h2 class="fw-semibold text-light">Jewelry</h2>
+                {% for item,img_list in m3_dict.items %}
+                <a href="{% url 'item_detail' item.id %}">
+                    <div class="row">
+                        {% for img in img_list %}
+                                <div class="polpuimgBox col w-100">
+                                  <img src="{{ img.url }}" class="polpular_img img-fluid d-block" alt="...">
+                                </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                <h2 class="fw-semibold">{{ item.title }}</h2>
               </div>
+                </a>
+                {% endfor %}
             </div>
-            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
-              <div class="row">
-                <div class="polpuimgBox col w-100">
-                  <img src="{% static 'image/art6.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
-                </div>
-                <div class="polpuimgBox col w-100">
-                  <img src="{% static 'image/art3.jpg' %}" class="polpular_img img-fluid d-block" alt="...">
-                </div>
-              </div>              
-              <div class="carousel-caption d-none d-md-block">
-                <h2 class="fw-semibold">Art</h2>
-              </div>
-            </div>
-            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
-              <img src="{% static 'image/jel0.jpg' %}" class="polpular_img img-fluid d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h2 class="fw-semibold">Accessories</h2>
-              </div>
-            </div>
-            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
-              <img src="{% static 'image/jel0.jpg' %}" class="polpular_img img-fluid d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h2 class="fw-semibold">Electronic</h2>
-              </div>
-            </div>
-            <div class="polpuimgBox carousel-item bg-body-secondary" data-bs-interval="1000">
-              <img src="{% static 'image/jel0.jpg' %}" class="polpular_img img-fluid d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h2 class="fw-semibold">Jewelry</h2>
-              </div>
-            </div>
+
           </div>
           <button class="carousel-control-prev rounded-circle my-auto" type="button" style="height:5vh; width:5vh; background-color: #9e9e9ea1;" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -103,59 +94,85 @@
         <div class=" adsBox container-fluid col-12">
           <div id="carouselExampleSlidesOnly" class=" carousel slide h-100 pb-2" data-bs-ride="carousel">
             <div class="carousel-inner h-100 ">
-              <div class="carousel-item active h-100 ">
-                <a href="detail.html">
-                  <img src="{% static 'image/jel8.jpg' %}" class="ads_img img-fluid img-thumbnail" alt="...">
-                </a>
-                <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
-                  <p class="notice_board card-text m-0">CURRENT BID</p>
-                  <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
-                  <span class="notice_board currentBid">5000</span>
-                </div>
-              </div>
-                <div class=" carousel-item h-100">
-                  <a href="detail.html">
-                    <img src="{% static 'image/car4.jpg' %}" class="ads_img img-thumbnail border-0" alt="...">
-                  </a>
-                  <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
-                    <p class="notice_board card-text m-0">CURRENT BID</p>
-                    <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1 ">
-                    <span class="notice_board currentBid">5000</span>
-                  </div>
+                {% for item,img_list in b1_dict.items %}
+                <a href="{% url 'item_detail' item.id %}">
+                        <div class="carousel-item active h-100 position-relative bg-black">
+                              <img src="{{ img_list.0.url }}" style="height: 100%; border-radius: 0%;padding: 0%;" class=" img-fluid border-0  img-thumbnail position-absolute border-0 top-50 start-50 translate-middle" alt="...">
+                            <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
+                              <p class="notice_board card-text m-0">CURRENT BID</p>
+                              <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
+                              {% if item.sell_price <= 0 %}
+                                    <span class="notice_board currentBid">{{ item.reverse_price }}</span>
+                                {% else %}
+                                    <span class="notice_board currentBid">{{ item.sell_price }}</span>
+                                {% endif %}
+                            </div>
+                          </div>
+                    </a>
+                {% endfor %}
+                {% for item,img_list in b1_dict.items %}
+                <a href="{% url 'item_detail' item.id %}">
+                          <div class="adsBox carousel-item h-100 position-relative bg-black">
+                              <img src="{{ img_list.1.url }}" style="height: 100%; border-radius: 0%;padding: 0%;" class=" img-thumbnail position-absolute top-50 start-50 translate-middle" alt="...">
+                            <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
+                              <p class="notice_board card-text m-0">CURRENT BID</p>
+                              <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
+                              {% if item.sell_price <= 0 %}
+                                    <span class="notice_board currentBid">{{ item.reverse_price }}</span>
+                                {% else %}
+                                    <span class="notice_board currentBid">{{ item.sell_price }}</span>
+                                {% endif %}
+                            </div>
+                          </div>
+                        </a>
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+          <div class="container-fluid h-auto p-0">
+            <div class=" adsBox container-fluid col-12 p-0">
+              <div id="carouselExampleSlidesOnly" class=" carousel slide h-100" data-bs-ride="carousel">
+                <div class="carousel-inner h-100">
+                    {% for item,img_list in b2_dict.items %}
+                    <a href="{% url 'item_detail' item.id %}">
+                        <div class="carousel-item active h-100 position-relative bg-black">
+                              <img src="{{ img_list.0.url }}" style="height: 100%; border-radius: 0%;padding: 0%;" class=" img-fluid border-0  img-thumbnail position-absolute border-0 top-50 start-50 translate-middle" alt="...">
+                            <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
+                              <p class="notice_board card-text m-0">CURRENT BID</p>
+                              <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
+                              {% if item.sell_price <= 0 %}
+                                    <span class="notice_board currentBid">{{ item.reverse_price }}</span>
+                                {% else %}
+                                    <span class="notice_board currentBid">{{ item.sell_price }}</span>
+                                {% endif %}
+                            </div>
+                          </div>
+                    </a>
+                    {% endfor %}
+                    {% for item,img_list in b2_dict.items %}
+                        <a href="{% url 'item_detail' item.id %}">
+                          <div class="adsBox carousel-item h-100 position-relative bg-black">
+                              <img src="{{ img_list.1.url }}" style="height: 100%; border-radius: 0%;padding: 0%;" class=" img-thumbnail position-absolute top-50 start-50 translate-middle" alt="...">
+                            <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
+                              <p class="notice_board card-text m-0">CURRENT BID</p>
+                              <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
+                              {% if item.sell_price <= 0 %}
+                                    <span class="notice_board currentBid">{{ item.reverse_price }}</span>
+                                {% else %}
+                                    <span class="notice_board currentBid">{{ item.sell_price }}</span>
+                                {% endif %}
+                            </div>
+                          </div>
+                        </a>
+                    {% endfor %}
                 </div>
               </div>
             </div>
-          </div>  
-          <div class="container-fluid h-auto p-0">
-            <div class=" adsBox container-fluid col-12">
-              <div id="carouselExampleSlidesOnly" class=" carousel slide h-100" data-bs-ride="carousel">
-                <div class="carousel-inner h-100">
-                  <div class="carousel-item active h-100">
-                    <a href="detail.html">
-                      <img src="{% static 'image/shoes3.jpg' %}" class="ads_img img-fluid img-thumbnail" alt="...">
-                    </a>
-                    <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
-                      <p class="notice_board card-text m-0">CURRENT BID</p>
-                      <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
-                      <span class="notice_board currentBid">5000</span>
-                    </div>
-                  </div>
-                  <div class="adsBox carousel-item h-100">
-                    <a href="detail.html">
-                      <img src="{% static 'image/bag1.jpg' %}" class="ads_img img-thumbnail border-0" alt="...">
-                    </a>
-                    <div class="text-light bg-dark bg-opacity-25 w-auto px-3 position-absolute bottom-0 m-1 ">
-                      <p class="notice_board card-text m-0">CURRENT BID</p>
-                      <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin mb-1">
-                      <span class="notice_board currentBid">5000</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>  
           </div>
       </div>
-    </div>  
+    </div>
+
+
   </div>  
   <!------------------- /advertisement ---------->
   
@@ -163,7 +180,7 @@
   <div id="ending_soon" class="items container my-5">
     <div class="text d-flex justify-content-between">
       <h5 class="text px-3 pb-3 fw-semibold">Ending Soon</h5>
-      <a class="link-secondary link-underline-opacity-0 " href="search.html">
+      <a class="link-secondary link-underline-opacity-0 " href="{% url 'search_item' 'Ending Soon' %}">
         <p class="text px-3 pb-3">See More</p>
       </a>
     </div>
@@ -843,7 +860,7 @@
     <hr>  
     <div class="text d-flex justify-content-between">
       <h5 class="text px-3 pb-3 fw-semibold">Lasted Post</h5>
-      <a class="link-secondary link-underline-opacity-0" href="search.html">
+      <a class="link-secondary link-underline-opacity-0" href="{% url 'search_item' 'Latest Post' %}">
         <p class="text px-3 pb-3 te">See More</p>
       </a>
     </div>
@@ -925,7 +942,7 @@
 <!--              L1-->
             <div class="container card d-none border border-0 d-md-block p-0 mx-2">
               <div class="container-sm card-header border border-0">
-                <a href="{% url 'item_detail' ending_list.1.id %}">
+                <a href="{% url 'item_detail' latest_list.1.id %}">
                   <img src="{{ latest_img_list.1.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
                 </a>             
                </div> 
@@ -1515,7 +1532,7 @@
       <hr>  
       <div class="text d-flex justify-content-between">
         <h5 class="text px-3 pb-3 fw-semibold">Popular Post</h5>
-        <a class="link-secondary link-underline-opacity-0" href="search.html">
+        <a class="link-secondary link-underline-opacity-0" href="{% url 'search_item' 'Popular Post' %}">
           <p class="text px-3 pb-3 te">See More</p>
         </a>
       </div>

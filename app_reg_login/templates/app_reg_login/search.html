@@ -19,6 +19,7 @@
     </div>
 
     {% for item, image in show_dict.items %}
+        {% if item.due_date != "expired" %}
         <div class="container search_box">
               <div class="card mb-3">
                   <div class="row g-0 ">
@@ -36,7 +37,7 @@
                             {% endif %}
                             <span class="count heart_count">{{ item.like_count }}</span>
                         </form>
-                        <a href="detail.html">
+                        <a href="{% url 'item_detail' item.id %}">
                             <div class="img_box">
                                 <img src="{{ image.url }}" class="search_img img-fluid rounded-start position-absolute top-50 start-50 translate-middle" alt="...">
                             </div>
@@ -107,6 +108,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     {% endfor %}
 
 </body>

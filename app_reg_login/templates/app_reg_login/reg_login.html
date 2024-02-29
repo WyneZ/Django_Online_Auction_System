@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signUp</title>
     <link rel="stylesheet" type="text/css" href="{% static 'styles/singIn.css' %}">
-    <link rel="stylesheet" type="text/css" href="bs\css\bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bs/css/bootstrap.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -157,7 +157,7 @@
                         </div>
                           <!-- -------------- -->
                         <div class="col p-0">
-                          <input type="text" name="middle_1" class="p-0 w-100">
+                          <input type="text" id="nrc_code" name="middle_1" maxlength="3" class="px-2 w-100">
                         </div>
                         <!-- --------------- -->
                         <div class="col">
@@ -169,7 +169,7 @@
                         </div>
                         <!-- ----------------- -->
                         <div class="col p-0">
-                          <input type="text" name="back" class="p-0 w-100 " onkeyup="numberonly(this)" maxlength="6" >
+                          <input type="text" name="back" class="px-2 w-100 " onkeyup="numberonly(this)" maxlength="6" >
                         </div>
                       </div>
                     </div>
@@ -260,6 +260,9 @@
               const com_pass = document.querySelector("#com_pass");
               const icon = document.querySelectorAll(".icon");
 
+              let nrc_code = document.getElementById("nrc_code");
+
+
               console.log(icon);
 
                   email.addEventListener("keyup", () =>{
@@ -332,6 +335,16 @@
 
                   })
 
+                nrc_code.addEventListener("keyup", () =>{
+                    var regex = /[^က-အ]/;
+                    nrc_code.value = nrc_code.value.replace(regex,"");
+
+                  });
+
+                function numberonly(nrcNo){
+                    var regex = /[^၀-၉]/;
+                    nrcNo.value = nrcNo.value.replace(regex,"");
+                  }
 
             </script>
         </body>

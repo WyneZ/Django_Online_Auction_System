@@ -44,7 +44,7 @@
                   <!-- *******Bidded List**********-->
                       <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                           {% for item,image in bidded_dict.items %}
-                            {% if item.winner != request.user.username %}
+                            {% if item.due_date != "expired" %}
                                 <div class="mt-3 search_box">
                           <div class="card mb-3 mx-0 mx-0">
                               <div class="row g-0 ">
@@ -173,196 +173,46 @@
                           <!-- ? -->
                           <div class="coin_history mt-2">
       
-                          <div class="bg-body-secondary position-relative" style="height:50px;">
-                            <div class="position-absolute top-50 start-0 translate-middle-y ms-3">
-                              <span class="month">February</span>
-                              <span class="year">2024</span>
-                            </div>
-                          </div>
+<!--                          <div class="bg-body-secondary position-relative" style="height:50px;">-->
+<!--                            <div class="position-absolute top-50 start-0 translate-middle-y ms-3">-->
+<!--                              <span class="month">February</span>-->
+<!--                              <span class="year">2024</span>-->
+<!--                            </div>-->
+<!--                          </div>-->
                           <div class="">
                             <table class="table text-center">                            
                               <tbody>
+                                {% for transaction in transactions_history %}
                                 <tr>
                                   <th scope="row" class=" border-0 text-center">
-                                    <img src="image/coin (3).png"  width="25" height="25" class="coin mb-3">
+                                    <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="coin mb-3" style="margin-top:20px">
                                   </th>
-      
                                   <td class="text-start" colspan="2">
                                     <p class="p-0 mt-2 mb-0">Transfer to Coin</p>
                                     <div class="history_date d-flex">
-                                      <span class="day">18</span>
-                                      <span>/</span>
-                                      <div class="d-flex ms-1">
-                                        <span class="hour">3</span> 
-                                        <span class="hour">:</span>    
-                                        <span class="min">43</span> 
-                                        <span class="hour">:</span> 
-                                        <span class="sec">18</span>  
-                                      </div>
+                                      <span class="day">{{ transaction.buying_time | date:"D d M Y H:i" }}</span>
                                     </div>
                                   </td>                             
                                   <td class="text-start">
                                     <div class="mt-2">
-                                      <span >+</span>
-                                      <img src="image/coin (3).png"  width="20" height="20" class="coin"> 
-                                      <span class="amount">2000</span>
+                                        {% if transaction.status == 'in' %}
+                                        <span>+</span>
+                                        {% elif transaction.status == 'out' %}
+                                        <span>-</span>
+                                        {% else %}
+                                        <span>@</span>
+                                        {% endif %}
+                                      <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin">
+                                      <span class="amount">{{ transaction.coin_amount }}</span>
                                     </div>
                                   </td>
                                 </tr>
-                                <tr >
-                                  <th scope="row" class=" border-0">
-                                    <img src="image/money.png"  width="20" height="20" class="coin mb-3">
-                                  </th>
-                                  <td class="text-start" colspan="2">
-                                    <p class="p-0 mt-2 mb-0">Transfer to Money</p>
-                                    <div class="history_date d-flex">
-                                      <span class="day">18</span>
-                                      <span>/</span>
-                                      <div class="d-flex ms-1">
-                                        <span class="hour">3</span> 
-                                        <span class="hour">:</span>    
-                                        <span class="min">43</span> 
-                                        <span class="hour">:</span> 
-                                        <span class="sec">18</span>  
-                                      </div>
-                                    </div>
-                                  </td>                             
-                                  <td class="text-start"">
-                                    <div class="mt-2">
-                                      <span class="fs-5">-</span>
-                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
-                                      <span class="amount">2000</span>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row" class=" border-0">
-                                    <i class="fa-brands fa-shopify" style="color: #208a0b; font-size:25px;"></i>
-                                  </th>
-                                  <td colspan="2" class="text-start"">
-                                    <p class="p-0 mt-2 mb-0">Shopping</p>
-                                    <div class="history_date d-flex">
-                                      <span class="day">18</span>
-                                      <span>/</span>
-                                      <div class="d-flex ms-1">
-                                        <span class="hour">3</span> 
-                                        <span class="hour">:</span>    
-                                        <span class="min">43</span> 
-                                        <span class="hour">:</span> 
-                                        <span class="sec">18</span>  
-                                      </div>
-                                    </div>
-                                  </td>               
-                                  <td class="text-start"">
-                                    <div class="mt-2">
-                                      <span class="fs-5">-</span>
-                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
-                                      <span class="amount">2000</span>
-                                    </div>
-                                  </td>
-                                </tr>
+                                {% endfor %}
                               </tbody>
                             </table>
                           </div>
                         </div>  
-                      <!-- ? -->
-      
-                      <!-- ? -->
-                        <div class="coin_history mt-2">
-      
-                          <div class="bg-body-secondary position-relative" style="height:50px;">
-                            <div class="position-absolute top-50 start-0 translate-middle-y ms-3">
-                              <span class="month">January</span>
-                              <span class="year">2024</span>
-                            </div>
-                          </div>
-                          <div class="">
-                            <table class="table text-center">                            
-                              <tbody>
-                                <tr>
-                                  <th scope="row" class=" border-0 text-center">
-                                    <img src="image/coin (3).png"  width="25" height="25" class="coin mb-3">
-                                  </th>
-      
-                                  <td class="text-start" colspan="2">
-                                    <p class="p-0 mt-2 mb-0">Transfer to Coin</p>
-                                    <div class="history_date d-flex">
-                                      <span class="day">18</span>
-                                      <span>/</span>
-                                      <div class="d-flex ms-1">
-                                        <span class="hour">3</span> 
-                                        <span class="hour">:</span>    
-                                        <span class="min">43</span> 
-                                        <span class="hour">:</span> 
-                                        <span class="sec">18</span>  
-                                      </div>
-                                    </div>
-                                  </td>                             
-                                  <td class="text-start">
-                                    <div class="mt-2">
-                                      <span>+</span>
-                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
-                                      <span class="amount">2000</span>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr >
-                                  <th scope="row" class=" border-0">
-                                    <img src="image/money.png"  width="20" height="20" class="coin mb-3">
-                                  </th>
-                                  <td class="text-start" colspan="2">
-                                    <p class="p-0 mt-2 mb-0">Transfer to Money</p>
-                                    <div class="history_date d-flex">
-                                      <span class="day">18</span>
-                                      <span>/</span>
-                                      <div class="d-flex ms-1">
-                                        <span class="hour">3</span> 
-                                        <span class="hour">:</span>    
-                                        <span class="min">43</span> 
-                                        <span class="hour">:</span> 
-                                        <span class="sec">18</span>  
-                                      </div>
-                                    </div>
-                                  </td>                             
-                                  <td class="text-start"">
-                                    <div class="mt-2">
-                                      <span class="fs-5">-</span>
-                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
-                                      <span class="amount">2000</span>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row" class=" border-0">
-                                    <i class="fa-brands fa-shopify" style="color: #208a0b; font-size:25px;"></i>
-                                  </th>
-                                  <td colspan="2" class="text-start"">
-                                    <p class="p-0 mt-2 mb-0">Shopping</p>
-                                    <div class="history_date d-flex">
-                                      <span class="day">18</span>
-                                      <span>/</span>
-                                      <div class="d-flex ms-1">
-                                        <span class="hour">3</span> 
-                                        <span class="hour">:</span>    
-                                        <span class="min">43</span> 
-                                        <span class="hour">:</span> 
-                                        <span class="sec">18</span>  
-                                      </div>
-                                    </div>
-                                  </td>               
-                                  <td class="text-start"">
-                                    <div class="mt-2">
-                                      <span class="fs-5">-</span>
-                                      <img src="image/coin (3).png"  width="20" height="20" class="coin">
-                                      <span class="amount">2000</span>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>  
-                      <!--?  -->
+                      <!-- ? --><!--?  -->
       
                       </div>
             <!-- ****************** -->   
@@ -548,18 +398,18 @@
                             <div>
                               <select name="category" class="border-0 border-bottom border-black ps-2 bg-body" style="width:100%;;height:50px;" required>
                                 <option>Choose Catagory</option>
-                                <option value="Art/Paint">Art/Paint</option>
-                                <option value="Book/Comics/Magazine">Book/Comics/Magazine</option>
-                                <option value="Electronic Devices/Accessories">Electronic Devices/Accessories</option>
-                                <option value="Fashion/Clothings/Bag/Watch">Fashion/Clothings/Bag/Watch</option>
-                                <option value="Furnitures/Decoration<">Furnitures/Decoration</option>
-                                <option value="Jewellery">Jewellery</option>
-                                <option value="Luxury/Accessories/Perfume">Luxury/Accessories/Perfume</option>
-                                <option value="Musical-Art/Camera">Musical-Art/Camera</option>
-                                <option value="Shoes/Footwear">Shoes/Footwear</option>
+                                <option value="Art&Paints">Art&Paints</option>
+                                <option value="Books&Comics">Books&Comics</option>
+                                <option value="Electronic Devices&Accessories">Electronic Devices&Accessories</option>
+                                <option value="Fashion&Clothings">Fashion&Clothings</option>
+                                <option value="Furnitures Decoration">Furnitures Decoration</option>
+                                <option value="Jewellery&Gems">Jewellery&Gems</option>
+                                <option value="Luxury Accessories&Perfume">Luxury Accessories&Perfume</option>
+                                <option value="Musical Art&Camera">Musical Art&Camera</option>
+                                <option value="Shoes&Footwear">Shoes&Footwear</option>
                                 <option value="Vehicles">Vehicles</option>
-                                <option value="Wine/Whiskey">Wine/Whiskey</option>
-                                <option value="Other">Other</option>
+                                <option value="Wine&Whiskey">Wine&Whiskey</option>
+                                <option value="Others">Others</option>
                               </select>            
                             </div>
                           </div>
@@ -624,20 +474,23 @@
             </div>
             
 
-    <!-- ///////////////// -->
+    <!-- USER PROFILE SECTION-->
             <div class="col container-fluid">
-                <form method="POST" action="{% url 'update' user.id %}">
-                    {% csrf_token %}
-              <div class="side_left">
+
+              <form method="POST" action="{% url 'update' user.id %}" enctype="multipart/form-data" class="side_left">
+                  {% csrf_token %}
                 <div class="bg-white shadow rounded-top"> 
                   <div class="text-center profile_header p-5 position-relative">                
                     <i class="fa fa-edit position-absolute top-0 end-0 p-3 " style="font-size:17px;" id="edit_btn"></i>
                       <button type="submit">
                           <i class="fa-solid fa-floppy-disk position-absolute top-0 end-0 p-3" style="color: #000000;" id="save_btn"></i>
                       </button>
-                    <img  src="{{ user.avatar.url }}"  width="100" height="100px" class="rounded-circle mb-4"
-                    id="profilePic">
-                    <input class="d-none" type="file" accept="image/jpg, image/png, image/jpeg" id="inputFile">
+                      {% if user.avatar.url != None %}
+                         <img  src="{{ user.avatar.url }}"  width="100" height="100px" class="rounded-circle mb-4" id="profilePic">
+                      {% else %}
+                        <img  src="{% static 'images/avatar.svg' %}"  width="100" height="100px" class="rounded-circle mb-4" id="profilePic">
+                      {% endif %}
+                    <input name="update_img" multiple class="d-none" type="file" accept="image/jpg, image/png, image/jpeg" id="inputFile">
                     <label  for="inputFile">
                       <i class="fa-solid fa-camera position-absolute top-50 start-50 translate-middle" id="camera" style="color: #000000;"></i>
                     </label>
@@ -690,16 +543,14 @@
 <!--                  </div>     -->
                 </div>
                 <hr class="m-0">
-                <div class="container p-0 bg-white  shadow rounded">
-                    <a>
-                        <button class="btn w-100 m-0 bg-white shadow">
-                    Log Out
-                  </button>
-                    </a>
-
+              </form>
+                <div class="container p-0 bg-white  shadow rounded" style="margin-top: 30px;">
+                    <form action="{% url 'logout' %}">
+                        <button type="submit" class="btn w-100 m-0 bg-white shadow">
+                            Log Out
+                        </button>
+                    </form>
                 </div>
-              </div>
-                </form>
   
 
             </div>

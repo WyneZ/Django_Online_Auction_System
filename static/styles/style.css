@@ -385,6 +385,12 @@ font-weight:bold;
   .logo_name{
     display: none;
   }
+  .bidInput{
+  width: 150px;
+}
+.setBid{
+margin:20px 0px;
+}
 
   .user{
     width: 37px;

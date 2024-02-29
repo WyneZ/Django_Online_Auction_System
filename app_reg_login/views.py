@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.views import View
 
 from .forms import MyUserCreationForm, UserForm, SellForm, ImageForm, TransitionForm
-from .models import User, Item, ImageTable, Bids, Transition, Comment
+from .models import User, Item, ImageTable, Bids, Transition, Comment, Advertisement
 
 # for login required to enter home
 from django.contrib.auth import authenticate, login, logout
@@ -47,6 +47,29 @@ def create_img_list(item_list, item_dict):
     return image_list
 
 
+def create_ad_dict(all_ads, all_items, all_images, place):
+    final_dict = {}
+    count = 0
+    for ad in all_ads:
+        for item in all_items:
+            if ad.item == item and count == 0 and ad.item.due_date != "expired":
+                if ad.place == place:
+                    print(97, item)
+                    img_list = []
+                    for image in all_images:
+                        if image.item == ad.item:
+                            if len(img_list) < 2:
+                                img_list.append(image.image_url)
+                                print(105, img_list)
+                                img_dict = {ad.item: img_list}
+                                final_dict.update(img_dict)
+                            else:
+                                break
+
+                    count = 1
+    return final_dict
+
+
 class MyView(View):
 
     def get(self, request):
@@ -55,8 +78,6 @@ class MyView(View):
 
         # when item expired
         for item in latest_items:
-            # print("\nid:", item.id)
-            # print('Due Date:', item.due_date)
             now = datetime.now()
             if item.due_date != "expired":
                 due_date = datetime.strptime(item.due_date, "%Y-%m-%dT%H:%M")
@@ -89,13 +110,25 @@ class MyView(View):
         popular_list = create_item_list(popular_dict)
         popular_img_list = create_img_list(popular_list, popular_dict)
 
-        print(98, popular_list)
-        print(99, popular_dict)
+        all_ads = Advertisement.objects.all()
+        m1 = create_ad_dict(all_ads, latest_items, all_images, "master1")
+        m2 = create_ad_dict(all_ads, latest_items, all_images, "master2")
+        m3 = create_ad_dict(all_ads, latest_items, all_images, "master3")
+        b1 = create_ad_dict(all_ads, latest_items, all_images, "Branch1")
+        b2 = create_ad_dict(all_ads, latest_items, all_images, "Branch2")
 
+
+        print(118, b1)
+        ad_dict = {}
+
+        for ad in Advertisement.objects.all():
+            print(111, ad.place, ad.item)
+        print(110, ad_dict)
         # context = {"ending_dict": ending_dict, "latest_dict": related_dict, "popular_dict": popular_dict, "ending_list": ending_list, "ending_img_list": ending_img_list}
         context = {"ending_list": ending_list, "ending_img_list": ending_img_list,
                    "latest_list": latest_list, "latest_img_list": latest_img_list,
-                   "popular_list": popular_list, "popular_img_list": popular_img_list}
+                   "popular_list": popular_list, "popular_img_list": popular_img_list,
+                   "m1_dict": m1, "m2_dict": m2, "m3_dict": m3, "b1_dict": b1, "b2_dict": b2,}
 
         return render(request, 'app_reg_login/home.html', context)
 
@@ -119,8 +152,14 @@ def popular_items():
     return show_dict
 
 
+def show_categories(request):
+    return render(request, 'app_reg_login/catagory.html')
+
+
 def signup(request):
     # form = MyUserCreationForm()
+    print(171, request.user)
+
     if request.method == "POST":
         print(93, "register section.")
         username = request.POST.get('name')
@@ -130,30 +169,33 @@ def signup(request):
         address = request.POST.get('address') + " | " + request.POST.get('city') + " | " + request.POST.get('state')
         ph_no = request.POST.get('phNo')
         password = request.POST.get('password')
-        print(101)
-        print(f'name: {username} '
-              f'email: {email} '
-              f'nrc: {nrc_no} '
-              f'address: {address} '
-              f'ph: {ph_no} '
-              f'password: {password}')
 
-        user = User.objects.create(
-            name=str(username),
-            username=username.strip(' '),
-            user_email=email,
-            email=email,
-            nrc_no=nrc_no,
-            address=address,
-            phone=ph_no,
-            password=password,
-            user_password=password,
-        )
-        user.save()
-        print("134 DONE REGISTRATION", user)
-        login(request, user)
-        return redirect('home')
+        try:
+            created_user = User.objects.get(user_email=email)
+        except:
+            print(101)
+            print(f'name: {username} '
+                  f'email: {email} '
+                  f'nrc: {nrc_no} '
+                  f'address: {address} '
+                  f'ph: {ph_no} '
+                  f'password: {password}')
 
+            user = User.objects.create(
+                name=str(username),
+                username=username.strip(' '),
+                user_email=email,
+                email=email,
+                nrc_no=nrc_no,
+                address=address,
+                phone=ph_no,
+                password=password,
+                user_password=password,
+            )
+            user.save()
+            print("134 DONE REGISTRATION", user)
+            login(request, user)
+            return redirect('home')
         # form = MyUserCreationForm(request.POST)
         # if form.is_valid():
         #     print(74,form.data.get('username'))
@@ -176,8 +218,7 @@ def signup(request):
         #     messages.error(request, 'An error occurs during signup')
 
     # context = {'form': form}
-    context = {}
-    return render(request, 'app_reg_login/reg_login.html', context)
+    return render(request, 'app_reg_login/reg_login.html')
 
 
 def loginUser(request):
@@ -194,7 +235,7 @@ def loginUser(request):
         print(f'173, Lemail: {email} | Lpassword: {password}')
         user = None
         try:
-            user = User.objects.get(user_email=email)
+            user = User.objects.get(user_email=email, password=password)
             print(176, user)
         except:
             print("User Not Found!!!")
@@ -232,7 +273,6 @@ def profile(request, pk):
     for transaction in transactions:
         if transaction.buyer == user:
             transactions_history.append(transaction)
-    print(118, transactions_history)
 
     # to get bidded history
     bidded_querySet = Item.objects.filter(participants__email=user.user_email)
@@ -256,6 +296,7 @@ def profile(request, pk):
         user.delete()
         return redirect('home')
 
+    print(297, transactions_history[0].buying_time)
     context = {'user': user, 'sell_dict': sell_dict, 'bidded_dict': bidded_dict, 'win_dict': win_dict,
                'transactions_history': transactions_history}
     return render(request, 'app_reg_login/profile.html', context)
@@ -276,8 +317,13 @@ def updateUser(request, pk):
     # return render(request, 'app_reg_login/updateUser.html', context)
 
     if request.method == "POST":
+        img = request.FILES.get('update_img')
+        print(280, img)
         items = Item.objects.all()
         user = User.objects.get(pk=pk)
+        if img is None:
+            img = user.avatar
+            print(290, "SET IMG")
         print(281, str(request.POST.get('user_username')).replace(' ', ''))
         if user.name is None:
             user.name = user.username
@@ -291,6 +337,7 @@ def updateUser(request, pk):
                 item.save()
                 print("After", item.winner)
 
+        user.avatar = img
         user.username = str(request.POST.get('user_username')).replace(' ', '')
         user.name = request.POST.get('user_username')
         user.user_email = request.POST.get('email')
@@ -425,6 +472,7 @@ def item_detail(request, pk):
         print("217 This is new sell price:", item.sell_price)
 
     if request.method == "POST":
+        print(472, request.POST.get('o1'))
         user_count = 0
         for participant in participants:
             user_count += 1
@@ -468,8 +516,37 @@ def item_detail(request, pk):
     return render(request, 'app_reg_login/item_details.html', context)
 
 
-def item_bid_btn(request, amount):
-    return render(request)
+def item_bid_btn(request, item, btn_no):
+    bid_item = Item.objects.get(id=item)
+    if request.method == "POST":
+        if btn_no == '1':
+            if bid_item.sell_price == 0:
+                bid_item.sell_price = bid_item.reverse_price + bid_item.once_up
+            else:
+                bid_item.sell_price += bid_item.once_up
+            print(520, bid_item.sell_price)
+        elif btn_no == '2':
+            if bid_item.sell_price == 0:
+                bid_item.sell_price = bid_item.reverse_price + (bid_item.once_up * 2)
+            else:
+                bid_item.sell_price += bid_item.once_up
+            print(522)
+        else:
+            if bid_item.sell_price == 0:
+                bid_item.sell_price = bid_item.reverse_price + (bid_item.once_up * 3)
+            else:
+                bid_item.sell_price += bid_item.once_up * 3
+            print(524)
+        bid_item.winner = str(request.user)
+        bid_item.participants.add(request.user)
+        bid_item.save()
+        Bids.objects.create(
+            bidder=request.user,
+            item=bid_item,
+            amount=bid_item.sell_price
+        )
+        print(530, bid_item.sell_price, bid_item.winner)
+    return redirect('item_detail', item)
 
 
 def item_edit(request, pk):
@@ -507,22 +584,34 @@ def item_delete(request, pk):
     return render(request, 'app_reg_login/item_delete.html', context)
 
 
-def search_item(request):
-    sItem = request.GET.get('sItem') if request.GET.get('sItem') is not None else ''
-
-    print(342, sItem)
-
-    sItem_querySet = Item.objects.filter(
-        Q(title__icontains=sItem)
-    )
-
+def search_item(request, page):
     image_list = ImageTable.objects.all()
+    if page == "navbar":
+        sItem = request.GET.get('sItem') if request.GET.get('sItem') is not None else ''
+        print(342, sItem)
+        sItem_querySet = Item.objects.filter(
+            Q(title__icontains=sItem)
+        )
+        show_dict = create_related_dict(sItem_querySet, image_list)
+    elif page == "Ending Soon":
+        sItem = page
+        show_dict = ending_soon_items()
+    elif page == "Latest Post":
+        sItem = page
+        show_dict = create_related_dict(Item.objects.all(), image_list)
+    elif page == "Popular Post":
+        sItem = page
+        show_dict = popular_items()
+    else:
+        sItem = page
+        sItem_querySet = Item.objects.filter(category=sItem)
+        show_dict = create_related_dict(sItem_querySet, image_list)
 
-    show_dict = create_related_dict(sItem_querySet, image_list)
     context = {'sItem': sItem, 'show_dict': show_dict}
     return render(request, 'app_reg_login/search.html', context)
 
 
+@login_required(login_url='login')
 def like_item(request, pk, page):
     item = Item.objects.get(id=pk)
     liked_users = item.liked_users.all()
@@ -546,44 +635,130 @@ def like_item(request, pk, page):
 
 @login_required(login_url='login')
 def buying_coin(request):
-    form = TransitionForm
+    # form = TransitionForm
+    # buyer = request.user
+    # if request.method == "POST":
+    #     print("Get into Transaction:")
+    #     form = TransitionForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         print("TransitionForm is valid")
+    #         transition = form.save()
+    #         transition.buyer = buyer
+    #         transition.save()
+    #
+    # if buyer.coin_amount == 0:
+    #     buyer.coin_amount = transition.coin_amount
+    #     print(285, buyer.coin_amount)
+    # else:
+    #     buyer.coin_amount = buyer.coin_amount + transition.coin_amount
+    # request.user.save()
+    #
+    #         print(f'Buyer: {transition.buyer.name} '
+    #               f'Coin Amount: {transition.coin_amount} '
+    #               f'Invoice No: {transition.invoice_no} '
+    #               f'Payment Method: {transition.payment_method} '
+    #               f'Invoice Img: {transition.invoice_img}'
+    #               f'Buying Time: {transition.buying_time}')
+    #
+    #         return redirect('home')
+    #     else:
+    #         messages.error(request, 'An error occurs when buying coin')
     buyer = request.user
-    if request.method == "POST":
-        print("Get into Transaction:")
-        form = TransitionForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("TransitionForm is valid")
-            transition = form.save()
-            transition.buyer = buyer
-            transition.save()
 
-            if buyer.coin_amount == 0:
-                buyer.coin_amount = transition.coin_amount
-                print(285, buyer.coin_amount)
-            else:
-                buyer.coin_amount = buyer.coin_amount + transition.coin_amount
+    if request.method == "POST":
+        buyer_nrc = request.POST.get('front') + "/" + request.POST.get('mid1') + request.POST.get(
+            'mid2') + request.POST.get('back')
+        buyer_ph = request.POST.get('buyer_ph')
+        coin_amount = request.POST.get('coin_amount')
+        invoice_no = request.POST.get('invoice_no')
+        payment_method = request.POST.get('payment_method')
+        invoice_img = request.FILES['invoice_img']
+        status = "in"
+        print(598)
+        transaction = Transition.objects.create(
+            buyer=buyer,
+            buyer_nrc=buyer_nrc,
+            buyer_ph=buyer_ph,
+            coin_amount=coin_amount,
+            invoice_no=invoice_no,
+            payment_method=payment_method,
+            invoice_img=invoice_img,
+            status=status,
+        )
+        transaction.save()
+        if buyer.coin_amount == 0:
+            buyer.coin_amount = int(transaction.coin_amount)
+            print(285, buyer.coin_amount)
+        else:
+            buyer.coin_amount = buyer.coin_amount + int(transaction.coin_amount)
+        request.user.save()
+        print(610, transaction)
+        # print(f'{buyer.username}'
+        #       f'{buyer_nrc}'
+        #       f'{buyer_ph}'
+        #       f'{coin_amount}'
+        #       f'{invoice_no}'
+        #       f'{payment_method}'
+        #       f'{invoice_img}'
+        #       f'{status}'
+        #       )
+
+    return render(request, 'app_reg_login/buying_coin.html')
+
+
+def transfer_money(request):
+    transfer_user = request.user
+
+    if request.method == "POST":
+        buyer_nrc = request.POST.get('Tfront') + "/" + request.POST.get('Tmid1') + request.POST.get(
+            'Tmid2') + request.POST.get('Tback')
+        buyer_ph = request.POST.get('transfer_ph')
+        coin_amount = request.POST.get('Tcoin_amount')
+        payment_method = request.POST.get('Tpayment_method')
+        status = "out"
+        if transfer_user.coin_amount >= int(coin_amount) and transfer_user.coin_amount > 0:
+            transaction = Transition.objects.create(
+                buyer=transfer_user,
+                buyer_nrc=buyer_nrc,
+                buyer_ph=buyer_ph,
+                coin_amount=coin_amount,
+                payment_method=payment_method,
+                status=status,
+            )
+            transfer_user.coin_amount = transfer_user.coin_amount - int(transaction.coin_amount)
             request.user.save()
 
-            print(f'Buyer: {transition.buyer.name} '
-                  f'Coin Amount: {transition.coin_amount} '
-                  f'Invoice No: {transition.invoice_no} '
-                  f'Payment Method: {transition.payment_method} '
-                  f'Invoice Img: {transition.invoice_img}'
-                  f'Buying Time: {transition.buying_time}')
-
-            return redirect('home')
-        else:
-            messages.error(request, 'An error occurs when buying coin')
-
-    context = {'form': form}
-    return render(request, 'app_reg_login/buying_coin_old.html', context)
+    return render(request, 'app_reg_login/buying_coin.html')
 
 
-def trading_coin(request, ):
-    return 0
+def advertising_item(request, pk, place):
+    item = Item.objects.get(id=pk)
+    if request.method == "POST":
+        advertisement = Advertisement.objects.create(
+            user=request.user,
+            item=item,
+        )
+        if place == "master" and request.user.coin_amount >= 20:
+            master = request.POST.get("ad_master")
+            advertisement.place = master
+            advertisement.ad_coin = 20
+            request.user.coin_amount = request.user.coin_amount - 20
+            request.user.save()
+            print(664, master)
+            advertisement.save()
+            return redirect('/')
 
-
-# def coin_handling(request, participants, )
+        elif place == "branch" and request.user.coin_amount >= 10:
+            branch = request.POST.get("ad_branch")
+            advertisement.place = branch
+            advertisement.ad_coin = 10
+            request.user.coin_amount = request.user.coin_amount - 10
+            request.user.save()
+            print(667, branch)
+            advertisement.save()
+            return redirect('/')
+    context = {'item': item}
+    return render(request, 'app_reg_login/advertising.html', context)
 
 
 def comment_section(request, pk):

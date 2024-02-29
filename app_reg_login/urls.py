@@ -16,11 +16,18 @@ urlpatterns = [
     # auction Listing & bidding
     path('sell/', views.sellItem, name='sell'),
     path('item_detail/<str:pk>', views.item_detail, name="item_detail"),
+    path('bid_btn/<str:item>/<str:btn_no>', views.item_bid_btn, name="bid_btn"),
     path('item_edit/<str:pk>', views.item_edit, name="item_edit"),
     path('item_delete/<str:pk>', views.item_delete, name="item_delete"),
 
+    # category
+    path('categories/', views.show_categories, name='show_categories'),
+
     # rating
     path('like_item/<str:pk>/<str:page>', views.like_item, name="like_item"),
+
+    # advertising
+    path('advertising/<str:pk>/<str:place>', views.advertising_item, name="advertising_item"),
 
     # comment section
     path('comment_section/<str:pk>', views.comment_section, name="comment_section"),
@@ -29,11 +36,13 @@ urlpatterns = [
     path('reply_section/<str:comment_id>', views.reply_section, name="reply_section"),
 
     # search
-    path('search_item/', views.search_item, name="search_item"),
+    path('search_item/<str:page>', views.search_item, name="search_item"),
 
     # buying coin
     path('buying_coin/', views.buying_coin, name="buying_coin"),
 
+    # transfer money
+    path('transfer_money/', views.transfer_money, name="transfer_money"),
 
 ]
 

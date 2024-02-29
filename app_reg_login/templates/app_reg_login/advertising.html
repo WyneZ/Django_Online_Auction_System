@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boot</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bs/css/bootstrap.min.css' %}">
+    <link rel="stylesheet"  href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+<!-- ..............................-->
+
+  <!-- ------------------------------- -->
+  <!-- Header popular catagory -->
+
+  <div id="catagories" class="container p-0" style="margin-top:5rem;">
+    <div class="container-fluid row h-auto p-0">
+        <div class="container-fluid col-sm-7 m-0 p-0 h-100">
+            <div class="mb-4">
+                <h5 class="fw-semibold">Master Advertisement (3Pages)</h5>
+                <h5 class="fw-semibold">1page(2photos) 20
+                    <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="coin mb-1">
+                </h5>
+                <form method="POST" action="{% url 'advertising_item' item.id 'master' %}">
+                    {% csrf_token %}
+                    <div class="">
+                        <select name="ad_master" class="p-2 " style="width: 150px;" aria-label="Default select example">
+                            <option value="master1">Master1</option>
+                            <option value="master2">Master2</option>
+                            <option value="master3">Master3</option>
+                        </select>
+                        <button type="submit" id="advBtn" class="btn advBtn btn-dark">Advertise</button>
+                    </div>
+                </form>
+
+            </div>
+            <div id="carouselExampleDark" class="carousel carousel-dark slide mt-0 p-0">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active position-relative">
+                <h1 class="fw-semibold position-absolute top-50 start-50 translate-middle" style="color: rgb(73, 74, 75);">Master 1</h1>
+                <div class="row ">
+                    <div class="col w-100 p-0 bg-body-secondary">
+                        <img src="{% static 'image/sellphoto.jpg' %}" class="polpular_img img-fluid d-block h-100 border " alt="...">
+                    </div>
+                    <div class="col w-100 p-0" style="height:500px;">
+                        <img src="{% static 'image/sellphoto.jpg' %}" class="polpular_img img-fluid d-block h-100 border" alt="...">
+                    </div>
+                </div>
+                </div>
+                <div class="carousel-item position-relative">
+                <h1 class="fw-semibold position-absolute top-50 start-50 translate-middle" style="color: rgb(73, 74, 75);">Master 2</h1>
+                <div class="row">
+                    <div class="col w-100 p-0"style="height:500px;">
+                        <img src="{% static 'image/sellphoto.jpg' %}" class="polpular_img img-fluid d-block h-100 border" alt="...">
+                    </div>
+                    <div class="col w-100 p-0"style="height:500px;">
+                        <img src="{% static 'image/sellphoto.jpg' %}" class="polpular_img img-fluid d-block h-100 border"  alt="...">
+                    </div>
+                </div>              
+                </div>
+                <div class="carousel-item position-relative">
+                    <h1 class="fw-semibold position-absolute top-50 start-50 translate-middle" style="color: rgb(73, 74, 75);">Master 3</h1>
+                <div class="row">
+                    <div class="col w-100 p-0" style="height:500px;">
+                        <img src="{% static 'image/sellphoto.jpg' %}" class="polpular_img img-fluid d-block h-100 border" alt="...">
+                    </div>
+                    <div class="col w-100 p-0" style="height:500px;">
+                        <img src="{% static 'image/sellphoto.jpg' %}" class="polpular_img img-fluid d-block h-100 border" alt="...">
+                    </div>
+                </div>              
+                </div>
+            </div>
+            <button class="carousel-control-prev rounded-circle my-auto" type="button" style="height:5vh; width:5vh; background-color: #9e9e9ea1;" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next rounded-circle my-auto" type="button" style="height:5vh; width:5vh; background-color: #9e9e9ea1;" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            </div>
+        </div>
+      <!-- small ADS -->
+        <div class="container-fluid col h-auto ps-2 ">
+            <form method="POST" action="{% url 'advertising_item' item.id 'branch' %}">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <h5 class="fw-semibold">Branch Advertising (2Pages)</h5>
+                    <h5 class="fw-semibold">1page(1photo) 10
+                        <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="coin mb-1">
+                    </h5>
+                    <div class="">
+                        <select name="ad_branch" class="p-2 " style="width: 150px;" aria-label="Default select example">
+                            <option value="Branch1">Branch1</option>
+                            <option value="Branch2">Branch2</option>
+                        </select>
+                        <button type="submit" id="advBtn" class="btn btn-dark">Advertise</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="container-fluid col-12 p-0" style="height: 500px;">
+                <div id="carouselExample" class=" carousel carousel-dark slide" style="height: 250px;">
+                    <div class="carousel-inner" style="height: 250px;">
+                        <div class="carousel-item active h-100 position-relative bg-body-secondary ">
+                            <img src="{% static 'image/sellphoto.jpg' %}" style="height: 100%; border-radius: 0%;padding: 0%;" class=" img-fluid border-0  img-thumbnail position-absolute border-0 top-50 start-50 translate-middle" alt="...">
+                            <h1 class="fw-semibold position-absolute top-50 start-50 translate-middle" style="color: rgb(73, 74, 75);">Branch 1</h1>
+                        </div>
+                        <div class="carousel-item h-100 position-relative bg-body-secondary ">
+                            <img src="{% static 'image/sellphoto.jpg' %}" style="height: 100%; border-radius: 0%;padding: 0%;" class=" img-thumbnail position-absolute top-50 start-50 translate-middle" alt="...">
+                            <h1 class="fw-semibold position-absolute top-50 start-50 translate-middle" style="color: rgb(73, 74, 75);">Branch 1</h1>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <div class="adsBox container-fluid col-12 p-0" style="height: 500px;">
+                <div id="carouselExample1" class=" carousel carousel-dark slide" style="height: 250px;">
+                    <div class="carousel-inner" style="height: 250px;">
+                        <div class="carousel-item active h-100 position-relative bg-body-secondary ">
+                            <img src="{% static 'image/sellphoto.jpg' %}" style="height: 100%; border-radius: 0%;padding: 0%;" class=" img-fluid border-0  img-thumbnail position-absolute border-0 top-50 start-50 translate-middle" alt="...">
+                            <h1 class="fw-semibold position-absolute top-50 start-50 translate-middle" style="color: rgb(73, 74, 75);">Branch 2</h1>
+                        </div>
+                        <div class="carousel-item h-100 position-relative bg-body-secondary ">
+                            <img src="{% static 'image/sellphoto.jpg' %}" style="height: 100%; border-radius: 0%;padding: 0%;" class=" img-thumbnail position-absolute top-50 start-50 translate-middle" alt="...">
+                            <h1 class="fw-semibold position-absolute top-50 start-50 translate-middle" style="color: rgb(73, 74, 75);">Branch 2</h1>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample1" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample1" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                </div>  
+            </div>  
+        </div>
+    </div>  
+  </div>  
+  <!------------------- /popular catagory ---------->
+  <!-- Script -->
+<script>
+    let coin = parseInt({{ request.user.coin_amount }}) ;
+    var advBtn = document.querySelectorAll("#advBtn");
+    var alert1 = document.getElementById("alert");
+    
+    advBtn[0].addEventListener("click",(e)=>{
+        if(coin > 20 || coin == 20){
+            alert("Advertising in Master Successful,Thank you");
+        }
+        else{
+        
+            alert("Not Enough Coins!!!");
+        }
+    })
+    advBtn[1].addEventListener("click",(e)=>{
+        if(coin > 10 || coin == 10){
+           
+            alert("Advertising in Branch Successful,Thank you");
+        }
+        else{
+            alert("Not Enough Coins!!!,Thank you");
+        }
+    })
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

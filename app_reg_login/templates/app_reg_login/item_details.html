@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boot</title>
     <link rel="stylesheet" type="text/css" href="{% static 'styles/bs/css/bootstrap.min.css' %}">
-    <link rel="stylesheet"  href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet"  href="{% static 'styles/style4.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN">
 
@@ -19,30 +19,39 @@
   <div class="header row">
     <div class="col px-0">
       <div class="product">
-        <img class="thumbnail active_thumbnail" src="{{ images.0.image_url.url }}">
-        <img class="thumbnail" src="{% static 'image/bag6.png' %}">
-        <img class="thumbnail" src="{% static 'image/bag2.png' %}">
-        <img class="thumbnail" src="{% static 'image/bag3.png' %}">
-        <img class="thumbnail" src="{% static 'image/bag4.png' %}">
-        <img class="thumbnail" src="{% static 'image/bag5.png' %}">
+<!--        <img class="thumbnail active_thumbnail" src="{{ images.0.image_url.url }}">-->
+        {% for image in images %}
+          <img class="thumbnail" src="{{ image.image_url.url }}">
+        {% endfor %}
       </div>
     </div>
     <div class="col-6 px-0">
       <h2 class="detail_title container fw-semibold fs-1 mb-5 text-center">{{ item.title }}</h2>
       <img class="imagebox img-fluid" src="{{ images.0.image_url.url }}" id="imagebox" alt="">
-      <form method="POST" action="{% url 'like_item' item.id 'detail' %}" class="rateForm shadow rounded-pill  my-3">
-        {% csrf_token %}
-        {% if user in item.liked_users.all %}
-          <button class="rate btn btn-light border-0 rounded-pill">
-            <i class="fa-solid fa-heart" style="color: #a80000;"></i>
-          </button>
-        {% else %}
-          <button class="rate btn btn-light border-0 rounded-pill">
-            <i class="fa-regular fa-heart" style="color: #333;"></i>
-          </button>
+      <div class="d-flex">
+        <form method="POST" action="{% url 'like_item' item.id 'detail' %}" class="rateForm shadow rounded-pill  my-3">
+          {% csrf_token %}
+          {% if user in item.liked_users.all %}
+            <button class="rate btn btn-light border-0 rounded-pill">
+              <i class="fa-solid fa-heart" style="color: #a80000;"></i>
+            </button>
+          {% else %}
+            <button class="rate btn btn-light border-0 rounded-pill">
+              <i class="fa-regular fa-heart" style="color: #333;"></i>
+            </button>
+          {% endif %}
+          <span class="count heart_count ms-1">{{ item.like_count }}</span>
+        </form>
+        {% if item.due_date != "expired" %}
+        <a  href="{% url 'advertising_item' item.id 'advertise' %}">
+            <div type="submit" class="rateForm shadow rounded-pill my-3  mx-3">
+              <button class="btn btn-light border-0 rounded-pill">
+                Advertising
+              </button>
+            </div>
+        </a>
         {% endif %}
-        <span class="count heart_count ms-1">{{ item.like_count }}</span>
-      </form>
+      </div>
       <div class="content mt-5">
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <div class="accordion-item border-0">
@@ -63,7 +72,7 @@
         <div class="d-flex">
           <ul class="ulList">
             <li>
-              <p class="my-0">CATAGORIES/ TYPE</p>
+              <p class="my-0">CATEGORIES/ TYPE</p>
               <span class="brand fw-semibold">{{ item.category }}</span>
             </li>
 
@@ -112,19 +121,16 @@
                   <span class="bidderName me-2" >{{ comment.user.username }}</span>
                   <span class="fw-bold">|</span>
                   <span class="month">{{ comment.created_at|timesince }} ago</span>
-                  <a data-bs-toggle="collapse" href="#reply1" aria-expanded="false" aria-controls="collapseExample">
+                  <a class="link-secondary link-underline-opacity-0 link-underline-opacity-50-hover" data-bs-toggle="collapse" href="#reply1" aria-expanded="false" aria-controls="collapseExample">
                     Reply
                   </a>
-                  <div class="collapse" id="reply1">
-                    <form method="POST" action="{% url 'reply_section' comment.id %}">
+                  <form method="POST" action="{% url 'reply_section' comment.id %}" class="collapse" id="reply1">
                       {% csrf_token %}
-                      <input type="text" name="reply_text" class="border-0 border-bottom p-2 mb-4" style="width:500px;" placeholder=" reply review">
+                      <input type="text" name="reply_text" class="cmtBox border-0 border-bottom p-2 mb-4" placeholder=" reply review">
                       <button type="submit" class="btn btn-dark shadow rounded-end">
                         <i class="fa-solid fa-reply" style="color: #ffffff;"></i>
                       </button>
-                    </form>
-
-                  </div>
+                  </form>
                 </div>
     <!--            End 1st ment-->
     <!--            Reply Section for 1st cmt-->
@@ -152,7 +158,7 @@
 <!--           End Reply section for 1st ment-->
           </div>
 
-          <div>
+            {% if request.user.is_authenticated %}
             <form method="POST" action="{% url 'comment_section' item.id %}">
               {% csrf_token %}
               <input type="text" name="comment_text" class="cmtBox p-2 mb-4 rounded-start" placeholder="Write Reviews">
@@ -160,7 +166,7 @@
                 <i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i>
               </button>
             </form>
-          </div>
+            {% endif %}
         </div>
         <hr>
       </div>
@@ -172,15 +178,11 @@
 
       <div class="card border-black mb-3" style="max-width:25rem;">
         <div class="card-header bg-transparent border-black">
-
           <img src="{{ item.seller.avatar.url }}"  width="50" height="50" class="my-2 rounded-circle">
           <span class="profileName fs-5 fw-semibold mx-2">{{ item.seller.name }}</span>
-
         </div>
 
-
         <div class="card-body">
-
           <!-- *CloseIN TIME -->
           <div class="d-flex text-black my-3">
             {% if item.due_date != "expired" %}
@@ -241,41 +243,55 @@
                 <span class="bid_price fs-2 fw-semibold">{{ item.sell_price }}</span>
               {% endif %}
             {% endif %}
-
           </div>
 
-          {% if request.user != item.seller and item.due_date != "expired" %}
+          {% if request.user != item.seller and item.due_date != "expired" and item.winner != request.user.username %}
             <div class="onceBid d-flex justify-content-around ">
-              <button type="button" class="bidBtn btn btn-outline-warning text-black">
-                <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
-                <span class="">{{ item.sell_price|add:item.once_up }}</span>
-              </button>
-
-              <button type="button" class="bidBtn btn btn-outline-warning text-black">
-                <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
-                <span class="">{{ item.sell_price|add:item.once_up|add:item.once_up }}</span>
-              </button>
-
-              <button type="button" class="bidBtn btn btn-outline-warning text-black">
-                <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
-                <span class="">{{ item.sell_price|add:item.once_up|add:item.once_up|add:item.once_up }}</span>
-              </button>
-            </div>
-            <div class="container mx-2">
-              <form method="POST">
+            <form class="bidBtn" method="POST" action="{% url 'bid_btn' item.id '1' %}">
                 {% csrf_token %}
-                <input type="text" class="bidInput rounded-start" name="amount" placeholder="Enter your bid">
-                <button class="setBid btn btn-dark rounded-end" type="submit">BID</button>
+                <button type="submit" class=" btn btn-outline-warning text-black">
+                  <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
+                  <span class="">{{ item.sell_price|add:item.once_up }}</span>
+                </button>
               </form>
-            </div>
+
+              <form class="bidBtn" method="POST" action="{% url 'bid_btn' item.id '2' %}">
+                {% csrf_token %}
+                <button type="submit" class=" btn btn-outline-warning text-black">
+                  <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
+                  <span class="">{{ item.sell_price|add:item.once_up|add:item.once_up }}</span>
+                </button>
+              </form>
+
+              <form class="bidBtn" method="POST" action="{% url 'bid_btn' item.id '3' %}">
+                {% csrf_token %}
+                <button type="submit" class=" btn btn-outline-warning text-black">
+                  <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
+                  <span class="">{{ item.sell_price|add:item.once_up|add:item.once_up|add:item.once_up }}</span>
+                </button>
+              </form>
+          </div>
+          <div class="container mx-2">
+            <input type="text" class="bInput rounded-start" style=" height: 50px;
+  margin:20px 0px;
+  padding-left:10px;width:150px;" placeholder="10 coin or up">
+            <button class="setBid btn btn-dark rounded-end"
+                    style="  padding:0 10px;
+  height: 50px;
+  margin:20px 0 px;
+  border-radius: 0%;
+  font-family:'Cinzel', serif;" type="button">BID</button>
+          </button>
+          </div>
           {% endif %}
 
         </div>
         <!-- ?/BID -->
 
 
-        <!--// Bidder HISTORY  -->
+        <!--// Bidder LIST  -->
         <div class="card-footer bg-transparent border-dark">
+          <div class="overflow-y-scroll" style="max-height:250px;">
           <table class="table m-3">
             <tbody>
               {% for bid in bids %}
@@ -284,15 +300,16 @@
                   <td class="bidderHour">
                     <span>{{ bid.created|timesince }}</span> ago</td>
                   <td class="bidCoin">
-                    <img src="image/coin (3).png"  width="15" height="15" class="coin my-2">
+                    <img src="{% static 'image/coin (3).png' %}"  width="15" height="15" class="coin my-2">
                     <span class="">{{ bid.amount }}</span>
                   </td>
                 </tr>
               {% endfor %}
             </tbody>
           </table>
+          </div>
         </div>
-        <!-- ///Bigger History -->
+        <!-- ///Bigger LIST -->
       </div>
     </div>
   <!--???BIDFORM SECTION  -->

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boot</title>
+    <link rel="stylesheet" type="text/css" href="bs\css\bootstrap.min.css">
+    <link rel="stylesheet"  href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN">
+    
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+    <!-- ..............................-->
+    
+      <!-- ------------------------------- -->
+    <div class="header container"> 
+        <h2 class="text fw-semibold">CATAGORIES</h2>
+    </div>
+    <div class="container text-center">
+        <div class="row align-items-center">
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Art&Paints' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #1c819be8;">
+                        <div class="cata_card cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3" >Art<br>&<br>Paints</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/art.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>   
+            </div>
+
+            <div class="col-3 col-sm-3"> 
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Books&Comics' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #a3646ee0;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3" style="color: #4d2128f1;">Books<br>&<br>Comics</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/book3.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>   
+            </div>
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Electronic Devices&Accessories' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #b1999e;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3 " style="color: #74255c;">Electronic Devices<br>&<br>Accessories</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/ele1.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>    
+            </div>
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Fashion&Clothings' %}">
+                    <div class="card mb-lg-5 my-3 " style="max-width: 400px;background-color: #e738385d;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3" style="color: #a30505d7;">Fashion<br>&<br>Clothings</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/clo3.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>      
+            </div>
+      
+          <!-- Force next columns to break to new line at md breakpoint and up -->
+            <div class="w-100 d-none d-md-block"></div>
+      
+   
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Furnitures Decoration' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #af5f78c2;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3">Furnitures<br> Decoration</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/funi1.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>      
+            </div>
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Jewellery&Gems' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #ffc941c4 ;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3" style="color: #6e1c29f1;">Jewellery<br>&<br>Gems</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/jel2.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>      
+            </div>
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Luxury Accessories&Perfume' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: rgb(252, 223, 179);">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold p-3 " style="color: #6e1c29f1;">Luxury Accessories<br>&<br>Perfume</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/lux1.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>  
+            </div>
+
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Musical Art&Camera' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #c6b66ed0;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3" style="color: #6e1c29f1;">Musical Art<br>&<br>Camera</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/muc6.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>  
+            </div>
+
+            <div class="w-100 d-none d-md-block"></div>
+      
+   
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Shoes&Footwear' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #cc7f6cda;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3" style="color: #4d2128f1;">Shoes<br>&<br>Footwear</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/shoe4.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>  
+            </div>
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Vehicles' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color:#574747be;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3" style="color: #4d0c16f1;" >Vehicles</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/car5.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>  
+            </div>
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Wine&Whiskey' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #DDD1C0  ;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3" style="color: #6e1c29f1;">Wine<br>&<br>Whiskey</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/wine9.jpg' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>  
+            </div>
+            <div class="col-3 col-sm-3">
+                <a class="link-underline link-underline-opacity-0" href="{% url 'search_item' 'Others' %}">
+                    <div class="card mb-lg-5 my-3" style="max-width: 400px;background-color: #b99470dc;">
+                        <div class="cata_card row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body p-0">
+                                    <h5 class="card-title fw-semibold py-3">Others</h5>
+                                </div>
+                            </div>
+                            <div class="cata-img col-md-4">
+                                <img src="{% static 'image/122.png' %}" class="cata-image img-fluid rounded-start-pill" alt="image/10.png">
+                            </div>
+                        </div>
+                    </div>      
+                </a>  
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

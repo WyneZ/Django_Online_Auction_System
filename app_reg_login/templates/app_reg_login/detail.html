@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boot</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bs/css/bootstrap.min.css' %}">
+    <link rel="stylesheet"  href="{% static 'styles/style4.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    
+</head>
+<body>
+
+  {% include 'navbar.html' %}
+<!-- ..............................-->
+
+<!-- ----------------/ Navbar -->
+
+  <div class="row" style="margin-top:9rem;">
+
+    <div class="col px-0">                
+      <div class="product">
+        {% for image in images %}
+        <img class="thumbnail" src="{{ image.image_url.url }}">
+        {% endfor %}
+      </div>
+      
+      
+    </div>
+    <div class="col-6 px-0">
+      <h2 class="detail_title container fw-semibold fs-1 mb-5 text-center">Black Chanel Bag</h2>
+      <img class="imagebox img-fluid" src="{{ images.0.image_url.url }}" id="imagebox" alt="">
+      <div class="d-flex">
+        <form method="POST" action="{% url 'like_item' item.id 'detail' %}" class="rateForm shadow rounded-pill  my-3">
+          {% csrf_token %}
+          {% if user in item.liked_users.all %}
+            <button class="rate btn btn-light border-0 rounded-pill">
+              <i class="fa-solid fa-heart" style="color: #a80000;"></i>
+            </button>
+          {% else %}
+            <button class="rate btn btn-light border-0 rounded-pill">
+              <i class="fa-regular fa-heart" style="color: #333;"></i>
+            </button>
+          {% endif %}
+          <span class="count heart_count ms-1">{{ item.like_count }}</span>
+        </form>
+        {% if item.due_date != "expired" %}
+        <a  href="{% url 'advertising_item' item.id 'advertise' %}">
+          <div type="submit" class="rateForm shadow rounded-pill my-3  mx-3">
+            <button class="btn btn-light border-0 rounded-pill">
+              Advertising
+            </button>
+        </div> 
+        </a>
+        {% endif %}
+      </div>
+      <div class="content mt-5">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          <div class="accordion-item border-0">
+            <h5 class="accordion-header">
+              <button class="item-description fw-semibold border-0 bg-body-tertiary collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                Item's Description
+                <i class="fa-solid fa-caret-down" style="color: #050505;"></i>
+              </button>
+            </h5>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <p>{{ item.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- items fact -->
+        <div class="d-flex">
+          <ul class="ulList">
+            <li>
+              <p class="my-0">CATEGORIES/ TYPE</p>
+              <span class="brand fw-semibold">{{ item.category }}</span>
+            </li>
+            
+            <li>
+              <p class="my-0">NO. of ITEM</p>
+              <span class="bid_price fw-semibold">{{ item.number_of_items }}</span>
+            </li>
+
+            <li>
+              <p class="my-0">MODEL/ NAME /ARTIST</p>
+              {% if item.item_name == None %}
+                <span class="brand fw-semibold">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;---</span>
+              {% else %}
+                <span class="brand fw-semibold">{{ item.item_name }}</span>
+              {% endif %}
+          </ul> 
+
+
+          <ul class="ulList">
+            <li>
+              <p class="my-0">CONDITION</p>
+              <span class="condition fw-semibold">{{ item.item_condition }}</span>
+            </li>
+
+            <li>
+              <p class="my-0">COUNTRY of ORIGIN</p>
+              <span class="country fw-semibold">{{ item.country_of_origin }}</span>
+            </li>
+
+            <li>
+              <p class="my-0">ESTIMATED PERIOD / ERA</p>
+              <span class="brand fw-semibold">{{ item.estimated_era }}</span>
+          </ul>  
+        </div>
+        <hr>
+
+        <!-- Review -->
+        <div class="reviewBox">
+          <div>
+            <p class="fw-bold">{{ review_count }} reviews</p>
+<!--            1st ment-->
+            {% for comment in comments %}
+              {% if comment.parent_comment == None %}
+                <div class="review">
+                  <p class="bidderReview m-0">{{ comment.text }}</p>
+                  <span class="bidderName me-2" >{{ comment.user.username }}</span>
+                  <span class="fw-bold">|</span>
+                  <span class="month">{{ comment.created_at|timesince }} ago</span>
+                  <a class="link-secondary link-underline-opacity-0 link-underline-opacity-50-hover" data-bs-toggle="collapse" href="#reply1" aria-expanded="false" aria-controls="collapseExample">
+                    Reply
+                  </a>
+                  <form method="POST" action="{% url 'reply_section' comment.id %}" class="collapse" id="reply1">
+                    {% csrf_token %}
+                    <input type=" text" name="reply_text" class="cmtBox border-0 border-bottom p-2 mb-4" placeholder=" reply review">
+                    <button type="submit" class="btn btn-dark shadow rounded-end">
+                      <i class="fa-solid fa-reply" style="color: #ffffff;"></i>
+                    </button>
+                  </form>
+                </div>
+
+            <div class="reply_box">   
+              <button class="item-description fw-semibold border-0 bg-body-tertiary collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cmt{{ comment.id }}" aria-expanded="false">
+                View Replies
+              </button>
+              {% for reply in replies %}
+                {% if reply.parent_commit == comment %}
+                  <div class="collapse" id="cmt{{ comment.id }}">
+                    <div class="reply_cmt">
+                      <p class="bidderReview m-0">{{ reply.text }}</p>
+                      <span class="bidderName me-2">{{ reply.user.username }}</span>
+                      <span class="fw-bold">|</span>
+                      <span class="month">{{ reply.created_at|timesince }} ago</span>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            <!-- ************* -->
+            {% if request.user.is_authenticated %}
+            <form method="POST" action="{% url 'comment_section' item.id %}">
+              {% csrf_token %}
+              <input type=" text" name="comment_text" class="cmtBox p-2 mb-4 rounded-start" placeholder="Write Reviews">
+              <button type="submit" class="sentBtn btn btn-dark shadow rounded-end">
+                <i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i>
+              </button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+        <hr>  
+      </div>
+    </div>
+
+  <!--???BIDFORM SECTION  -->
+    <div class="bidForm col-4 px-3 mx-0">
+
+      <div class="card mb-3" style="max-width:25rem;">
+        <div class="card-header bg-transparent border-black">
+          <img src="{{ item.seller.avatar.url }} "  width="50" height="50" class="my-2 rounded-circle">
+          <span class="profileName fs-5 fw-semibold mx-2">{{ item.seller.name }}</span>
+        </div>
+ 
+        <div class="card-body">
+          <!-- *CloseIN TIME -->
+          <div class="d-flex text-black my-3">
+            {% if item.due_date != "expired" %}
+            <span class="text me-2 fs-5">Closes in</span>
+            <div class="colseIn d-flex me-1">
+              <span class="day" id="countdown"></span>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    $(document).ready(function() {
+                        // var endDate = "2024-02-11T12:56"
+                        var endDate = "{{ item.due_date }}";
+
+                        if (endDate != "expired") {
+                            var countdownDate = new Date(endDate).getTime();
+
+                            var x = setInterval(function() {
+                                var now = new Date().getTime();
+                                var distance = countdownDate - now;
+
+                                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                                if (distance < 0) {
+                                    clearInterval(x);
+                                    document.getElementById("countdown").innerHTML = "EXPIRED";
+                                }
+                            }, 1000);
+                        }
+                        else {
+                            document.getElementById("countdown").innerHTML = "EXPIRED";
+                        }
+
+                    });
+                </script>
+            </div>
+            {% else %}
+            <span class="text me-2 fs-5" >Bidding Closed</span>
+            {% endif %}
+          </div>
+          <!-- */CloseIN TIME -->
+
+          <!-- ? BID -->
+          <div class="bidBox mx-3 my-2">
+            {% if item.due_date != "expired" %}
+            <p class="my-0">CURRENT BID</p>
+            <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="coin my-2 mb-4">
+            <span class="bid_price fs-2 fw-semibold">{{ item.sell_price }}</span>
+            {% else %}
+            <p class="my-0">FINAL BID</p>
+              {% if item.winner == None %}
+                <span class="bid_price fs-2 fw-semibold">No Bidders</span>
+              {% else %}
+                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="coin my-2 mb-4">
+                <span class="bid_price fs-2 fw-semibold">{{ item.sell_price }}</span>
+              {% endif %}
+            {% endif %}
+          </div>
+
+          {% if request.user != item.seller and item.due_date != "expired" and item.winner != request.user.username and request.user.coin_amount >= item.sell_price %}
+          <div class="onceBid d-flex justify-content-around ">
+            <form method="POST" action="{% url 'bid_btn' item.id '1' %}">
+              {% csrf_token %}
+              <button type="submit" class="bidBtn btn btn-outline-warning text-black">
+                <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
+                <span class="">{{ item.sell_price|add:item.once_up }}</span>
+              </button>
+            </form>
+
+              <form method="POST" action="{% url 'bid_btn' item.id '2' %}">
+                {% csrf_token %}
+                <button type="submit" class="bidBtn btn btn-outline-warning text-black">
+                  <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
+                  <span class="">{{ item.sell_price|add:item.once_up|add:item.once_up|add:item.once_up }}</span>
+                </button>
+              </form>
+
+              <form method="POST" action="{% url 'bid_btn' item.id '3' %}">
+                {% csrf_token %}
+                <button type="submit" class="bidBtn btn btn-outline-warning text-black">
+                  <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin my-2">
+                  <span class="">{{ item.sell_price|add:item.once_up|add:item.once_up|add:item.once_up }}</span>
+                </button>
+              </form>
+          </div>
+          <form method="POST" class="container mx-2">
+            {% csrf_token %}
+            <input name="amount" type="text" class="bidInput rounded-start" placeholder="10 coin or up">
+            <button class="setBid btn btn-dark rounded-end" type="submit">BID</button>
+          </form>
+          {% endif %}
+        </div>
+        <!-- ?/BID -->
+
+
+        <!--// Bidder HISTORY  -->
+        <div class="card-footer bg-transparent border-dark" >
+          <p class="fw-semibold">Buidders</p>
+          <div class="overflow-y-scroll" style="height:250px;">
+            <table class="table m-3">
+              <tbody>
+              {% for bid in bids %}
+                <tr>
+                  <td class="bidderName">{{ bid.bidder.name }}</td>
+                  <td class="bidderHour">
+                    <span>{{ bid.created|timesince }}</span> ago</td>
+                  <td class="bidCoin">
+                    <img src="{% static 'image/coin (3).png' %}"  width="15" height="15" class="coin my-2">
+                    <span class="">{{ bid.amount }}</span>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- ///Bigger History -->
+      </div>
+    </div>
+  <!--???BIDFORM SECTION  -->
+
+  </div>
+
+  <!-- ?Related Post -->
+  <div id="related" class="items container">
+    <hr>  
+    <div class="text d-flex justify-content-between">
+      <h5 class="text px-3 pb-3 fw-semibold">Related Post</h5>
+      <a class="link-secondary link-underline-opacity-0" href="items.html">
+        <p class="text px-3 pb-3 te">See More</p>
+      </a>
+    </div>
+    <div id="carouselExample1" class="carousel carousel-dark slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="cards-wrapper">
+            <!-- 1 -->
+            <div class="container border border-0 card p-0 mx-2" id="postId">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/book.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div>                   
+                <div class="img_card card-body">
+                  <h5 class="card-title fw-semibold my-2">Title</h5>
+                  <p class="startBid card-text my-0 ">Current Bid</p>
+                  <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                  <span class="currentBid fw-semibold">5000 </span>
+                  <div class="dueDate d-flex mt-2">
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <span>Closes:</span>
+                    <div class="d-flex mx-1">
+                      <span class="date ">0</span>
+                      <span>d</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="month ">february</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="hour">00:</span>
+                      <span class="minutes">00</span>
+                    </div>
+                </div>                  
+                <form class="rating">
+                    <button class="rate ms-1" id="1">
+                      <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                    </button>
+                    <button class="rate" id="2">
+                      <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                    </button>
+                    <span class="count heart_count">12</span>
+                  </form> 
+                </div>
+            </div>
+            <div class="container card d-none border border-0 d-md-block p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/bag7.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div> 
+                <div class="img_card card-body">
+                  <h5 class="card-title fw-semibold my-2">Title</h5>
+                  <p class="startBid card-text my-0 ">Current Bid</p>
+                  <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                  <span class="currentBid fw-semibold">5000 </span>
+                  <div class="dueDate d-flex mt-2">
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <span>Closes:</span>
+                    <div class="d-flex mx-1">
+                      <span class="date ">0</span>
+                      <span>d</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="month ">february</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="hour">00:</span>
+                      <span class="minutes">00</span>
+                    </div>
+                </div>                  
+                <form class="rating">
+                    <button class="rate ms-1" id="1">
+                      <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                    </button>
+                    <button class="rate" id="2">
+                      <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                    </button>
+                    <span class="count heart_count">12</span>
+                  </form> 
+                </div>
+            </div>
+            <div class="container card d-none border border-0 d-md-block p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/shoes1.jpeg" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div>                
+                <div class="img_card card-body">
+                  <h5 class="card-title fw-semibold my-2">Title</h5>
+                  <p class="startBid card-text my-0 ">Current Bid</p>
+                  <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                  <span class="currentBid fw-semibold">5000 </span>
+                  <div class="dueDate d-flex mt-2">
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <span>Closes:</span>
+                    <div class="d-flex mx-1">
+                      <span class="date ">0</span>
+                      <span>d</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="month ">february</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="hour">00:</span>
+                      <span class="minutes">00</span>
+                    </div>
+                </div>                  
+                <form class="rating">
+                    <button class="rate ms-1" id="1">
+                      <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                    </button>
+                    <button class="rate" id="2">
+                      <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                    </button>
+                    <span class="count heart_count">12</span>
+                  </form> 
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="cards-wrapper">
+            <div class="container-sm card border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/3.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div>                 
+                <div class="img_card card-body">
+                  <h5 class="card-title fw-semibold my-2">Title</h5>
+                  <p class="startBid card-text my-0 ">Current Bid</p>
+                  <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                  <span class="currentBid fw-semibold">5000 </span>
+                  <div class="dueDate d-flex mt-2">
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <span>Closes:</span>
+                    <div class="d-flex mx-1">
+                      <span class="date ">0</span>
+                      <span>d</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="month ">february</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="hour">00:</span>
+                      <span class="minutes">00</span>
+                    </div>
+                </div>                  
+                <form class="rating">
+                    <button class="rate ms-1" id="1">
+                      <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                    </button>
+                    <button class="rate" id="2">
+                      <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                    </button>
+                    <span class="count heart_count">12</span>
+                  </form> 
+                </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/1.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div>                  
+                <div class="img_card card-body">
+                  <h5 class="card-title fw-semibold my-2">Title</h5>
+                  <p class="startBid card-text my-0 ">Current Bid</p>
+                  <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                  <span class="currentBid fw-semibold">5000 </span>
+                  <div class="dueDate d-flex mt-2">
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <span>Closes:</span>
+                    <div class="d-flex mx-1">
+                      <span class="date ">0</span>
+                      <span>d</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="month ">february</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="hour">00:</span>
+                      <span class="minutes">00</span>
+                    </div>
+                </div>                  
+                <form class="rating">
+                    <button class="rate ms-1" id="1">
+                      <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                    </button>
+                    <button class="rate" id="2">
+                      <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                    </button>
+                    <span class="count heart_count">12</span>
+                  </form> 
+                </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/4.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div>                  
+                <div class="img_card card-body">
+                  <h5 class="card-title fw-semibold my-2">Title</h5>
+                  <p class="startBid card-text my-0 ">Current Bid</p>
+                  <img src="image/coin (3).png"  width="25" height="25" class="post-coin mb-2">
+                  <span class="currentBid fw-semibold">5000 </span>
+                  <div class="dueDate d-flex mt-2">
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <span>Closes:</span>
+                    <div class="d-flex mx-1">
+                      <span class="date ">0</span>
+                      <span>d</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="month ">february</span>
+                    </div>
+                    <div class="d-flex me-1">
+                      <span class="hour">00:</span>
+                      <span class="minutes">00</span>
+                    </div>
+                </div>                  
+                <form class="rating">
+                    <button class="rate ms-1" id="1">
+                      <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                    </button>
+                    <button class="rate" id="2">
+                      <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                    </button>
+                    <span class="count heart_count">12</span>
+                  </form> 
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="cards-wrapper">
+            <div class="container-sm card border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/5.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div>                  
+              <div class="img_card card-body">
+                <h5 class="card-title ">Special title treatment</h5>
+                <p class="card-text">Current Bid</p>
+                <span class="currentBid">5000$ </span>
+                <p class="date_text text-body-secondary mt-1">2 days left</p>
+                <div class="rating">
+                  <button class="rate" onclick="reactBefore()">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" onclick="reactAfter()">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="heart_count ms-1">19</span>
+                </div> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/6.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div>                   
+              <div class="img_card card-body">
+                <h5 class="card-title ">Special title treatment</h5>
+                <p class="card-text">Current Bid</p>
+                <span class="currentBid">5000$ </span>
+                <p class="date_text text-body-secondary mt-1">2 days left</p>
+                <div class="rating">
+                  <button class="rate" onclick="reactBefore()">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" onclick="reactAfter()">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="heart_count ms-1">19</span>
+                </div> 
+              </div>
+            </div>
+            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">
+              <div class="container-sm card-header border border-0">
+                <a href="detail.html">               
+                  <img src="image/1.png" class="img-fluid card-img-top" style="height:18rem;" alt="...">
+                </a>             
+                </div>                 
+              <div class="img_card card-body">
+                <h5 class="card-title ">Special title treatment</h5>
+                <p class="card-text">Current Bid</p>
+                <span class="currentBid">5000$ </span>
+                <p class="date_text text-body-secondary mt-1">2 days left</p>
+                <div class="rating">
+                  <button class="rate" onclick="reactBefore()">
+                    <i id="reactBefore" class="fa-regular fa-heart" style="color: #333;"></i>
+                  </button>
+                  <button class="rate" onclick="reactAfter()">
+                    <i id="reactAfter" class="fa-solid fa-heart" style="color: #a80000;"></i>
+                  </button>
+                  <span class="heart_count ms-1">19</span>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>      
+        <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample1" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample1" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div> 
+   <!-- -----------Follow us------------- -->
+   <div class="termBox container-fluid bg-body-secondary" style="height: 90px;">
+    <div class="container">
+      <div class="container py-4">
+        <div class=" list-unstyled d-flex justify-content-around m-0">
+          <h3 class="fw-semibold col-2">Follow Us</h3>
+          <i class="followUs fa-brands fa-facebook" style="color: rgb(0, 0, 0);"></i>
+          <i class="followUs fa-brands fa-twitter" style="color: #000000;"></i>
+          <i class="followUs fa-brands fa-instagram" style="color: #000000;"></i>
+          <i class="followUs fa-brands fa-youtube" style="color: #000000;"></i>
+          <i class="followUs fa-brands fa-linkedin" style="color: #000000;"></i>
+        </div>
+    </div>
+  </div>
+  <!-- ------------Trems------------ -->
+    <div class="termBox container d-flex justify-content-between ">
+      <ul class="explore_ul list-unstyled ms-5">
+        <li class="fw-semibold text-black">About Eagle Auction</li>
+        <li><a href="">About Eagle Auction</a></li>
+        <li><a href="">Our Experts</a></li>
+        <li><a href="">Careers</a></li>
+      </ul>
+
+      <ul class="explore_ul  list-unstyled">
+        <li class="fw-semibold text-black">Buy</a></li>
+        <li><a href="">How to Buy</a></li>
+        <li><a href="">Buyer Protection</a></li>
+        <li><a href="">Buyer terms</a></li>
+      </ul>
+
+      <ul class="explore_ul  list-unstyled">
+        <li class="fw-semibold text-black">Sell</a></li>
+        <li><a href="">How to Sell</a></li>
+        <li><a href="">Seller Tips</a></li>
+        <li><a href="">Seller terms</a></li>
+      </ul>
+
+      <ul class="explore_ul  list-unstyled">
+        <li class="fw-semibold text-black">My Eagle</a></li>
+        <li><a href="">Sign in</a></li>
+        <li><a href="">Register</a></li>
+        <li><a href="">Help Centre</a></li>
+      </ul>
+
+      <hr> 
+    </div> 
+
+
+
+                                                                  v>
+        
+    <script>
+
+        let thumbnails = document.getElementsByClassName('thumbnail')
+
+        let activeImages = document.getElementsByClassName('active_thumbnail')
+
+        for (var i=0; i < thumbnails.length; i++){
+
+          thumbnails[i].addEventListener('click', function(){
+            console.log(activeImages)
+            
+            if (activeImages.length > 0){
+              activeImages[0].classList.remove('active_thumbnail')
+            }
+            
+
+            this.classList.add('active_thumbnail')
+            document.getElementById('imagebox').src = this.src
+          })
+        }
+
+    </script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
