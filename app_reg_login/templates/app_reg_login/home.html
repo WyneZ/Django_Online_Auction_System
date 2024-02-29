@@ -339,8 +339,8 @@
             <div class="container card-header border border-0">
               <a href="{% url 'item_detail' ending_list.2.id %}">
                 <img src="{{ ending_img_list.2.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-              </a>            
-            </div>                 
+              </a>
+            </div>
             <div class="img_card card-body">
               <h5 class="card-title fw-semibold my-2">{{ ending_list.2.title }}</h5>
               <p class="startBid card-text my-0 ">Current Bid</p>
@@ -351,7 +351,7 @@
                     <span class="currentBid fw-semibold">{{ ending_list.2.sell_price }}</span>
                 {% endif %}
                 <div class="dueDate d-flex mt-2">
-                <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                 <span>Closes:</span>
                 <div class="d-flex mx-1">
                   <span class="date" id="countdown_e2"></span>
@@ -416,8 +416,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' ending_list.3.id %}">
                   <img src="{{ ending_img_list.3.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                  
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ ending_list.3.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -428,7 +428,7 @@
                         <span class="currentBid fw-semibold">{{ ending_list.3.sell_price }}</span>
                     {% endif %}
                    <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_e3"></span>
@@ -487,8 +487,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' ending_list.4.id %}">
                   <img src="{{ ending_img_list.4.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                   
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ ending_list.4.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -499,7 +499,7 @@
                         <span class="currentBid fw-semibold">{{ ending_list.4.sell_price }}</span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_e4"></span>
@@ -537,7 +537,7 @@
                       </script>
                   </div>
 
-              </div>                  
+              </div>
                 <form method="POST" action="{% url 'like_item' ending_list.4.id 'home' %}" class="rating">
                     {% csrf_token %}
                     {% if user in ending_list.4.liked_users.all %}
@@ -559,8 +559,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' ending_list.5.id %}">
                   <img src="{{ ending_img_list.5.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                  
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ ending_list.5.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -571,7 +571,7 @@
                         <span class="currentBid fw-semibold">{{ ending_list.5.sell_price }}</span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_e5"></span>
@@ -633,8 +633,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' ending_list.6.id %}">
                   <img src="{{ ending_img_list.6.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ ending_list.6.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -645,7 +645,7 @@
                         <span class="currentBid fw-semibold">{{ ending_list.6.sell_price }}</span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_e6"></span>
@@ -704,8 +704,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' ending_list.7.id %}">
                   <img src="{{ ending_img_list.7.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                  
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ ending_list.7.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -716,7 +716,7 @@
                         <span class="currentBid fw-semibold">{{ ending_list.7.sell_price }}</span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_e7"></span>
@@ -774,8 +774,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' ending_list.8.id %}">
                   <img src="{{ ending_img_list.8.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                  
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ ending_list.8.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -786,7 +786,7 @@
                         <span class="currentBid fw-semibold">{{ ending_list.8.sell_price }}</span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_e8"></span>
@@ -841,7 +841,7 @@
             </div>
 <!--              End es8-->
           </div>
-        </div>      
+        </div>
         <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
@@ -853,11 +853,11 @@
       </div>
     </div>
   </div>
-  <!---------------- /Ending Soon ------------------->              
+  <!---------------- /Ending Soon ------------------->
 
   <!-- Lasted -->
   <div id="lasted" class="items container">
-    <hr>  
+    <hr>
     <div class="text d-flex justify-content-between">
       <h5 class="text px-3 pb-3 fw-semibold">Lasted Post</h5>
       <a class="link-secondary link-underline-opacity-0" href="{% url 'search_item' 'Latest Post' %}">
@@ -873,8 +873,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.0.id %}">
                   <img src="{{ latest_img_list.0.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                   
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.0.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -885,7 +885,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.0.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l0"></span>
@@ -944,8 +944,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.1.id %}">
                   <img src="{{ latest_img_list.1.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div> 
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.1.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -956,7 +956,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.1.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l1"></span>
@@ -1014,8 +1014,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.2.id %}">
                   <img src="{{ latest_img_list.2.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.2.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1026,7 +1026,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.2.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l2">0</span>
@@ -1089,8 +1089,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.3.id %}">
                   <img src="{{ latest_img_list.3.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                 
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.3.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1101,7 +1101,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.3.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l3"></span>
@@ -1159,8 +1159,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.4.id %}">
                   <img src="{{ latest_img_list.4.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                  
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.4.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1171,7 +1171,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.4.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l4"></span>
@@ -1230,8 +1230,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.5.id %}">
                   <img src="{{ latest_img_list.5.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                  
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.5.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1242,7 +1242,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.5.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l5"></span>
@@ -1305,8 +1305,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.6.id %}">
                   <img src="{{ latest_img_list.6.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                  
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.6.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1317,7 +1317,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.6.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l6"></span>
@@ -1376,8 +1376,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.7.id %}">
                   <img src="{{ latest_img_list.7.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                   
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.7.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1388,7 +1388,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.7.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l7"></span>
@@ -1447,8 +1447,8 @@
               <div class="container-sm card-header border border-0">
                 <a href="{% url 'item_detail' latest_list.8.id %}">
                   <img src="{{ latest_img_list.8.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                </a>             
-               </div>                 
+                </a>
+               </div>
                <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ latest_list.8.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1459,7 +1459,7 @@
                         <span class="currentBid fw-semibold">{{ latest_list.8.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date " id="countdown_l8"></span>
@@ -1514,7 +1514,7 @@
               </div>
             </div>
           </div>
-        </div>      
+        </div>
         <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample1" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
@@ -1529,7 +1529,7 @@
   <!----------------- /Lasted --------------------------->
     <!-- Popular -->
     <div id="popular" class="items container">
-      <hr>  
+      <hr>
       <div class="text d-flex justify-content-between">
         <h5 class="text px-3 pb-3 fw-semibold">Popular Post</h5>
         <a class="link-secondary link-underline-opacity-0" href="{% url 'search_item' 'Popular Post' %}">
@@ -1545,8 +1545,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.0.id %}">
                     <img src="{{ popular_img_list.0.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div>                   
+                  </a>
+                 </div>
                  <div class="img_card card-body">
                   <h5 class="card-title fw-semibold my-2">{{ popular_list.0.title }}</h5>
                   <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1557,7 +1557,7 @@
                         <span class="currentBid fw-semibold">{{ popular_list.0.sell_price }} </span>
                      {% endif %}
                   <div class="dueDate d-flex mt-2">
-                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                     <span>Closes:</span>
                     <div class="d-flex mx-1">
                         <span class="date" id="countdown_p0"></span>
@@ -1618,8 +1618,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.1.id %}">
                     <img src="{{ popular_img_list.1.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div> 
+                  </a>
+                 </div>
                  <div class="img_card card-body">
                   <h5 class="card-title fw-semibold my-2">{{ popular_list.1.title }}</h5>
                   <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1630,7 +1630,7 @@
                         <span class="currentBid fw-semibold">{{ popular_list.1.sell_price }} </span>
                      {% endif %}
                      <div class="dueDate d-flex mt-2">
-                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                     <span>Closes:</span>
                     <div class="d-flex mx-1">
                       <span class="date" id="countdown_p1"></span>
@@ -1689,8 +1689,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.2.id %}">
                     <img src="{{ popular_img_list.2.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div>                
+                  </a>
+                 </div>
              <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ popular_list.2.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1700,7 +1700,7 @@
                      {% else %}
                         <span class="currentBid fw-semibold">{{ popular_list.2.sell_price }} </span>
                      {% endif %}                <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_p2"></span>
@@ -1762,8 +1762,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.3.id %}">
                     <img src="{{ popular_img_list.3.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div>                 
+                  </a>
+                 </div>
              <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ popular_list.3.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1774,7 +1774,7 @@
                         <span class="currentBid fw-semibold">{{ popular_list.3.sell_price }} </span>
                      {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_p3"></span>
@@ -1832,8 +1832,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.4.id %}">
                     <img src="{{ popular_img_list.4.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div>                  
+                  </a>
+                 </div>
              <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ popular_list.4.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1844,7 +1844,7 @@
                         <span class="currentBid fw-semibold">{{ popular_list.4.sell_price }} </span>
                      {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_p4"></span>
@@ -1903,8 +1903,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.5.id %}">
                     <img src="{{ popular_img_list.5.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div>                  
+                  </a>
+                 </div>
              <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ popular_list.5.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1915,7 +1915,7 @@
                         <span class="currentBid fw-semibold">{{ popular_list.5.sell_price }} </span>
                      {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_p5"></span>
@@ -1977,8 +1977,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.6.id %}">
                     <img src="{{ popular_img_list.6.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div>                  
+                  </a>
+                 </div>
              <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ popular_list.6.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -1989,7 +1989,7 @@
                         <span class="currentBid fw-semibold">{{ popular_list.6.sell_price }} </span>
                      {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_p6"></span>
@@ -2047,8 +2047,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.7.id %}">
                     <img src="{{ popular_img_list.7.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div>                   
+                  </a>
+                 </div>
              <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ popular_list.7.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -2059,7 +2059,7 @@
                         <span class="currentBid fw-semibold">{{ popular_list.7.sell_price }} </span>
                      {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_p7"></span>
@@ -2118,8 +2118,8 @@
                 <div class="container-sm card-header border border-0">
                   <a href="{% url 'item_detail' popular_list.8.id %}">
                     <img src="{{ popular_img_list.8.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">
-                  </a>             
-                 </div>                 
+                  </a>
+                 </div>
              <div class="img_card card-body">
                 <h5 class="card-title fw-semibold my-2">{{ popular_list.8.title }}</h5>
                 <p class="startBid card-text my-0 ">Current Bid</p>
@@ -2130,7 +2130,7 @@
                         <span class="currentBid fw-semibold">{{ popular_list.8.sell_price }} </span>
                     {% endif %}
                 <div class="dueDate d-flex mt-2">
-                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>            
+                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>
                   <span>Closes:</span>
                   <div class="d-flex mx-1">
                     <span class="date" id="countdown_p8"></span>
@@ -2184,7 +2184,7 @@
               </div>
               </div>
             </div>
-          </div>      
+          </div>
           <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample2" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>

@@ -84,7 +84,9 @@ class MyView(View):
                 # print(42, due_date-now-timedelta(hours=6, minutes=30))
 
                 final_date = due_date - now - timedelta(hours=6, minutes=30)
-                if final_date < timedelta(minutes=1):
+                print(86, final_date.total_seconds())
+                print(87, final_date, type(final_date))
+                if int(final_date.total_seconds()) < 1:
                     print(48, item.title)
                     item.due_date = "expired"
                     print(50, len(item.participants.all()))
@@ -117,7 +119,6 @@ class MyView(View):
         b1 = create_ad_dict(all_ads, latest_items, all_images, "Branch1")
         b2 = create_ad_dict(all_ads, latest_items, all_images, "Branch2")
 
-
         print(118, b1)
         ad_dict = {}
 
@@ -128,7 +129,7 @@ class MyView(View):
         context = {"ending_list": ending_list, "ending_img_list": ending_img_list,
                    "latest_list": latest_list, "latest_img_list": latest_img_list,
                    "popular_list": popular_list, "popular_img_list": popular_img_list,
-                   "m1_dict": m1, "m2_dict": m2, "m3_dict": m3, "b1_dict": b1, "b2_dict": b2,}
+                   "m1_dict": m1, "m2_dict": m2, "m3_dict": m3, "b1_dict": b1, "b2_dict": b2, }
 
         return render(request, 'app_reg_login/home.html', context)
 
@@ -158,6 +159,7 @@ def show_categories(request):
 
 def signup(request):
     # form = MyUserCreationForm()
+    all_users = User.objects.all()
     print(171, request.user)
 
     if request.method == "POST":
@@ -217,8 +219,8 @@ def signup(request):
         #     print("SignUp Form failed.")
         #     messages.error(request, 'An error occurs during signup')
 
-    # context = {'form': form}
-    return render(request, 'app_reg_login/reg_login.html')
+    context = {'all_users': all_users}
+    return render(request, 'app_reg_login/reg_login.html', context)
 
 
 def loginUser(request):
@@ -296,7 +298,6 @@ def profile(request, pk):
         user.delete()
         return redirect('home')
 
-    print(297, transactions_history[0].buying_time)
     context = {'user': user, 'sell_dict': sell_dict, 'bidded_dict': bidded_dict, 'win_dict': win_dict,
                'transactions_history': transactions_history}
     return render(request, 'app_reg_login/profile.html', context)
@@ -427,11 +428,14 @@ def sellItem(request):
         )
 
         images = request.FILES.getlist('sell_imgs')
+        img_count = 0
         for image in images:
-            image = ImageTable.objects.create(
-                item=item,
-                image_url=image
-            )
+            if img_count < 6:
+                image = ImageTable.objects.create(
+                    item=item,
+                    image_url=image
+                )
+            img_count += 1
         print(368, item.reverse_price)
 
     return redirect('profile', request.user.id)
@@ -439,7 +443,6 @@ def sellItem(request):
 
 def item_detail(request, pk):
     item = Item.objects.get(id=pk)
-    url = reverse('item_detail', kwargs={'pk': item.id})
     images = ImageTable.objects.filter(item=item)
     print(279, type(images))
     item_bids = item.bids_set.all()
@@ -471,36 +474,72 @@ def item_detail(request, pk):
         item.save()
         print("217 This is new sell price:", item.sell_price)
 
+        for participant in participants:
+            print("Participants:", participant)
+
+    # when item expired
+    now = datetime.now()
+    if item.due_date != "expired":
+        due_date = datetime.strptime(item.due_date, "%Y-%m-%dT%H:%M")
+        # print(42, due_date-now-timedelta(hours=6, minutes=30))
+
+        final_date = due_date - now - timedelta(hours=6, minutes=30)
+        print(86, final_date.total_seconds())
+        print(87, final_date, type(final_date))
+        if int(final_date.total_seconds()) < 1:
+            print(48, item.title)
+            item.due_date = "expired"
+            print(50, len(item.participants.all()))
+            if len(item.participants.all()) > 0:
+                item.seller.coin_amount = item.seller.coin_amount + item.sell_price
+                item.seller.save()
+            item.save()
+
+
+
+
     if request.method == "POST":
         print(472, request.POST.get('o1'))
         user_count = 0
-        for participant in participants:
-            user_count += 1
-            print(252, "uc:", user_count)
-            print(253, "participants:", participants[0])
+        # for bid in item_bids:
+        #     if user_count == 1:
+        #         bid.bidder.coin_amount += int(request)
+        #     user_count += 1
+        #     user_count = 0
 
         amount = int(request.POST.get('amount'))
         once_up = item.sell_price + int(item.once_up)
 
         if (request.user.coin_amount >= amount) and (amount >= once_up):
             # give back coin to second winner
-            if user_count > 1:
-                print(260, "Before:", participants[1].coin_amount)
-                participants[1].coin_amount = participants[1].coin_amount + item.sell_price
-                participants[1].save()
-                print((262, "After:", participants[1].coin_amount))
+            # if user_count > 1:
+            #     print(260, "Before:", participants[1].coin_amount)
+            #     participants[1].coin_amount = participants[1].coin_amount + item.sell_price
+            #     participants[1].save()
+            #     print((262, "After:", participants[1].coin_amount))
 
-            request.user.coin_amount = request.user.coin_amount - amount
-            request.user.save()
-            item.sell_price = amount
-            item.winner = str(request.user)
-            item.save()
             Bids.objects.create(
                 bidder=request.user,
                 item=item,
                 amount=int(request.POST.get('amount'))
             )
+            print("Bid created")
+            bid_count = 0
+            for bid in item_bids:
+                if bid_count == 1:
+                    print("Second Bidder ", bid.bidder.name, bid.bidder.coin_amount)
+                    bid.bidder.coin_amount += item.sell_price
+                    bid.bidder.save()
+                    print(511, bid.bidder.coin_amount)
+                    break
+                bid_count += 1
+
+            request.user.coin_amount = request.user.coin_amount - amount
+            request.user.save()
+            item.sell_price = amount
+            item.winner = str(request.user)
             item.participants.add(request.user)
+            item.save()
             print("Winner:", item.winner)
 
         return redirect('item_detail', pk=item.id)
@@ -518,6 +557,8 @@ def item_detail(request, pk):
 
 def item_bid_btn(request, item, btn_no):
     bid_item = Item.objects.get(id=item)
+    item_bids = Bids.objects.all()
+    user = request.user
     if request.method == "POST":
         if btn_no == '1':
             if bid_item.sell_price == 0:
@@ -537,9 +578,22 @@ def item_bid_btn(request, item, btn_no):
             else:
                 bid_item.sell_price += bid_item.once_up * 3
             print(524)
+
+        bid_count = 0
+        for bid in item_bids:
+            if bid_count == 0:
+                print("Btn Second Bidder ", bid.bidder.name, bid.bidder.coin_amount)
+                bid.bidder.coin_amount += bid_item.sell_price
+                bid.bidder.save()
+                print(511, bid.bidder.coin_amount)
+                break
+            bid_count += 1
+
         bid_item.winner = str(request.user)
         bid_item.participants.add(request.user)
         bid_item.save()
+        user.coin_amount -= bid_item.sell_price
+        user.save()
         Bids.objects.create(
             bidder=request.user,
             item=bid_item,

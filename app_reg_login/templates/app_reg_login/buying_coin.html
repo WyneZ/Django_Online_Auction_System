@@ -71,7 +71,7 @@
                             <label for="validationServer08" class="form-label fw-semibold" >NRC.No</label>
                             <div class="singup_inputfield row row-cols-4">
                                 <div class="col">
-                                    <select name="front" class="code_select text-center p-0 me-1 w-100">
+                                    <select name="front" id="front" class="code_select text-center p-0 me-1 w-100">
                                         <option value="၁">၁</option>
                                         <option value="၂">၂</option>
                                         <option value="၃">၃</option>
@@ -91,11 +91,11 @@
                                 </div>
                                 <!-- -------------- -->
                                 <div class="col p-0">
-                                    <input name="mid1" type="text" class="px-2 w-100">
+                                    <input name="mid1" id="mid1" type="text" class="px-2 w-100">
                                 </div>
                                 <!-- --------------- -->
                                 <div class="col">
-                                    <select name="mid2" class="select p-0 me-1">
+                                    <select name="mid2" id="mid2" class="select p-0 me-1">
                                     <option value="(နိုင်)">(နိုင်)</option>
                                     <option value="(ဧည့်)">(ဧည့်)</option>
                                     <option value="(ပြု)">(ပြု)</option>
@@ -103,7 +103,7 @@
                                 </div>
                                 <!-- ----------------- -->
                                 <div class="col p-0">
-                                    <input name="back" type="text" class="px-2 w-100 " onkeyup="numberonly(this)" maxlength="6" >
+                                    <input name="back" id="back" type="text" class="px-2 w-100 " onkeyup="numberonly(this)" maxlength="6" >
                                 </div>
                             </div>             
                           </div>
@@ -154,7 +154,7 @@
                       </div> 
                   </div>      
                 </div>
-                <button type="submit" class="btn bg-dark text-white">Buying Coin</button>
+                <button type="submit" id="btn_buying" class="btn bg-dark text-white">Buying Coin</button>
                <!-- *******/FormInput******* -->
               </form>
             </div>
@@ -360,6 +360,41 @@
           icon[2].style.color = "#de0611"; //red
         
         });
+
+
+
+    function handleClick() {
+        let front = document.getElementById("front");
+        let mid1 = document.getElementById("mid1");
+        let mid2 = document.getElementById("mid2");
+        let back = document.getElementById("back");
+        nrc = front.value + "/" + mid1.value + mid2.value + back.value
+
+        if (nrc != "{{ request.user.nrc_no }}"){
+          alert ("Please!Check Your NRC.");
+          document.getElementById('btn_buying').disabled = true;
+        }else{
+          alert ("ok");
+        }
+        alert (nrc);
+    }
+
+    // Add click event listener to the button
+    document.addEventListener('DOMContentLoaded', function() {
+      var button = document.getElementById('btn_buying');
+      button.addEventListener('click', handleClick);
+    });
+
+
+    mid1.addEventListener("keyup", () =>{
+                    var regex = /[^က-အ]/;
+                    mid1.value = mid1.value.replace(regex,"");
+                  });
+
+    function numberonly(nrcNo){
+        var regex = /[^၀-၉]/;
+            nrcNo.value = nrcNo.value.replace(regex,"");
+        }
 
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

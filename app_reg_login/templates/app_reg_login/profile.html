@@ -30,7 +30,7 @@
                 </div>        
                 <ul class="nav nav-tabs bg-white rounded-bottom" id="myTab" role="tablist">
                   <li class=" nav-item" role="presentation">
-                    <a class="nav-link  active text-dark"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bidded</a>
+                    <a class="nav-link  active text-dark"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bidding</a>
                   </li>   
                   <li class="nav-item text-secondary" role="presentation">
                     <a class="nav-link text-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Win</a>
@@ -188,7 +188,12 @@
                                     <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="coin mb-3" style="margin-top:20px">
                                   </th>
                                   <td class="text-start" colspan="2">
-                                    <p class="p-0 mt-2 mb-0">Transfer to Coin</p>
+                                      {% if transaction.status == 'in' %}
+                                        <p class="p-0 mt-2 mb-0">Buy {{ transaction.coin_amount }} coins</p>
+                                        {% elif transaction.status == 'out' %}
+                                        <p class="p-0 mt-2 mb-0">Transfer {{ transaction.coin_amount }} coins</p>
+                                        {% endif %}
+
                                     <div class="history_date d-flex">
                                       <span class="day">{{ transaction.buying_time | date:"D d M Y H:i" }}</span>
                                     </div>
@@ -397,7 +402,7 @@
                             <label class="form-label fw-semibold">Catagory/ Type</label>
                             <div>
                               <select name="category" class="border-0 border-bottom border-black ps-2 bg-body" style="width:100%;;height:50px;" required>
-                                <option>Choose Catagory</option>
+                                <option value="Others">Others</option>
                                 <option value="Art&Paints">Art&Paints</option>
                                 <option value="Books&Comics">Books&Comics</option>
                                 <option value="Electronic Devices&Accessories">Electronic Devices&Accessories</option>
@@ -409,8 +414,7 @@
                                 <option value="Shoes&Footwear">Shoes&Footwear</option>
                                 <option value="Vehicles">Vehicles</option>
                                 <option value="Wine&Whiskey">Wine&Whiskey</option>
-                                <option value="Others">Others</option>
-                              </select>            
+                              </select>
                             </div>
                           </div>
                         </div>
@@ -475,12 +479,13 @@
             
 
     <!-- USER PROFILE SECTION-->
-            <div class="col container-fluid">
+            <div class="col container-fluid ">
+                <div class="side_left">
 
-              <form method="POST" action="{% url 'update' user.id %}" enctype="multipart/form-data" class="side_left">
+                    <form method="POST" action="{% url 'update' user.id %}" enctype="multipart/form-data" class="side_left">
                   {% csrf_token %}
-                <div class="bg-white shadow rounded-top"> 
-                  <div class="text-center profile_header p-5 position-relative">                
+                <div class="bg-white shadow rounded-top">
+                  <div class="text-center profile_header p-5 position-relative">
                     <i class="fa fa-edit position-absolute top-0 end-0 p-3 " style="font-size:17px;" id="edit_btn"></i>
                       <button type="submit">
                           <i class="fa-solid fa-floppy-disk position-absolute top-0 end-0 p-3" style="color: #000000;" id="save_btn"></i>
@@ -508,7 +513,7 @@
                   <div class="py-3 px-3 row">
                     <label class="col-4 p-0 col-form-label fw-semibold">NRC.No:</label>
                     <div class="col">
-                      <input type="text"  class="p-0 form-control-plaintext" readonly="true" name="nrc_no" id="info_input"  value="{{ user.nrc_no }}">
+                      <input type="text"  class="p-0 form-control-plaintext" readonly="true" name="nrc_no"  value="{{ user.nrc_no }}">
                     </div>
                   </div>
                   <div class="py-3 px-3 row">
@@ -520,7 +525,7 @@
                   <div class="py-3 px-3 row">
                     <label class="col-4 p-0 col-form-label fw-semibold">Email:</label>
                     <div class="col">
-                      <input type="text"  class="p-0 form-control-plaintext" readonly="true" name="email" id="info_input"  value="{{ user.user_email }}">
+                      <input type="text"  class="p-0 form-control-plaintext" readonly="true" name="email" value="{{ user.user_email }}">
                     </div>
                   </div>
                   <div class="py-3 px-3  row">
@@ -544,14 +549,12 @@
                 </div>
                 <hr class="m-0">
               </form>
-                <div class="container p-0 bg-white  shadow rounded" style="margin-top: 30px;">
-                    <form action="{% url 'logout' %}">
+                <form action="{% url 'logout' %}" class="container p-0 bg-white  shadow rounded">
                         <button type="submit" class="btn w-100 m-0 bg-white shadow">
                             Log Out
                         </button>
-                    </form>
+                </form>
                 </div>
-  
 
             </div>
              
@@ -636,9 +639,6 @@
     });
 
 
-
-
- 
 
 </script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

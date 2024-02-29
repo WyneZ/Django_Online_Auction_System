@@ -42,7 +42,7 @@
           {% endif %}
           <span class="count heart_count ms-1">{{ item.like_count }}</span>
         </form>
-        {% if item.due_date != "expired" %}
+        {% if item.due_date != "expired" and request.user == item.seller %}
         <a  href="{% url 'advertising_item' item.id 'advertise' %}">
             <div type="submit" class="rateForm shadow rounded-pill my-3  mx-3">
               <button class="btn btn-light border-0 rounded-pill">
@@ -245,7 +245,7 @@
             {% endif %}
           </div>
 
-          {% if request.user != item.seller and item.due_date != "expired" and item.winner != request.user.username %}
+          {% if request.user != item.seller and item.due_date != "expired" and item.winner != request.user.username and request.user.coin_amount > item.sell_price%}
             <div class="onceBid d-flex justify-content-around ">
             <form class="bidBtn" method="POST" action="{% url 'bid_btn' item.id '1' %}">
                 {% csrf_token %}
@@ -272,16 +272,16 @@
               </form>
           </div>
           <div class="container mx-2">
-            <input type="text" class="bInput rounded-start" style=" height: 50px;
-  margin:20px 0px;
-  padding-left:10px;width:150px;" placeholder="10 coin or up">
+            <form method="POST">
+              {% csrf_token %}
+            <input type="text" name="amount" class="bInput rounded-start" style=" height: 50px; margin:20px 0px; padding-left:10px;width:150px;" placeholder="Enter your bid...">
             <button class="setBid btn btn-dark rounded-end"
                     style="  padding:0 10px;
   height: 50px;
   margin:20px 0 px;
   border-radius: 0%;
-  font-family:'Cinzel', serif;" type="button">BID</button>
-          </button>
+  font-family:'Cinzel', serif;" type="submit">BID</button>
+            </form>
           </div>
           {% endif %}
 
@@ -315,17 +315,18 @@
   <!--???BIDFORM SECTION  -->
   </div>
 
-  <!-- ?Related Post -->
-  <div id="related" class="items container">
-    <hr>
-    <div class="text d-flex justify-content-between">
-      <h5 class="text px-3 pb-3 fw-semibold">Related Post</h5>
-      <a class="link-secondary link-underline-opacity-0" href="items.html">
-        <p class="text px-3 pb-3 te">See More</p>
-      </a>
-    </div>
+<!--  &lt;!&ndash; ?Related Post &ndash;&gt;-->
+<!--  <div id="related" class="items container">-->
+<!--    <hr>-->
+<!--    <div class="text d-flex justify-content-between">-->
+<!--      <h5 class="text px-3 pb-3 fw-semibold">Related Post</h5>-->
+<!--      <a class="link-secondary link-underline-opacity-0" href="items.html">-->
+<!--        <p class="text px-3 pb-3 te">See More</p>-->
+<!--      </a>-->
+<!--    </div>-->
 
 <!--    PUT COPY TEXT HERE-->
+
 
 
   </div>
