@@ -91,7 +91,27 @@ class MyView(View):
                     item.due_date = "expired"
                     print(50, len(item.participants.all()))
                     if len(item.participants.all()) > 0:
-                        item.seller.coin_amount = item.seller.coin_amount + item.sell_price
+                        buyer = item.winner
+                        for user in User.objects.all():
+                            if str(user) == item.winner:
+                                buyer = user
+                        transaction_for_seller = Transition.objects.create(
+                            buyer=item.seller,
+                            buyer_nrc=item.seller.nrc_no,
+                            buyer_ph=item.seller.phone,
+                            coin_amount=item.sell_price,
+                            status="sold",
+                        )
+                        transaction_for_seller.save()
+                        transaction_for_buyer = Transition.objects.create(
+                            buyer=buyer,
+                            buyer_nrc=buyer.nrc_no,
+                            buyer_ph=buyer.phone,
+                            coin_amount=item.sell_price,
+                            status="bought",
+                        )
+                        transaction_for_buyer.save()
+                        item.seller.coin_amount = item.seller.coin_amount + int(item.sell_price * (97/100))
                         item.seller.save()
                     item.save()
 
@@ -465,13 +485,15 @@ def item_detail(request, pk):
     else:
         # when winner deleted account
         related_bids_querySet = Bids.objects.filter(item=item)
-        sell_price = related_bids_querySet[0].amount
-        for bid in related_bids_querySet:
-            if bid.amount > sell_price:
-                sell_price = bid.amount
+        print("when winner", related_bids_querySet)
+        if related_bids_querySet:
+            sell_price = related_bids_querySet[0].amount
+            for bid in related_bids_querySet:
+                if bid.amount > sell_price:
+                    sell_price = bid.amount
 
-        item.sell_price = sell_price
-        item.save()
+            item.sell_price = sell_price
+            item.save()
         print("217 This is new sell price:", item.sell_price)
 
         for participant in participants:
@@ -770,7 +792,7 @@ def transfer_money(request):
         coin_amount = request.POST.get('Tcoin_amount')
         payment_method = request.POST.get('Tpayment_method')
         status = "out"
-        if transfer_user.coin_amount >= int(coin_amount) and transfer_user.coin_amount > 0:
+        if transfer_user.coin_amount >= int(coin_amount) and transfer_user.coin_amount > 0 and buyer_nrc == transfer_user.nrc_no:
             transaction = Transition.objects.create(
                 buyer=transfer_user,
                 buyer_nrc=buyer_nrc,
@@ -787,6 +809,7 @@ def transfer_money(request):
 
 def advertising_item(request, pk, place):
     item = Item.objects.get(id=pk)
+    all_ads = Advertisement.objects.all()
     if request.method == "POST":
         advertisement = Advertisement.objects.create(
             user=request.user,
@@ -800,6 +823,14 @@ def advertising_item(request, pk, place):
             request.user.save()
             print(664, master)
             advertisement.save()
+            transaction_ad = Transition.objects.create(
+                buyer=request.user,
+                buyer_nrc=request.user.nrc_no,
+                buyer_ph=request.user.phone,
+                coin_amount=20,
+                status="ad",
+            )
+            transaction_ad.save()
             return redirect('/')
 
         elif place == "branch" and request.user.coin_amount >= 10:
@@ -810,8 +841,16 @@ def advertising_item(request, pk, place):
             request.user.save()
             print(667, branch)
             advertisement.save()
+            transaction_ad = Transition.objects.create(
+                buyer=request.user,
+                buyer_nrc=request.user.nrc_no,
+                buyer_ph=request.user.phone,
+                coin_amount=10,
+                status="ad",
+            )
+            transaction_ad.save()
             return redirect('/')
-    context = {'item': item}
+    context = {'item': item, 'all_ads': all_ads}
     return render(request, 'app_reg_login/advertising.html', context)
 
 

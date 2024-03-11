@@ -378,8 +378,18 @@
     </div>
    </div>
 
-    <script>
 
+  <script src="{% static 'js/zoomsl.js' %}" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".imagebox").imagezoomsl({
+        zoomrange:[3,3]
+      });
+    });
+
+  </script>
+
+    <script>
         let thumbnails = document.getElementsByClassName('thumbnail')
 
         let activeImages = document.getElementsByClassName('active_thumbnail')

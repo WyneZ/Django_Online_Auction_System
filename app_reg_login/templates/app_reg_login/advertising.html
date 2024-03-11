@@ -35,6 +35,19 @@
                             <option value="master1">Master1</option>
                             <option value="master2">Master2</option>
                             <option value="master3">Master3</option>
+
+<!--                            {% for ad in all_ads %}-->
+<!--                                {% if ad.place == "master1" %}-->
+<!--                                    <option value="master2">Master2</option>-->
+<!--                                    <option value="master3">Master3</option>-->
+<!--                                {% elif ad.place == "master2" %}-->
+<!--                                    <option value="master1">Master1</option>-->
+<!--                                    <option value="master3">Master3</option>-->
+<!--                                {% elif ad.place == "master3" %}-->
+<!--                                    <option value="master1">Master1</option>-->
+<!--                                    <option value="master2">Master2</option>-->
+<!--                                {% endif %}-->
+<!--                            {% endfor %}-->
                         </select>
                         <button type="submit" id="advBtn" class="btn advBtn btn-dark">Advertise</button>
                     </div>
@@ -103,8 +116,18 @@
                     </h5>
                     <div class="">
                         <select name="ad_branch" class="p-2 " style="width: 150px;" aria-label="Default select example">
-                            <option value="Branch1">Branch1</option>
-                            <option value="Branch2">Branch2</option>
+                                    <option value="Branch1">Branch1</option>
+                                    <option value="Branch2">Branch2</option>
+<!--                            {% for ad in all_ads %}-->
+<!--                                {% if ad.place != "Branch1" and ad.place != "Branch2" %}-->
+<!--                                    <option value="Branch1">Branch1</option>-->
+<!--                                    <option value="Branch2">Branch2</option>-->
+<!--                                {% elif ad.place == "Branch1" %}-->
+<!--                                    <option value="Branch2">Branch2</option>-->
+<!--                                {% elif ad.place == "Branch2" %}-->
+<!--                                    <option value="Branch1">Branch1</option>-->
+<!--                                {% endif %}-->
+<!--                            {% endfor %}-->
                         </select>
                         <button type="submit" id="advBtn" class="btn btn-dark">Advertise</button>
                     </div>

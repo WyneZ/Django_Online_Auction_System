@@ -185,14 +185,26 @@
                                 {% for transaction in transactions_history %}
                                 <tr>
                                   <th scope="row" class=" border-0 text-center">
-                                    <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="coin mb-3" style="margin-top:20px">
+                                      {% if transaction.status == 'sold' or transaction.status == 'bought' %}
+                                        <i class="fa-brands fa-shopify" style="color: #208a0b; font-size:25px; margin-top:20px"></i>
+                                      {% elif transaction.status == 'ad' %}
+                                        <i class="fa-brands fa-adversal" style="color: #2c60ba; font-size:25px; margin-top:20px"></i>
+                                      {% else %}
+                                        <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="coin mb-3" style="margin-top:20px">
+                                      {% endif %}
                                   </th>
                                   <td class="text-start" colspan="2">
                                       {% if transaction.status == 'in' %}
-                                        <p class="p-0 mt-2 mb-0">Buy {{ transaction.coin_amount }} coins</p>
-                                        {% elif transaction.status == 'out' %}
-                                        <p class="p-0 mt-2 mb-0">Transfer {{ transaction.coin_amount }} coins</p>
-                                        {% endif %}
+                                        <p class="p-0 mt-2 mb-0">Buy</p>
+                                      {% elif transaction.status == 'out' %}
+                                        <p class="p-0 mt-2 mb-0">Transfer</p>
+                                      {% elif transaction.status == 'sold' %}
+                                        <p class="p-0 mt-2 mb-0">Sold</p>
+                                      {% elif transaction.status == 'bought' %}
+                                        <p class="p-0 mt-2 mb-0">Bought</p>
+                                      {% elif transaction.status == 'ad' %}
+                                        <p class="p-0 mt-2 mb-0">Ad</p>
+                                      {% endif %}
 
                                     <div class="history_date d-flex">
                                       <span class="day">{{ transaction.buying_time | date:"D d M Y H:i" }}</span>
@@ -200,14 +212,15 @@
                                   </td>                             
                                   <td class="text-start">
                                     <div class="mt-2">
-                                        {% if transaction.status == 'in' %}
+                                        {% if transaction.status == 'in' or transaction.status == 'sold' %}
                                         <span>+</span>
-                                        {% elif transaction.status == 'out' %}
+                                        {% elif transaction.status == 'out' or transaction.status == 'bought' or transaction.status == 'ad' %}
                                         <span>-</span>
                                         {% else %}
                                         <span>@</span>
                                         {% endif %}
-                                      <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin">
+
+                                        <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin">
                                       <span class="amount">{{ transaction.coin_amount }}</span>
                                     </div>
                                   </td>

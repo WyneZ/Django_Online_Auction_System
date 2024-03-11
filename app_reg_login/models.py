@@ -17,7 +17,7 @@ class User(AbstractUser):
     coin_amount = models.IntegerField(default=0)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.username
@@ -87,7 +87,7 @@ class Transition(models.Model):
     invoice_img = models.ImageField(null=True)
     buying_time = models.DateTimeField(auto_now_add=True)
 
-    # coin in/out
+    # coin in/out/bought/sold
     status = models.CharField(max_length=10, null=True)
 
     class Meta:
@@ -119,3 +119,4 @@ class Advertisement(models.Model):
         ordering = ['-ad_post_date']
 
 
+# pip install -r requirements.txt

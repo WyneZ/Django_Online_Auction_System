@@ -1,0 +1,2020 @@
+  &lt;!&ndash; Ending soon &ndash;&gt;-->
+<!--  <div id="ending_soon" class="items container my-5">-->
+<!--    <div class="text d-flex justify-content-between">-->
+<!--      <h5 class="text px-3 pb-3 fw-semibold">Ending Soon</h5>-->
+<!--      <a class="link-secondary link-underline-opacity-0 " href="{% url 'search_item' 'Ending Soon' %}">-->
+<!--        <p class="text px-3 pb-3">See More</p>-->
+<!--      </a>-->
+<!--    </div>-->
+<!--    <div id="carouselExample" class="carousel carousel-dark slide">-->
+<!--      <div class="carousel-inner">-->
+<!--        <div class="carousel-item active">-->
+<!--          <div class="cards-wrapper">-->
+<!--&lt;!&ndash;           Start es0&ndash;&gt;-->
+<!--            <div class="container border border-0 card p-0 mx-2">-->
+
+<!--              <div class="container card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' ending_list.0.id %}">-->
+<!--                  <img src="{{ ending_img_list.0.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ ending_list.0.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid:</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                  {% if ending_list.0.sell_price <= 0 %}-->
+<!--                    <span class="currentBid fw-semibold">{{ ending_list.0.reverse_price }} </span>-->
+<!--                  {% else %}-->
+<!--                    <span class="currentBid fw-semibold">{{ ending_list.0.sell_price }} </span>-->
+<!--                  {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_e0"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.0.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e0").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e0").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e0").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--              <form method="POST" action="{% url 'like_item' ending_list.0.id 'home' %}" class="rating">-->
+<!--                  {% csrf_token %}-->
+<!--                  {% if user in ending_list.0.liked_users.all %}-->
+<!--                      <button class="rate ms-1">-->
+<!--                        <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                      </button>-->
+<!--                  {% else %}-->
+<!--                      <button class="rate">-->
+<!--                        <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                      </button>-->
+<!--                  {% endif %}-->
+<!--                  <span class="count heart_count">{{ ending_list.0.like_count }}</span>-->
+<!--                </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;            End es0&ndash;&gt;-->
+
+<!--&lt;!&ndash;             Start es1&ndash;&gt;-->
+<!--          <div class="container border border-0 card p-0 mx-2">-->
+<!--            <div class="container card-header border border-0">-->
+<!--              <a href="{% url 'item_detail' ending_list.1.id %}">-->
+<!--                <img src="{{ ending_img_list.1.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--              </a>-->
+<!--            </div>-->
+<!--            <div class="img_card card-body">-->
+<!--              <h5 class="card-title fw-semibold my-2">{{ ending_list.1.title }}</h5>-->
+<!--              <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--              <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                {% if ending_list.1.sell_price <= 0 %}-->
+<!--                    <span class="currentBid fw-semibold">{{ ending_list.1.reverse_price }}</span>-->
+<!--                {% else %}-->
+<!--                    <span class="currentBid fw-semibold">{{ ending_list.1.sell_price }}</span>-->
+<!--                {% endif %}-->
+<!--              <div class="dueDate d-flex mt-2">-->
+<!--                <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                <span>Closes:</span>-->
+<!--                <div class="d-flex mx-1">-->
+<!--                  <span class="date" id="countdown_e1"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.1.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e1").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e1").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e1").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--                <form method="POST" action="{% url 'like_item' ending_list.1.id 'home' %}" class="rating">-->
+<!--                    {% csrf_token %}-->
+<!--                    {% if user in ending_list.1.liked_users.all %}-->
+<!--                        <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                        </button>-->
+<!--                    {% else %}-->
+<!--                        <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                        </button>-->
+<!--                    {% endif %}-->
+<!--                    <span class="count heart_count">{{ ending_list.1.like_count }}</span>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--&lt;!&ndash;              End of es1&ndash;&gt;-->
+
+<!--&lt;!&ndash;              Start es2&ndash;&gt;-->
+<!--          <div class="container card d-none border border-0 d-md-block p-0 mx-2">-->
+<!--            <div class="container card-header border border-0">-->
+<!--              <a href="{% url 'item_detail' ending_list.2.id %}">-->
+<!--                <img src="{{ ending_img_list.2.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--              </a>-->
+<!--            </div>-->
+<!--            <div class="img_card card-body">-->
+<!--              <h5 class="card-title fw-semibold my-2">{{ ending_list.2.title }}</h5>-->
+<!--              <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--              <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                {% if ending_list.2.sell_price <= 0 %}-->
+<!--                    <span class="currentBid fw-semibold">{{ ending_list.2.reverse_price }}</span>-->
+<!--                {% else %}-->
+<!--                    <span class="currentBid fw-semibold">{{ ending_list.2.sell_price }}</span>-->
+<!--                {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                <span>Closes:</span>-->
+<!--                <div class="d-flex mx-1">-->
+<!--                  <span class="date" id="countdown_e2"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.2.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e2").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e2").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e2").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            <form method="POST" action="{% url 'like_item' ending_list.2.id 'home' %}" class="rating">-->
+<!--                {% csrf_token %}-->
+<!--                {% if user in ending_list.2.liked_users.all %}-->
+<!--                    <button class="rate ms-1">-->
+<!--                        <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                    </button>-->
+<!--                {% else %}-->
+<!--                    <button class="rate">-->
+<!--                        <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                    </button>-->
+<!--                {% endif %}-->
+<!--                <span class="count heart_count">{{ ending_list.2.like_count }}</span>-->
+<!--            </form>-->
+<!--            </div>-->
+
+<!--&lt;!&ndash;              End es2&ndash;&gt;-->
+<!--          </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="carousel-item">-->
+<!--          <div class="cards-wrapper">-->
+<!--              &lt;!&ndash;                Start es3&ndash;&gt;-->
+<!--            <div class="container-sm card border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' ending_list.3.id %}">-->
+<!--                  <img src="{{ ending_img_list.3.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ ending_list.3.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                   {% if ending_list.3.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.3.reverse_price }}</span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.3.sell_price }}</span>-->
+<!--                    {% endif %}-->
+<!--                   <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_e3"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.3.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e3").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e3").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e3").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' ending_list.3.id 'home' %}" class="rating">-->
+<!--                        {% csrf_token %}-->
+<!--                        {% if user in ending_list.3.liked_users.all %}-->
+<!--                            <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                            </button>-->
+<!--                        {% else %}-->
+<!--                            <button class="rate">-->
+<!--                                <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                            </button>-->
+<!--                        {% endif %}-->
+<!--                        <span class="count heart_count">{{ ending_list.3.like_count }}</span>-->
+<!--                    </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              End es3&ndash;&gt;-->
+<!--&lt;!&ndash;              Start es4&ndash;&gt;-->
+<!--            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' ending_list.4.id %}">-->
+<!--                  <img src="{{ ending_img_list.4.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ ending_list.4.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if ending_list.4.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.4.reverse_price }}</span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.4.sell_price }}</span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_e4"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.4.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e4").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e4").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e4").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                <form method="POST" action="{% url 'like_item' ending_list.4.id 'home' %}" class="rating">-->
+<!--                    {% csrf_token %}-->
+<!--                    {% if user in ending_list.4.liked_users.all %}-->
+<!--                        <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                        </button>-->
+<!--                    {% else %}-->
+<!--                        <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                        </button>-->
+<!--                    {% endif %}-->
+<!--                    <span class="count heart_count">{{ ending_list.4.like_count }}</span>-->
+<!--                </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              End es4&ndash;&gt;-->
+<!--&lt;!&ndash;              Start es5&ndash;&gt;-->
+<!--            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' ending_list.5.id %}">-->
+<!--                  <img src="{{ ending_img_list.5.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ ending_list.5.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if ending_list.5.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.5.reverse_price }}</span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.5.sell_price }}</span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_e5"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.5.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e5").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e5").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e5").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' ending_list.5.id 'home' %}" class="rating">-->
+<!--                        {% csrf_token %}-->
+<!--                        {% if user in ending_list.5.liked_users.all %}-->
+<!--                            <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                            </button>-->
+<!--                        {% else %}-->
+<!--                            <button class="rate">-->
+<!--                                <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                            </button>-->
+<!--                        {% endif %}-->
+<!--                        <span class="count heart_count">{{ ending_list.5.like_count }}</span>-->
+<!--                    </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="carousel-item">-->
+<!--          <div class="cards-wrapper">-->
+<!--&lt;!&ndash;              Start es6&ndash;&gt;-->
+<!--            <div class="container-sm card border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' ending_list.6.id %}">-->
+<!--                  <img src="{{ ending_img_list.6.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ ending_list.6.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if ending_list.6.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.6.reverse_price }}</span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.6.sell_price }}</span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_e6"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.6.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e6").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e6").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e6").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' ending_list.6.id 'home' %}" class="rating">-->
+<!--                        {% csrf_token %}-->
+<!--                        {% if user in ending_list.6.liked_users.all %}-->
+<!--                            <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                            </button>-->
+<!--                        {% else %}-->
+<!--                            <button class="rate">-->
+<!--                                <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                            </button>-->
+<!--                        {% endif %}-->
+<!--                        <span class="count heart_count">{{ ending_list.6.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              End es6&ndash;&gt;-->
+<!--&lt;!&ndash;              Start es7&ndash;&gt;-->
+<!--            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' ending_list.7.id %}">-->
+<!--                  <img src="{{ ending_img_list.7.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ ending_list.7.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if ending_list.7.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.7.reverse_price }}</span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.7.sell_price }}</span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_e7"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.7.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e7").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e7").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e7").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' ending_list.7.id 'home' %}" class="rating">-->
+<!--                        {% csrf_token %}-->
+<!--                        {% if user in ending_list.7.liked_users.all %}-->
+<!--                            <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                            </button>-->
+<!--                        {% else %}-->
+<!--                            <button class="rate">-->
+<!--                                <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                            </button>-->
+<!--                        {% endif %}-->
+<!--                        <span class="count heart_count">{{ ending_list.7.like_count }}</span>-->
+<!--                    </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              Start es8&ndash;&gt;-->
+<!--            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' ending_list.8.id %}">-->
+<!--                  <img src="{{ ending_img_list.8.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ ending_list.8.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if ending_list.8.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.8.reverse_price }}</span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ ending_list.8.sell_price }}</span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_e8"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ ending_list.8.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_e8").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_e8").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_e8").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' ending_list.8.id 'home' %}" class="rating">-->
+<!--                        {% csrf_token %}-->
+<!--                        {% if user in ending_list.8.liked_users.all %}-->
+<!--                            <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                            </button>-->
+<!--                        {% else %}-->
+<!--                            <button class="rate">-->
+<!--                                <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                            </button>-->
+<!--                        {% endif %}-->
+<!--                        <span class="count heart_count">{{ ending_list.8.like_count }}</span>-->
+<!--                    </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              End es8&ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample" data-bs-slide="prev">-->
+<!--          <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--          <span class="visually-hidden">Previous</span>-->
+<!--        </button>-->
+<!--        <button class="carousel-control-next rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample" data-bs-slide="next">-->
+<!--          <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--          <span class="visually-hidden">Next</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; /Ending Soon -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+
+<!--  &lt;!&ndash; Lasted &ndash;&gt;-->
+<!--  <div id="lasted" class="items container">-->
+<!--    <hr>-->
+<!--    <div class="text d-flex justify-content-between">-->
+<!--      <h5 class="text px-3 pb-3 fw-semibold">Lasted Post</h5>-->
+<!--      <a class="link-secondary link-underline-opacity-0" href="{% url 'search_item' 'Latest Post' %}">-->
+<!--        <p class="text px-3 pb-3 te">See More</p>-->
+<!--      </a>-->
+<!--    </div>-->
+<!--    <div id="carouselExample1" class="carousel carousel-dark slide">-->
+<!--      <div class="carousel-inner">-->
+<!--        <div class="carousel-item active">-->
+<!--          <div class="cards-wrapper">-->
+<!--&lt;!&ndash;              L0&ndash;&gt;-->
+<!--            <div class="container border border-0 card p-0 mx-2" id="postId">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.0.id %}">-->
+<!--                  <img src="{{ latest_img_list.0.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.0.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.0.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.0.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.0.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l0"></span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.0.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l0").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l0").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l0").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.0.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.0.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.0.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              L1&ndash;&gt;-->
+<!--            <div class="container card d-none border border-0 d-md-block p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.1.id %}">-->
+<!--                  <img src="{{ latest_img_list.1.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.1.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.1.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.1.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.1.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l1"></span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.1.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l1").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l1").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l1").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.1.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.1.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.1.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              L2&ndash;&gt;-->
+<!--            <div class="container card d-none border border-0 d-md-block p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.2.id %}">-->
+<!--                  <img src="{{ latest_img_list.2.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.2.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.2.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.2.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.2.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l2">0</span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.2.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l2").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l2").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l2").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.2.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.2.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.2.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="carousel-item">-->
+<!--          <div class="cards-wrapper">-->
+<!--&lt;!&ndash;              L3&ndash;&gt;-->
+<!--            <div class="container-sm card border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.3.id %}">-->
+<!--                  <img src="{{ latest_img_list.3.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.3.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.3.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.3.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.3.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l3"></span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.3.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l3").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l3").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l3").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.3.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.3.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.3.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              L4&ndash;&gt;-->
+<!--            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.4.id %}">-->
+<!--                  <img src="{{ latest_img_list.4.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.4.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.4.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.4.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.4.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l4"></span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.4.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l4").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l4").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l4").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.4.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.4.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.4.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              L5&ndash;&gt;-->
+<!--            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.5.id %}">-->
+<!--                  <img src="{{ latest_img_list.5.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.5.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.5.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.5.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.5.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l5"></span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.5.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l5").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l5").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l5").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.5.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.5.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.5.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="carousel-item">-->
+<!--          <div class="cards-wrapper">-->
+<!--&lt;!&ndash;              L6&ndash;&gt;-->
+<!--            <div class="container-sm card border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.6.id %}">-->
+<!--                  <img src="{{ latest_img_list.6.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.6.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.6.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.6.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.6.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l6"></span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.6.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l6").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l6").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l6").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.6.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.6.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.6.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              L7&ndash;&gt;-->
+<!--            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.7.id %}">-->
+<!--                  <img src="{{ latest_img_list.7.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.7.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.7.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.7.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.7.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l7"></span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.7.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l7").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l7").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l7").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.7.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.7.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.7.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&lt;!&ndash;              L8&ndash;&gt;-->
+<!--            <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--              <div class="container-sm card-header border border-0">-->
+<!--                <a href="{% url 'item_detail' latest_list.8.id %}">-->
+<!--                  <img src="{{ latest_img_list.8.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                </a>-->
+<!--               </div>-->
+<!--               <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ latest_list.8.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if latest_list.8.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.8.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ latest_list.8.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date " id="countdown_l8"></span>-->
+<!--                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ latest_list.8.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_l8").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_l8").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_l8").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                   <form method="POST" action="{% url 'like_item' latest_list.8.id 'home' %}" class="rating">-->
+<!--                      {% csrf_token %}-->
+<!--                      {% if user in latest_list.8.liked_users.all %}-->
+<!--                          <button class="rate ms-1">-->
+<!--                            <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                          </button>-->
+<!--                      {% else %}-->
+<!--                          <button class="rate">-->
+<!--                            <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                          </button>-->
+<!--                      {% endif %}-->
+<!--                      <span class="count heart_count">{{ latest_list.8.like_count }}</span>-->
+<!--                   </form>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample1" data-bs-slide="prev">-->
+<!--          <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--          <span class="visually-hidden">Previous</span>-->
+<!--        </button>-->
+<!--        <button class="carousel-control-next rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample1" data-bs-slide="next">-->
+<!--          <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--          <span class="visually-hidden">Next</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  &lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; /Lasted -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+<!--    &lt;!&ndash; Popular &ndash;&gt;-->
+<!--    <div id="popular" class="items container">-->
+<!--      <hr>-->
+<!--      <div class="text d-flex justify-content-between">-->
+<!--        <h5 class="text px-3 pb-3 fw-semibold">Popular Post</h5>-->
+<!--        <a class="link-secondary link-underline-opacity-0" href="{% url 'search_item' 'Popular Post' %}">-->
+<!--          <p class="text px-3 pb-3 te">See More</p>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div id="carouselExample2" class="carousel carousel-dark slide">-->
+<!--        <div class="carousel-inner">-->
+<!--          <div class="carousel-item active">-->
+<!--            <div class="cards-wrapper">-->
+<!--&lt;!&ndash;                P0&ndash;&gt;-->
+<!--              <div class="container border border-0 card p-0 mx-2" id="postId">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.0.id %}">-->
+<!--                    <img src="{{ popular_img_list.0.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--                 <div class="img_card card-body">-->
+<!--                  <h5 class="card-title fw-semibold my-2">{{ popular_list.0.title }}</h5>-->
+<!--                  <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                  <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                     {% if popular_list.0.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.0.reverse_price }} </span>-->
+<!--                     {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.0.sell_price }} </span>-->
+<!--                     {% endif %}-->
+<!--                  <div class="dueDate d-flex mt-2">-->
+<!--                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                    <span>Closes:</span>-->
+<!--                    <div class="d-flex mx-1">-->
+<!--                        <span class="date" id="countdown_p0"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.0.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p0").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p0").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p0").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+
+<!--                     <form method="POST" action="{% url 'like_item' popular_list.0.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.0.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.0.like_count }}</span>-->
+<!--                     </form>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;                P1&ndash;&gt;-->
+<!--              <div class="container card d-none border border-0 d-md-block p-0 mx-2">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.1.id %}">-->
+<!--                    <img src="{{ popular_img_list.1.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--                 <div class="img_card card-body">-->
+<!--                  <h5 class="card-title fw-semibold my-2">{{ popular_list.1.title }}</h5>-->
+<!--                  <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                  <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if popular_list.1.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.1.reverse_price }} </span>-->
+<!--                     {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.1.sell_price }} </span>-->
+<!--                     {% endif %}-->
+<!--                     <div class="dueDate d-flex mt-2">-->
+<!--                    <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                    <span>Closes:</span>-->
+<!--                    <div class="d-flex mx-1">-->
+<!--                      <span class="date" id="countdown_p1"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.1.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p1").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p1").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p1").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--                     <form method="POST" action="{% url 'like_item' popular_list.1.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.1.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.1.like_count }}</span>-->
+<!--                     </form>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;                P2&ndash;&gt;-->
+<!--              <div class="container card d-none border border-0 d-md-block p-0 mx-2">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.2.id %}">-->
+<!--                    <img src="{{ popular_img_list.2.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--             <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ popular_list.2.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if popular_list.2.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.2.reverse_price }} </span>-->
+<!--                     {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.2.sell_price }} </span>-->
+<!--                     {% endif %}                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_p2"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.2.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p2").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p2").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p2").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                 <form method="POST" action="{% url 'like_item' popular_list.2.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.2.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.2.like_count }}</span>-->
+<!--                     </form>-->
+<!--              </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="carousel-item">-->
+<!--            <div class="cards-wrapper">-->
+<!--&lt;!&ndash;                P3&ndash;&gt;-->
+<!--              <div class="container-sm card border border-0 p-0 mx-2">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.3.id %}">-->
+<!--                    <img src="{{ popular_img_list.3.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--             <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ popular_list.3.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if popular_list.3.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.3.reverse_price }} </span>-->
+<!--                     {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.3.sell_price }} </span>-->
+<!--                     {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_p3"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.3.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p3").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p3").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p3").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                 <form method="POST" action="{% url 'like_item' popular_list.3.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.3.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.3.like_count }}</span>-->
+<!--                     </form>-->
+<!--              </div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;                P4&ndash;&gt;-->
+<!--              <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.4.id %}">-->
+<!--                    <img src="{{ popular_img_list.4.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--             <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ popular_list.4.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                {% if popular_list.4.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.4.reverse_price }} </span>-->
+<!--                     {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.4.sell_price }} </span>-->
+<!--                     {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_p4"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.4.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p4").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p4").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p4").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                 <form method="POST" action="{% url 'like_item' popular_list.4.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.4.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.4.like_count }}</span>-->
+<!--                     </form>-->
+<!--              </div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;                P5&ndash;&gt;-->
+<!--              <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.5.id %}">-->
+<!--                    <img src="{{ popular_img_list.5.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--             <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ popular_list.5.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                {% if popular_list.5.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.5.reverse_price }} </span>-->
+<!--                     {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.5.sell_price }} </span>-->
+<!--                     {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_p5"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.5.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p5").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p5").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p5").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                 <form method="POST" action="{% url 'like_item' popular_list.5.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.5.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.5.like_count }}</span>-->
+<!--                     </form>-->
+<!--              </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="carousel-item">-->
+<!--            <div class="cards-wrapper">-->
+<!--&lt;!&ndash;                P6&ndash;&gt;-->
+<!--              <div class="container-sm card border border-0 p-0 mx-2">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.6.id %}">-->
+<!--                    <img src="{{ popular_img_list.6.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--             <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ popular_list.6.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                {% if popular_list.6.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.6.reverse_price }} </span>-->
+<!--                     {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.6.sell_price }} </span>-->
+<!--                     {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_p6"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.6.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p6").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p6").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p6").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--                 <form method="POST" action="{% url 'like_item' popular_list.6.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.6.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.6.like_count }}</span>-->
+<!--                     </form>-->
+<!--              </div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;                P7&ndash;&gt;-->
+<!--              <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.7.id %}">-->
+<!--                    <img src="{{ popular_img_list.7.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--             <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ popular_list.7.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                {% if popular_list.7.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.7.reverse_price }} </span>-->
+<!--                     {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.7.sell_price }} </span>-->
+<!--                     {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_p7"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.7.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p7").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p7").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p7").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+
+<!--              </div>-->
+<!--                 <form method="POST" action="{% url 'like_item' popular_list.7.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.7.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.7.like_count }}</span>-->
+<!--                     </form>-->
+<!--              </div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;                P8&ndash;&gt;-->
+<!--              <div class="container-sm card d-none d-md-block border border-0 p-0 mx-2">-->
+<!--                <div class="container-sm card-header border border-0">-->
+<!--                  <a href="{% url 'item_detail' popular_list.8.id %}">-->
+<!--                    <img src="{{ popular_img_list.8.url }}" class="img-fluid card-img-top" style="height:18rem;" alt="...">-->
+<!--                  </a>-->
+<!--                 </div>-->
+<!--             <div class="img_card card-body">-->
+<!--                <h5 class="card-title fw-semibold my-2">{{ popular_list.8.title }}</h5>-->
+<!--                <p class="startBid card-text my-0 ">Current Bid</p>-->
+<!--                <img src="{% static 'image/coin (3).png' %}"  width="25" height="25" class="post-coin mb-2">-->
+<!--                    {% if popular_list.8.sell_price <= 0 %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.8.reverse_price }} </span>-->
+<!--                    {% else %}-->
+<!--                        <span class="currentBid fw-semibold">{{ popular_list.8.sell_price }} </span>-->
+<!--                    {% endif %}-->
+<!--                <div class="dueDate d-flex mt-2">-->
+<!--                  <i class="fa-regular fa-clock me-1" style="color: #595b5e;"></i>-->
+<!--                  <span>Closes:</span>-->
+<!--                  <div class="d-flex mx-1">-->
+<!--                    <span class="date" id="countdown_p8"></span>-->
+<!--                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--                      <script>-->
+<!--                          $(document).ready(function() {-->
+<!--                              // var endDate = "2024-02-11T12:56"-->
+<!--                              var endDate = "{{ popular_list.8.due_date }}";-->
+
+<!--                              if (endDate != "expired") {-->
+<!--                                  var countdownDate = new Date(endDate).getTime();-->
+
+<!--                                  var x = setInterval(function() {-->
+<!--                                      var now = new Date().getTime();-->
+<!--                                      var distance = countdownDate - now;-->
+
+<!--                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+<!--                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));-->
+<!--                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+<!--                                      document.getElementById("countdown_p8").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";-->
+
+<!--                                      if (distance < 0) {-->
+<!--                                          clearInterval(x);-->
+<!--                                          document.getElementById("countdown_p8").innerHTML = "EXPIRED";-->
+<!--                                      }-->
+<!--                                  }, 1000);-->
+<!--                              }-->
+<!--                              else {-->
+<!--                                  document.getElementById("countdown_p8").innerHTML = "EXPIRED";-->
+<!--                              }-->
+
+<!--                          });-->
+<!--                      </script>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                 <form method="POST" action="{% url 'like_item' popular_list.8.id 'home' %}" class="rating">-->
+<!--                         {% csrf_token %}-->
+<!--                         {% if user in popular_list.8.liked_users.all %}-->
+<!--                              <button class="rate ms-1">-->
+<!--                                <i class="fa-solid fa-heart" style="color: #a80000;"></i>-->
+<!--                              </button>-->
+<!--                         {% else %}-->
+<!--                              <button class="rate">-->
+<!--                                  <i class="fa-regular fa-heart" style="color: #333;"></i>-->
+<!--                              </button>-->
+<!--                         {% endif %}-->
+<!--                         <span class="count heart_count">{{ popular_list.8.like_count }}</span>-->
+<!--                     </form>-->
+<!--              </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <button class="carousel-control-prev rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample2" data-bs-slide="prev">-->
+<!--            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--            <span class="visually-hidden">Previous</span>-->
+<!--          </button>-->
+<!--          <button class="carousel-control-next rounded-circle " type="button" style="height:5vh; width:5vh; top:30%;background-color: #9e9e9ea1;" data-bs-target="#carouselExample2" data-bs-slide="next">-->
+<!--            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--            <span class="visually-hidden">Next</span>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>
