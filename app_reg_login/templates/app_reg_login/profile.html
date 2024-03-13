@@ -205,7 +205,6 @@
                                       {% elif transaction.status == 'ad' %}
                                         <p class="p-0 mt-2 mb-0">Ad</p>
                                       {% endif %}
-
                                     <div class="history_date d-flex">
                                       <span class="day">{{ transaction.buying_time | date:"D d M Y H:i" }}</span>
                                     </div>
@@ -219,7 +218,6 @@
                                         {% else %}
                                         <span>@</span>
                                         {% endif %}
-
                                         <img src="{% static 'image/coin (3).png' %}"  width="20" height="20" class="coin">
                                       <span class="amount">{{ transaction.coin_amount }}</span>
                                     </div>

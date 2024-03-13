@@ -33,13 +33,13 @@
                     <div class="row">
                         {% for img in img_list %}
                             <div class="polpuimgBox col w-100">
-                              <img src="{{ img.url }}" class="polpular_img img-fluid d-block" alt="...">
+                                <img src="{{ img.url }}" class="polpular_img img-fluid d-block" alt="...">
                             </div>
                         {% endfor %}
                     </div>
                     <div class="carousel-caption d-none d-md-block bg-gradient  w-auto">
-                <h2 class="fw-semibold text-light">{{ item.title }}</h2>
-              </div>
+                        <h2 class="fw-semibold">{{ item.title }}</h2>
+                    </div>
                 </a>
                 {% endfor %}
             </div>
@@ -55,8 +55,8 @@
                         {% endfor %}
                     </div>
                     <div class="carousel-caption d-none d-md-block">
-                <h2 class="fw-semibold text-light">{{ item.title }}</h2>
-              </div>
+                        <h2 class="fw-semibold">{{ item.title }}</h2>
+                    </div>
                 </a>
                 {% endfor %}
 

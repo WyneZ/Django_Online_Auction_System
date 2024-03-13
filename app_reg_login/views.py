@@ -481,7 +481,6 @@ def item_detail(request, pk):
 
     if item.sell_price == 0:
         item.sell_price = item.reverse_price
-
     else:
         # when winner deleted account
         related_bids_querySet = Bids.objects.filter(item=item)
@@ -506,8 +505,6 @@ def item_detail(request, pk):
         # print(42, due_date-now-timedelta(hours=6, minutes=30))
 
         final_date = due_date - now - timedelta(hours=6, minutes=30)
-        print(86, final_date.total_seconds())
-        print(87, final_date, type(final_date))
         if int(final_date.total_seconds()) < 1:
             print(48, item.title)
             item.due_date = "expired"
@@ -517,11 +514,7 @@ def item_detail(request, pk):
                 item.seller.save()
             item.save()
 
-
-
-
     if request.method == "POST":
-        print(472, request.POST.get('o1'))
         user_count = 0
         # for bid in item_bids:
         #     if user_count == 1:
@@ -548,6 +541,7 @@ def item_detail(request, pk):
             print("Bid created")
             bid_count = 0
             for bid in item_bids:
+                # give back coin to second winner
                 if bid_count == 1:
                     print("Second Bidder ", bid.bidder.name, bid.bidder.coin_amount)
                     bid.bidder.coin_amount += item.sell_price
@@ -581,6 +575,7 @@ def item_bid_btn(request, item, btn_no):
     bid_item = Item.objects.get(id=item)
     item_bids = Bids.objects.all()
     user = request.user
+    old_sell_price = bid_item.sell_price
     if request.method == "POST":
         if btn_no == '1':
             if bid_item.sell_price == 0:
@@ -605,7 +600,7 @@ def item_bid_btn(request, item, btn_no):
         for bid in item_bids:
             if bid_count == 0:
                 print("Btn Second Bidder ", bid.bidder.name, bid.bidder.coin_amount)
-                bid.bidder.coin_amount += bid_item.sell_price
+                bid.bidder.coin_amount += old_sell_price
                 bid.bidder.save()
                 print(511, bid.bidder.coin_amount)
                 break
@@ -769,15 +764,6 @@ def buying_coin(request):
             buyer.coin_amount = buyer.coin_amount + int(transaction.coin_amount)
         request.user.save()
         print(610, transaction)
-        # print(f'{buyer.username}'
-        #       f'{buyer_nrc}'
-        #       f'{buyer_ph}'
-        #       f'{coin_amount}'
-        #       f'{invoice_no}'
-        #       f'{payment_method}'
-        #       f'{invoice_img}'
-        #       f'{status}'
-        #       )
 
     return render(request, 'app_reg_login/buying_coin.html')
 
