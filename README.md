@@ -7,6 +7,8 @@ An online auction platform built with Django, enabling users to register, list i
 * **User Registration & Authentication**: Secure user sign-up, login, and logout functionalities.
 * **Auction Listings**: Users can create, view, and manage auction listings.
 * **Bidding System**: Real-time bidding on active auctions with automatic bid updates.
+* **Advertisement System**: To get more users' interest and attention, can advertise auction items.
+* **Coin System**: Buy coins to bid and adverise their auction items.
 * **Auction Management**: Sellers can close auctions and declare winners.
 * **Responsive Design**: Mobile-friendly interface using Bootstrap.
 
