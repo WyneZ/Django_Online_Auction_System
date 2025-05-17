@@ -71,7 +71,7 @@ An online auction platform built with Django, enabling users to register, list i
 
 ## 📸 Screenshots
 
-Comming Soon!
+Coming Soon!
 
 
 ## 📄 License
