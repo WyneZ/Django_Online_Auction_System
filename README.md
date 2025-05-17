@@ -61,13 +61,16 @@ An online auction platform built with Django, enabling users to register, list i
 7. **Access the application**:
    Open your browser and navigate to `http://127.0.0.1:8000/`
 
-## 🛠️ Usage
+## 🛠️ Features
 
 * **Register**: Create a new user account.
 * **Login**: Access your dashboard.
 * **Create Auction**: List a new item for auction.
+* **Advertisement**: Can advertise auction items in Home Page.
 * **Bid**: Place bids on active auctions.
 * **Manage Auctions**: Close auctions and view winners.
+* **Coin System**: Buy coins to bid and adverise their auction items.
+* **Transaction History**: Easily can track their usage of coin.
 
 ## 📸 Screenshots
 
